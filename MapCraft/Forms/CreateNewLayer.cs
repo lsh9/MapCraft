@@ -7,13 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MyMapObjects;
 
-namespace MapCraft
+namespace MapCraft.Forms
 {
-    public partial class MapCraftForm : Form
+    public partial class CreateNewLayer : Form
     {
-        public MapCraftForm()
+        public CreateNewLayer()
         {
             InitializeComponent();
         }

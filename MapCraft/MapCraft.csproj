@@ -46,6 +46,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\AddNewField.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddNewField.Designer.cs">
+      <DependentUpon>AddNewField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\CreateNewLayer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CreateNewLayer.Designer.cs">
+      <DependentUpon>CreateNewLayer.cs</DependentUpon>
+    </Compile>
     <Compile Include="MapCraftForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -54,6 +66,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\AddNewField.resx">
+      <DependentUpon>AddNewField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CreateNewLayer.resx">
+      <DependentUpon>CreateNewLayer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MapCraftForm.resx">
       <DependentUpon>MapCraftForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -65,6 +83,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -78,6 +97,60 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\按属性选择.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\按位置选择.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\编辑要素.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\创建要素.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\放大.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\固定比例放大.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\固定比例缩小.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\漫游.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\清除选择.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\全图.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\删除节点.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\识别.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\缩小.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\添加结点.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\添加数据.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\移动节点.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyMapObjects\MyMapObjects.csproj">
+      <Project>{0b25525d-96b3-458b-8ef6-5d315b6637f2}</Project>
+      <Name>MyMapObjects</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
