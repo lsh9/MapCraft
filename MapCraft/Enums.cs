@@ -6,6 +6,21 @@ using System.Threading.Tasks;
 
 namespace MapCraft
 {
+
+    public enum shpGeometryType
+    {
+        point = 1,
+        polyline = 3,
+        polygon = 5,
+    }
+
+    public enum DbfFieldType : byte
+    {
+        Int = (byte)'I',
+        Single = (byte)'F',
+        Double = (byte)'D',
+        Text = (byte)'C',
+
     /// <summary>
     /// 地图操作类型
     /// </summary>
@@ -24,5 +39,6 @@ namespace MapCraft
         FixedZoomIn = 5,
         FixedZoomOut = 6,
         SelectByAttribute = 8,
+
     }
 }
