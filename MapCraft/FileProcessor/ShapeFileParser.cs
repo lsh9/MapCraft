@@ -64,6 +64,7 @@ namespace MapCraft.FileProcessor
             _filePath = FilePath;
             _shxFile = new ShxParser(FilePath + ".shx");
             _shpFile = new ShpParser(_shxFile, FilePath + ".shp");
+            _dbfFile = new DbfFileParser(FilePath + ".dbf");
         }
 
         #endregion
