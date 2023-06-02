@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MapCraft.Forms
@@ -48,29 +42,50 @@ namespace MapCraft.Forms
         {
             TextBoxSQL.AppendText("Like ");
         }
+
         private void btnGt_Click(object sender, EventArgs e)
         {
             TextBoxSQL.AppendText("> ");
         }
+
         private void btnGe_Click(object sender, EventArgs e)
         {
             TextBoxSQL.AppendText(">= ");
         }
+
         private void btnAnd_Click(object sender, EventArgs e)
         {
             TextBoxSQL.AppendText("And ");
         }
+
         private void btnLt_Click(object sender, EventArgs e)
         {
             TextBoxSQL.AppendText("< ");
         }
+
         private void btnLe_Click(object sender, EventArgs e)
         {
             TextBoxSQL.AppendText("<= ");
         }
+
         private void btnOr_Click(object sender, EventArgs e)
         {
             TextBoxSQL.AppendText("Or ");
+        }
+
+        private void btnIs_Click(object sender, EventArgs e)
+        {
+            TextBoxSQL.AppendText("Is ");
+        }
+
+        private void btnIn_Click(object sender, EventArgs e)
+        {
+            TextBoxSQL.AppendText("In ");
+        }
+
+        private void btnNot_Click(object sender, EventArgs e)
+        {
+            TextBoxSQL.AppendText("Not ");
         }
 
         #endregion
@@ -82,6 +97,7 @@ namespace MapCraft.Forms
             mLayerSelectIndex = SelectBoxLayer.SelectedIndex;// 获取选中的图层的索引
             ListBoxUniqueValues.Items.Clear();// 重新选择了图层必然唯一值框要清零
             ListBoxFields.Items.Clear();// 清零字段显示图层
+            labelSQL.Text = $"SELECT * FROM {MainForm.MapControl.Layers.GetItem(mLayerSelectIndex).Name} WHERE ";
             LoadFields();// 重新加载下拉框
             LoadDataTable();// 重新建立数据表
             mFieldSelectIndex = -1;// 同时重新清零上次选中的字段

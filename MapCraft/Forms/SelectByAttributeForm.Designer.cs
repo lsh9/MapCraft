@@ -48,6 +48,10 @@
             this.btnValidate = new System.Windows.Forms.Button();
             this.labelFieldList = new System.Windows.Forms.Label();
             this.btnClear = new System.Windows.Forms.Button();
+            this.btnNot = new System.Windows.Forms.Button();
+            this.btnIn = new System.Windows.Forms.Button();
+            this.btnIs = new System.Windows.Forms.Button();
+            this.labelSQL = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // SelectBoxLayer
@@ -178,7 +182,7 @@
             // 
             // btnGetUniqueValue
             // 
-            this.btnGetUniqueValue.Location = new System.Drawing.Point(181, 345);
+            this.btnGetUniqueValue.Location = new System.Drawing.Point(181, 361);
             this.btnGetUniqueValue.Name = "btnGetUniqueValue";
             this.btnGetUniqueValue.Size = new System.Drawing.Size(131, 30);
             this.btnGetUniqueValue.TabIndex = 19;
@@ -192,14 +196,14 @@
             this.ListBoxUniqueValues.ItemHeight = 12;
             this.ListBoxUniqueValues.Location = new System.Drawing.Point(181, 232);
             this.ListBoxUniqueValues.Name = "ListBoxUniqueValues";
-            this.ListBoxUniqueValues.Size = new System.Drawing.Size(131, 100);
+            this.ListBoxUniqueValues.Size = new System.Drawing.Size(131, 124);
             this.ListBoxUniqueValues.TabIndex = 20;
             this.ListBoxUniqueValues.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ListBoxUniqueValues_MouseDoubleClick);
             // 
             // TextBoxSQL
             // 
             this.TextBoxSQL.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.TextBoxSQL.Location = new System.Drawing.Point(42, 389);
+            this.TextBoxSQL.Location = new System.Drawing.Point(43, 412);
             this.TextBoxSQL.Multiline = true;
             this.TextBoxSQL.Name = "TextBoxSQL";
             this.TextBoxSQL.Size = new System.Drawing.Size(269, 77);
@@ -207,7 +211,7 @@
             // 
             // btnApply
             // 
-            this.btnApply.Location = new System.Drawing.Point(240, 482);
+            this.btnApply.Location = new System.Drawing.Point(241, 505);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(60, 30);
             this.btnApply.TabIndex = 23;
@@ -217,7 +221,7 @@
             // 
             // btnConfirm
             // 
-            this.btnConfirm.Location = new System.Drawing.Point(174, 482);
+            this.btnConfirm.Location = new System.Drawing.Point(175, 505);
             this.btnConfirm.Name = "btnConfirm";
             this.btnConfirm.Size = new System.Drawing.Size(60, 30);
             this.btnConfirm.TabIndex = 26;
@@ -227,7 +231,7 @@
             // 
             // btnValidate
             // 
-            this.btnValidate.Location = new System.Drawing.Point(108, 482);
+            this.btnValidate.Location = new System.Drawing.Point(109, 505);
             this.btnValidate.Name = "btnValidate";
             this.btnValidate.Size = new System.Drawing.Size(60, 30);
             this.btnValidate.TabIndex = 25;
@@ -248,7 +252,7 @@
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(42, 482);
+            this.btnClear.Location = new System.Drawing.Point(43, 505);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(60, 31);
             this.btnClear.TabIndex = 29;
@@ -256,11 +260,55 @@
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
+            // btnNot
+            // 
+            this.btnNot.Location = new System.Drawing.Point(125, 332);
+            this.btnNot.Name = "btnNot";
+            this.btnNot.Size = new System.Drawing.Size(40, 30);
+            this.btnNot.TabIndex = 32;
+            this.btnNot.Text = "Not";
+            this.btnNot.UseVisualStyleBackColor = true;
+            this.btnNot.Click += new System.EventHandler(this.btnNot_Click);
+            // 
+            // btnIn
+            // 
+            this.btnIn.Location = new System.Drawing.Point(84, 332);
+            this.btnIn.Name = "btnIn";
+            this.btnIn.Size = new System.Drawing.Size(40, 30);
+            this.btnIn.TabIndex = 31;
+            this.btnIn.Text = "In";
+            this.btnIn.UseVisualStyleBackColor = true;
+            this.btnIn.Click += new System.EventHandler(this.btnIn_Click);
+            // 
+            // btnIs
+            // 
+            this.btnIs.Location = new System.Drawing.Point(43, 332);
+            this.btnIs.Name = "btnIs";
+            this.btnIs.Size = new System.Drawing.Size(40, 30);
+            this.btnIs.TabIndex = 30;
+            this.btnIs.Text = "Is";
+            this.btnIs.UseVisualStyleBackColor = true;
+            this.btnIs.Click += new System.EventHandler(this.btnIs_Click);
+            // 
+            // labelSQL
+            // 
+            this.labelSQL.AutoSize = true;
+            this.labelSQL.BackColor = System.Drawing.SystemColors.Control;
+            this.labelSQL.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelSQL.Location = new System.Drawing.Point(42, 397);
+            this.labelSQL.Name = "labelSQL";
+            this.labelSQL.Size = new System.Drawing.Size(0, 12);
+            this.labelSQL.TabIndex = 33;
+            // 
             // SelectByAttributeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(347, 526);
+            this.ClientSize = new System.Drawing.Size(347, 549);
+            this.Controls.Add(this.labelSQL);
+            this.Controls.Add(this.btnNot);
+            this.Controls.Add(this.btnIn);
+            this.Controls.Add(this.btnIs);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.labelFieldList);
             this.Controls.Add(this.btnConfirm);
@@ -310,5 +358,9 @@
         private System.Windows.Forms.ListBox ListBoxFields;
         private System.Windows.Forms.Label labelFieldList;
         private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.Button btnNot;
+        private System.Windows.Forms.Button btnIn;
+        private System.Windows.Forms.Button btnIs;
+        private System.Windows.Forms.Label labelSQL;
     }
 }

@@ -32,10 +32,15 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnSavePath = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.chbLayerType = new System.Windows.Forms.ComboBox();
+            this.cbBoxLayerType = new System.Windows.Forms.ComboBox();
             this.btnConfirm = new System.Windows.Forms.Button();
-            this.textBoxLayrName = new System.Windows.Forms.TextBox();
+            this.textBoxFieldName = new System.Windows.Forms.TextBox();
+            this.labelFieldName = new System.Windows.Forms.Label();
+            this.cbBoxValueType = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnAddField = new System.Windows.Forms.Button();
+            this.listBoxFields = new System.Windows.Forms.ListBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBoxSavePath
@@ -53,14 +58,15 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(87, 16);
             this.label2.TabIndex = 2;
-            this.label2.Text = "存储路径：";
+            this.label2.Text = "保存路径：";
             // 
             // btnSavePath
             // 
-            this.btnSavePath.Location = new System.Drawing.Point(368, 83);
+            this.btnSavePath.Location = new System.Drawing.Point(364, 83);
             this.btnSavePath.Name = "btnSavePath";
             this.btnSavePath.Size = new System.Drawing.Size(31, 24);
             this.btnSavePath.TabIndex = 4;
+            this.btnSavePath.Text = "...";
             this.btnSavePath.UseVisualStyleBackColor = true;
             this.btnSavePath.Click += new System.EventHandler(this.btnSavePath_Click);
             // 
@@ -74,51 +80,103 @@
             this.label3.TabIndex = 5;
             this.label3.Text = "几何类型：";
             // 
-            // chbLayerType
+            // cbBoxLayerType
             // 
-            this.chbLayerType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.chbLayerType.FormattingEnabled = true;
-            this.chbLayerType.Location = new System.Drawing.Point(124, 34);
-            this.chbLayerType.Name = "chbLayerType";
-            this.chbLayerType.Size = new System.Drawing.Size(219, 20);
-            this.chbLayerType.TabIndex = 6;
+            this.cbBoxLayerType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbBoxLayerType.FormattingEnabled = true;
+            this.cbBoxLayerType.Location = new System.Drawing.Point(124, 34);
+            this.cbBoxLayerType.Name = "cbBoxLayerType";
+            this.cbBoxLayerType.Size = new System.Drawing.Size(219, 20);
+            this.cbBoxLayerType.TabIndex = 6;
             // 
             // btnConfirm
             // 
-            this.btnConfirm.Location = new System.Drawing.Point(166, 174);
+            this.btnConfirm.Location = new System.Drawing.Point(168, 429);
             this.btnConfirm.Name = "btnConfirm";
-            this.btnConfirm.Size = new System.Drawing.Size(100, 42);
+            this.btnConfirm.Size = new System.Drawing.Size(100, 31);
             this.btnConfirm.TabIndex = 7;
-            this.btnConfirm.Text = "创建";
+            this.btnConfirm.Text = "创建图层";
             this.btnConfirm.UseVisualStyleBackColor = true;
             this.btnConfirm.Click += new System.EventHandler(this.btnConfirm_Click);
             // 
-            // textBoxLayrName
+            // textBoxFieldName
             // 
-            this.textBoxLayrName.Location = new System.Drawing.Point(124, 125);
-            this.textBoxLayrName.Name = "textBoxLayrName";
-            this.textBoxLayrName.Size = new System.Drawing.Size(219, 21);
-            this.textBoxLayrName.TabIndex = 9;
+            this.textBoxFieldName.Location = new System.Drawing.Point(124, 144);
+            this.textBoxFieldName.Name = "textBoxFieldName";
+            this.textBoxFieldName.Size = new System.Drawing.Size(219, 21);
+            this.textBoxFieldName.TabIndex = 9;
+            // 
+            // labelFieldName
+            // 
+            this.labelFieldName.AutoSize = true;
+            this.labelFieldName.Font = new System.Drawing.Font("宋体", 12F);
+            this.labelFieldName.Location = new System.Drawing.Point(28, 149);
+            this.labelFieldName.Name = "labelFieldName";
+            this.labelFieldName.Size = new System.Drawing.Size(87, 16);
+            this.labelFieldName.TabIndex = 8;
+            this.labelFieldName.Text = "字段名称：";
+            // 
+            // cbBoxValueType
+            // 
+            this.cbBoxValueType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbBoxValueType.FormattingEnabled = true;
+            this.cbBoxValueType.Location = new System.Drawing.Point(124, 189);
+            this.cbBoxValueType.Name = "cbBoxValueType";
+            this.cbBoxValueType.Size = new System.Drawing.Size(219, 20);
+            this.cbBoxValueType.TabIndex = 11;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 12F);
-            this.label1.Location = new System.Drawing.Point(28, 130);
+            this.label1.Location = new System.Drawing.Point(28, 193);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(87, 16);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "图层名称：";
+            this.label1.TabIndex = 10;
+            this.label1.Text = "字段类型：";
+            // 
+            // btnAddField
+            // 
+            this.btnAddField.Location = new System.Drawing.Point(124, 236);
+            this.btnAddField.Name = "btnAddField";
+            this.btnAddField.Size = new System.Drawing.Size(100, 31);
+            this.btnAddField.TabIndex = 12;
+            this.btnAddField.Text = "添加字段";
+            this.btnAddField.UseVisualStyleBackColor = true;
+            this.btnAddField.Click += new System.EventHandler(this.btnAddField_Click);
+            // 
+            // listBoxFields
+            // 
+            this.listBoxFields.FormattingEnabled = true;
+            this.listBoxFields.ItemHeight = 12;
+            this.listBoxFields.Location = new System.Drawing.Point(124, 284);
+            this.listBoxFields.Name = "listBoxFields";
+            this.listBoxFields.Size = new System.Drawing.Size(219, 124);
+            this.listBoxFields.TabIndex = 13;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(243, 236);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(100, 31);
+            this.button1.TabIndex = 14;
+            this.button1.Text = "删除字段";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // CreateLayerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(450, 240);
-            this.Controls.Add(this.textBoxLayrName);
+            this.ClientSize = new System.Drawing.Size(450, 496);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.listBoxFields);
+            this.Controls.Add(this.btnAddField);
+            this.Controls.Add(this.cbBoxValueType);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.textBoxFieldName);
+            this.Controls.Add(this.labelFieldName);
             this.Controls.Add(this.btnConfirm);
-            this.Controls.Add(this.chbLayerType);
+            this.Controls.Add(this.cbBoxLayerType);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnSavePath);
             this.Controls.Add(this.textBoxSavePath);
@@ -136,9 +194,14 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnSavePath;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox chbLayerType;
+        private System.Windows.Forms.ComboBox cbBoxLayerType;
         private System.Windows.Forms.Button btnConfirm;
-        private System.Windows.Forms.TextBox textBoxLayrName;
+        private System.Windows.Forms.TextBox textBoxFieldName;
+        private System.Windows.Forms.Label labelFieldName;
+        private System.Windows.Forms.ComboBox cbBoxValueType;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnAddField;
+        private System.Windows.Forms.ListBox listBoxFields;
+        private System.Windows.Forms.Button button1;
     }
 }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MyMapObjects;
 using MapCraft.Forms;
-using MapCraft.IO;
+//using MapCraft.IO;
 
 namespace MapCraft
 {
@@ -46,7 +46,7 @@ namespace MapCraft
         private List<moPoints> mSketchingShape;   // 正在描绘的图形，用多点集合存储
 
         // 图层路径记录
-        private List<Shapefile> mShapefiles = new List<Shapefile>();
+        //private List<Shapefile> mShapefiles = new List<Shapefile>();
 
         #endregion
 
@@ -57,7 +57,6 @@ namespace MapCraft
         public moMapControl MapControl
         {
             get { return moMapControl1; }
-            set { moMapControl1 = value; }
         }
         #endregion
 
@@ -91,23 +90,7 @@ namespace MapCraft
         // 点击添加图层按钮
         private void btnAddData_Click(object sender, EventArgs e)
         {
-            CreateLayerForm createLayerForm = new CreateLayerForm();
-            createLayerForm.Owner = this;
-            createLayerForm.Show();
-            //string shpFilePath;
-            //OpenFileDialog fileDialog = new OpenFileDialog();
-            //fileDialog.Filter = ".shp文件|*.shp";
-            //if (fileDialog.ShowDialog() == DialogResult.OK)
-            //{
-            //    shpFilePath = fileDialog.FileName;
-            //    fileDialog.Dispose();
-            //}
-            //else
-            //{
-            //    fileDialog.Dispose();
-            //    return;
-            //}
-            //AddLayer(shpFilePath);
+
         }
 
         // 点击放大按钮
@@ -525,6 +508,20 @@ namespace MapCraft
 
         #endregion
 
+        #region 方法
+
+        #region 图层操作
+        // 根据.shp文件的路径添加图层到当前地图
+        public void AddLayer(moMapLayer mapLayer, object shapefile)
+        {
+
+        }
+        #endregion
+
+        #endregion
+
+
+
         #region 私有函数
         //初始化符号
         private void InitializeSymbols()
@@ -699,39 +696,7 @@ namespace MapCraft
             }
         }
 
-        #region 图层操作
-        // 根据.shp文件的路径添加图层到当前地图
-        private void AddLayer(string shpFilePath, string layerName="")
-        {
-            try
-            {
-                string shpName = Path.GetFileNameWithoutExtension(shpFilePath);
-                shpFilePath.ToLower();
-                string layerPath = shpFilePath.Substring(0, shpFilePath.IndexOf(".shp", StringComparison.Ordinal));
 
-                //Shapefile shapefile = new Shapefile(layerPath);
-                //shapefile.Read();
-
-
-                //moMapLayer mapLayer = new moMapLayer(shpName, shapefile.GeometryType, shapefile.Fields);
-
-                //moFeatures features = new moFeatures();
-                //for (int i = 0; i < shapefile.Geometries.Count; ++i)
-                //{
-                //    moFeature feature = new moFeature(shapefile.GeometryType, shapefile.Geometries[i], shapefile.AttributesList[i]);
-                //    features.Add(feature);
-                //}
-
-                //mapLayer.Features = features;
-                //MapControl.Layers.Add(mapLayer);
-                //mShapefiles.Add(shapefile);
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.ToString());
-            }
-        }
-        #endregion
 
         #endregion
 

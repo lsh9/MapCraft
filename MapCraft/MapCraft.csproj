@@ -65,13 +65,18 @@
     <Compile Include="Forms\CreateNewLayer.Designer.cs">
       <DependentUpon>CreateNewLayer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\IdentifyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\IdentifyForm.Designer.cs">
+      <DependentUpon>IdentifyForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\SelectByAttributeForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\SelectByAttributeForm.Designer.cs">
       <DependentUpon>SelectByAttributeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="IO\Shapefile.cs" />
     <Compile Include="MapCraftForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -171,6 +176,9 @@
       <Project>{0b25525d-96b3-458b-8ef6-5d315b6637f2}</Project>
       <Name>MyMapObjects</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="IO\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
