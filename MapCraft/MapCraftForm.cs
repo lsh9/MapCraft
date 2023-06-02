@@ -9,8 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MyMapObjects;
+using MapCraft.Forms;
 using MapCraft.FileProcessor;
-
 
 
 namespace MapCraft
@@ -25,6 +25,7 @@ namespace MapCraft
         private double mSelectBoxWidth = 0.53;              // 选择盒的边界宽度，单位毫米
         private double mZoomRatioFixed = 2;                 // 固定放大系数
         private double mZoomRatioMouseWheel = 1.2;          // 滑轮放大系数
+<<<<<<< HEAD
         private double mSelectingTolerance = 3;             //  选择容限，像素
         private moSimpleFillSymbol mSelectingBoxSymbol;    // 选择盒符号
         private moSimpleFillSymbol mZoomBoxSymbol;         // 缩放盒符号
@@ -34,6 +35,16 @@ namespace MapCraft
         private moSimpleLineSymbol mElasticSymbol;         // 橡皮筋符号
         private bool mShowLngLat = false;                               // 是否显示经纬度
         private List<ShapeFileParser> mShapefiles = new List<ShapeFileParser>();
+=======
+        private double mSelectingTolerance = 3;             // 选择容限，像素
+        private moSimpleFillSymbol mSelectingBoxSymbol;     // 选择盒符号
+        private moSimpleFillSymbol mZoomBoxSymbol;          // 缩放盒符号
+        private moSimpleFillSymbol mMovingPolygonSymbol;    // 正在移动的多边形的符号
+        private moSimpleFillSymbol mEditingPolygonSymbol;   // 正在编辑的多边形的符号
+        private moSimpleMarkerSymbol mEditingVertexSymbol;  // 正在编辑的图形的顶点的符号
+        private moSimpleLineSymbol mElasticSymbol;          // 橡皮筋符号
+        private bool mShowLngLat = false;                   // 是否显示经纬度
+>>>>>>> main
 
         // 与地图操作有关的变量
         private MapOpConstant mMapOpStyle = 0;  // 地图操作方式
@@ -47,6 +58,19 @@ namespace MapCraft
         private moGeometry mEditingGeometry;   // 正在编辑的图形
         private List<moPoints> mSketchingShape;   // 正在描绘的图形，用多点集合存储
 
+        // 图层路径记录
+        //private List<Shapefile> mShapefiles = new List<Shapefile>();
+
+        #endregion
+
+        #region 属性
+        /// <summary>
+        /// 地图控件，子窗体可使用
+        /// </summary>
+        public moMapControl MapControl
+        {
+            get { return moMapControl1; }
+        }
         #endregion
 
         #region 构造函数
@@ -68,6 +92,7 @@ namespace MapCraft
             // （3）描绘图形比例尺
             ShowMapScale();
         }
+
         
         
         // 是否显示经纬度
@@ -177,12 +202,21 @@ namespace MapCraft
         // 点击按属性选择按钮
         private void btnSelectByAttribute_Click(object sender, EventArgs e)
         {
+            SelectByAttributeForm sSelectByAttributeForm = new SelectByAttributeForm(this);
+            sSelectByAttributeForm.Show();
 
         }
 
         // 点击清除选择按钮
         private void btnClearSelection_Click(object sender, EventArgs e)
         {
+            // 清除每个图层选中的要素
+            for (int i = 0; i < moMapControl1.Layers.Count; i++)
+            {
+                moMapLayer sLayer = moMapControl1.Layers.GetItem(i);
+                sLayer.SelectedFeatures.Clear();
+            }
+            moMapControl1.RedrawMap();
         }
 
         // 点击查询按钮
@@ -535,6 +569,20 @@ namespace MapCraft
 
         #endregion
 
+        #region 方法
+
+        #region 图层操作
+        // 根据.shp文件的路径添加图层到当前地图
+        public void AddLayer(moMapLayer mapLayer, object shapefile)
+        {
+
+        }
+        #endregion
+
+        #endregion
+
+
+
         #region 私有函数
         //初始化符号
         private void InitializeSymbols()
@@ -715,6 +763,7 @@ namespace MapCraft
             treeView1.Nodes.Add(mapLayer.Name);
             moMapControl1.FullExtent();
         }
+
 
         #endregion
 
