@@ -53,6 +53,7 @@ namespace MyMapObjects
         public double MinX
         {
             get { return _MinX; }
+            set { _MinX = value; }
         }
 
         /// <summary>
@@ -61,6 +62,7 @@ namespace MyMapObjects
         public double MaxX
         {
             get { return _MaxX; }
+            set { _MaxX = value; }
         }
 
         /// <summary>
@@ -69,6 +71,10 @@ namespace MyMapObjects
         public double MinY
         {
             get { return _MinY; }
+            set
+            {
+                _MinY = value;
+            }
         }
 
         /// <summary>
@@ -77,6 +83,10 @@ namespace MyMapObjects
         public double MaxY
         {
             get { return _MaxY; }
+            set
+            {
+                _MaxY = value;
+            }
         }
         #endregion
 
