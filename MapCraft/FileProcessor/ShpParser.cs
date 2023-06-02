@@ -125,18 +125,24 @@ namespace MapCraft.FileProcessor
                     while (br.PeekChar() != -1)
                     {
                         uint RecordNum = br.ReadUInt32();
+                        Console.WriteLine("文件记录号为:" + ChangeByteOrder((int)RecordNum));
                         int DataLength = br.ReadInt32();
+                        Console.WriteLine("坐标长度为:" + ChangeByteOrder(DataLength));
                         //读取第i个记录
-                        br.ReadInt32();
-                        moMultiPolygon multiPolygon = new moMultiPolygon
-                        {
-                            MinX = br.ReadDouble(),
-                            MinY = br.ReadDouble(),
-                            MaxX = br.ReadDouble(),
-                            MaxY = br.ReadDouble()
-                        };
+                        int m = br.ReadInt32();
+                        moMultiPolygon multiPolygon = new moMultiPolygon();
+                        multiPolygon.MinX = br.ReadDouble();
+                        Console.WriteLine("最小X坐标为:" + multiPolygon.MinX);
+                        multiPolygon.MinY = br.ReadDouble();
+                        Console.WriteLine("最小Y坐标为:" + multiPolygon.MinY);
+                        multiPolygon.MaxX = br.ReadDouble();
+                        Console.WriteLine("最大X坐标为:" + multiPolygon.MaxX);
+                        multiPolygon.MaxY = br.ReadDouble();
+                        Console.WriteLine("最大Y坐标为:" + multiPolygon.MaxY);
+                        
                         int NumParts = br.ReadInt32();
                         int NumPoints = br.ReadInt32();
+
                         int[] begin = new int[NumParts];
                         int[] end = new int[NumParts];
                         for (int i = 0; i < NumParts; i++)
@@ -145,20 +151,37 @@ namespace MapCraft.FileProcessor
                         }
                         for (int i = 1; i < NumParts; i++)
                         {
-                            end[i - 1] = begin[i] + 1;
+                            end[i - 1] = begin[i];
+                            Console.WriteLine("第" + i + "个部分的终点为:" + end[i-1]);
                         }
                         end[NumParts - 1] = NumPoints;
-                        for (int i = 0; i < NumParts; i++)
+                        //for (int i = 0; i < NumParts; i++)
+                        //{
+                        //    moPoints points = new moPoints();
+                        //    for (int j = begin[i]; j < end[i]; j++)
+                        //    {
+                        //        moPoint spoint = new moPoint();
+                        //        spoint.X = br.ReadDouble();
+                        //        spoint.Y = br.ReadDouble();
+                        //        points.Add(spoint);
+                        //    }
+                        //    multiPolygon.Parts.Add(points);
+                        //}
+
+                        moPoints moPoints = new moPoints();
+                        int flag = 0;
+                        for(int j = 0; j < NumPoints; j++)
                         {
-                            moPoints points = new moPoints();
-                            for (int j = begin[i]; j < end[i]; j++)
+                            moPoint moPoint = new moPoint();
+                            moPoint.X = br.ReadDouble();
+                            moPoint.Y = br.ReadDouble();
+                            moPoints.Add(moPoint);
+                            if(j == end[flag]-1)
                             {
-                                moPoint spoint = new moPoint();
-                                spoint.X = br.ReadDouble();
-                                spoint.Y = br.ReadDouble();
-                                points.Add(spoint);
+                                multiPolygon.Parts.Add(moPoints);
+                                moPoints = new moPoints();
+                                flag++;
                             }
-                            multiPolygon.Parts.Add(points);
                         }
                         Geometries.Add(multiPolygon);
                     }

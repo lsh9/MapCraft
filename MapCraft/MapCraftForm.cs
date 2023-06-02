@@ -78,12 +78,16 @@ namespace MapCraft
         }
 
         
-        /// <summary>
-        /// 打开shp文件并在mapcontrol中显示
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void 打开ToolStripMenuItem_Click(object sender, EventArgs e)
+        
+        // 是否显示经纬度
+        private void ChkShowLngLat_CheckedChanged(object sender, EventArgs e)
+        {
+            mShowLngLat = cbxProjectionCS.Checked;
+        }
+
+        #region 按钮控件点击事件
+        // 点击添加图层按钮
+        private void btnAddData_Click(object sender, EventArgs e)
         {
             string shpFilePath;
             OpenFileDialog fileDialog = new OpenFileDialog();
@@ -105,7 +109,7 @@ namespace MapCraft
                 string layerPath = shpFilePath.Substring(0, shpFilePath.IndexOf(".shp", StringComparison.Ordinal));
 
                 ShapeFileParser fileProcessor = new ShapeFileParser(layerPath);
-
+                int a = 0;
                 // convert to mapLayer
                 moMapLayer mapLayer =
                     new moMapLayer(layerName, fileProcessor.GeometryType, fileProcessor.Fields);
@@ -125,21 +129,8 @@ namespace MapCraft
             catch (Exception error)
             {
                 MessageBox.Show(error.ToString());
-                
+
             }
-        }
-        
-        // 是否显示经纬度
-        private void ChkShowLngLat_CheckedChanged(object sender, EventArgs e)
-        {
-            mShowLngLat = cbxProjectionCS.Checked;
-        }
-
-        #region 按钮控件点击事件
-        // 点击添加图层按钮
-        private void btnAddData_Click(object sender, EventArgs e)
-        {
-
         }
 
         // 点击放大按钮

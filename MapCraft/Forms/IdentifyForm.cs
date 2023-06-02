@@ -23,8 +23,8 @@ namespace MapCraft.Forms
                 moAttributes curAttributes = sFeature.Attributes;
                 treeView.Nodes.Add(Convert.ToString(curAttributes.GetItem(0)));
             }
-            treeView.Nodes[0].Expand();
-            ShowTable(0);
+            //treeView.Nodes[0].Expand();
+            //ShowTable(0);
         }
 
         private void ShowTable(int nodeIndex)

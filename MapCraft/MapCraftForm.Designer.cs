@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MapCraftForm));
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("图层");
-            MyMapObjects.moLayers moLayers1 = new MyMapObjects.moLayers();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.新建ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,6 +68,7 @@
             this.cbxProjectionCS = new System.Windows.Forms.CheckBox();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.moMapControl1 = new MyMapObjects.moMapControl();
+            this.创建图层ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tStripMapOperator.SuspendLayout();
             this.tStripFeatureEditor.SuspendLayout();
@@ -93,6 +93,7 @@
             // 
             this.文件ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.新建ToolStripMenuItem,
+            this.创建图层ToolStripMenuItem,
             this.打开ToolStripMenuItem,
             this.保存ToolStripMenuItem,
             this.另存为ToolStripMenuItem});
@@ -104,14 +105,13 @@
             // 
             this.新建ToolStripMenuItem.Name = "新建ToolStripMenuItem";
             this.新建ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
-            this.新建ToolStripMenuItem.Text = "新建";
+            this.新建ToolStripMenuItem.Text = "新建地图";
             // 
             // 打开ToolStripMenuItem
             // 
             this.打开ToolStripMenuItem.Name = "打开ToolStripMenuItem";
             this.打开ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
-            this.打开ToolStripMenuItem.Text = "打开";
-            this.打开ToolStripMenuItem.Click += new System.EventHandler(this.打开ToolStripMenuItem_Click);
+            this.打开ToolStripMenuItem.Text = "打开地图";
             // 
             // 保存ToolStripMenuItem
             // 
@@ -437,7 +437,6 @@
             this.moMapControl1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.moMapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.moMapControl1.FlashColor = System.Drawing.Color.Green;
-            this.moMapControl1.Layers = moLayers1;
             this.moMapControl1.Location = new System.Drawing.Point(159, 102);
             this.moMapControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.moMapControl1.Name = "moMapControl1";
@@ -448,6 +447,12 @@
             this.moMapControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.moMapControl1_MouseDown);
             this.moMapControl1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.moMapControl1_MouseMove);
             this.moMapControl1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.moMapControl1_MouseUp);
+            // 
+            // 创建图层ToolStripMenuItem
+            // 
+            this.创建图层ToolStripMenuItem.Name = "创建图层ToolStripMenuItem";
+            this.创建图层ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.创建图层ToolStripMenuItem.Text = "新建图层";
             // 
             // MapCraftForm
             // 
@@ -519,6 +524,7 @@
         private System.Windows.Forms.CheckBox cbxProjectionCS;
         private System.Windows.Forms.TreeView treeView1;
         private MyMapObjects.moMapControl moMapControl1;
+        private System.Windows.Forms.ToolStripMenuItem 创建图层ToolStripMenuItem;
     }
 }
 
