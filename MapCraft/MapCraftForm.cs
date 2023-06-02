@@ -33,6 +33,7 @@ namespace MapCraft
         private moSimpleMarkerSymbol mEditingVertexSymbol; // 正在编辑的图形的顶点的符号
         private moSimpleLineSymbol mElasticSymbol;         // 橡皮筋符号
         private bool mShowLngLat = false;                               // 是否显示经纬度
+        private List<ShapeFileParser> mShapefiles = new List<ShapeFileParser>();
 
         // 与地图操作有关的变量
         private MapOpConstant mMapOpStyle = 0;  // 地图操作方式
@@ -68,12 +69,16 @@ namespace MapCraft
             ShowMapScale();
         }
         
-        /// <summary>
-        /// 打开shp文件并在mapcontrol中显示
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OpenFileItem_Click(object sender, EventArgs e)
+        
+        // 是否显示经纬度
+        private void ChkShowLngLat_CheckedChanged(object sender, EventArgs e)
+        {
+            mShowLngLat = cbxProjectionCS.Checked;
+        }
+
+        #region 按钮控件点击事件
+        // 点击添加图层按钮
+        private void btnAddData_Click(object sender, EventArgs e)
         {
             string shpFilePath;
             OpenFileDialog fileDialog = new OpenFileDialog();
@@ -95,7 +100,7 @@ namespace MapCraft
                 string layerPath = shpFilePath.Substring(0, shpFilePath.IndexOf(".shp", StringComparison.Ordinal));
 
                 ShapeFileParser fileProcessor = new ShapeFileParser(layerPath);
-
+                int a = 0;
                 // convert to mapLayer
                 moMapLayer mapLayer =
                     new moMapLayer(layerName, fileProcessor.GeometryType, fileProcessor.Fields);
@@ -110,26 +115,13 @@ namespace MapCraft
                 }
 
                 mapLayer.Features = features;
-                AddLayerToMap(mapLayer);
+                AddLayer(mapLayer, fileProcessor);
             }
             catch (Exception error)
             {
                 MessageBox.Show(error.ToString());
-                
+
             }
-        }
-        
-        // 是否显示经纬度
-        private void ChkShowLngLat_CheckedChanged(object sender, EventArgs e)
-        {
-            mShowLngLat = cbxProjectionCS.Checked;
-        }
-
-        #region 按钮控件点击事件
-        // 点击添加图层按钮
-        private void btnAddData_Click(object sender, EventArgs e)
-        {
-
         }
 
         // 点击放大按钮
@@ -716,7 +708,13 @@ namespace MapCraft
                 }
             }
         }
-
+        public void AddLayer(moMapLayer mapLayer, ShapeFileParser shapefile)
+        {
+            moMapControl1.Layers.Add(mapLayer);
+            mShapefiles.Add(shapefile);
+            treeView1.Nodes.Add(mapLayer.Name);
+            moMapControl1.FullExtent();
+        }
 
         #endregion
 

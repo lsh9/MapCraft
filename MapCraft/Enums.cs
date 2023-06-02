@@ -20,6 +20,7 @@ namespace MapCraft
         Single = (byte)'F',
         Double = (byte)'D',
         Text = (byte)'C',
+    }
 
     /// <summary>
     /// 地图操作类型
