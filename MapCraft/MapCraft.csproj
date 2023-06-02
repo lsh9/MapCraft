@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums.cs" />
+
     <Compile Include="FileProcessor\AttributesList.cs" />
     <Compile Include="FileProcessor\DbfFieldDescriptor.cs" />
     <Compile Include="FileProcessor\DbfFileHeader.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="FileProcessor\ShpParser.cs" />
     <Compile Include="FileProcessor\ShxParser.cs" />
     <Compile Include="FileTools.cs" />
+
     <Compile Include="Forms\AddNewField.cs">
       <SubType>Form</SubType>
     </Compile>
