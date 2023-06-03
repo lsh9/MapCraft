@@ -1,16 +1,12 @@
-﻿using System;
+﻿using MapCraft.FileProcessor;
+using MapCraft.Forms;
+using MyMapObjects;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MyMapObjects;
-using MapCraft.Forms;
-using MapCraft.FileProcessor;
 
 
 namespace MapCraft
@@ -25,17 +21,6 @@ namespace MapCraft
         private double mSelectBoxWidth = 0.53;              // 选择盒的边界宽度，单位毫米
         private double mZoomRatioFixed = 2;                 // 固定放大系数
         private double mZoomRatioMouseWheel = 1.2;          // 滑轮放大系数
-<<<<<<< HEAD
-        private double mSelectingTolerance = 3;             //  选择容限，像素
-        private moSimpleFillSymbol mSelectingBoxSymbol;    // 选择盒符号
-        private moSimpleFillSymbol mZoomBoxSymbol;         // 缩放盒符号
-        private moSimpleFillSymbol mMovingPolygonSymbol;   // 正在移动的多边形的符号
-        private moSimpleFillSymbol mEditingPolygonSymbol;  // 正在编辑的多边形的符号
-        private moSimpleMarkerSymbol mEditingVertexSymbol; // 正在编辑的图形的顶点的符号
-        private moSimpleLineSymbol mElasticSymbol;         // 橡皮筋符号
-        private bool mShowLngLat = false;                               // 是否显示经纬度
-        private List<ShapeFileParser> mShapefiles = new List<ShapeFileParser>();
-=======
         private double mSelectingTolerance = 3;             // 选择容限，像素
         private moSimpleFillSymbol mSelectingBoxSymbol;     // 选择盒符号
         private moSimpleFillSymbol mZoomBoxSymbol;          // 缩放盒符号
@@ -44,7 +29,6 @@ namespace MapCraft
         private moSimpleMarkerSymbol mEditingVertexSymbol;  // 正在编辑的图形的顶点的符号
         private moSimpleLineSymbol mElasticSymbol;          // 橡皮筋符号
         private bool mShowLngLat = false;                   // 是否显示经纬度
->>>>>>> main
 
         // 与地图操作有关的变量
         private MapOpConstant mMapOpStyle = 0;  // 地图操作方式
@@ -59,7 +43,7 @@ namespace MapCraft
         private List<moPoints> mSketchingShape;   // 正在描绘的图形，用多点集合存储
 
         // 图层路径记录
-        //private List<Shapefile> mShapefiles = new List<Shapefile>();
+        private List<ShapeFileParser> mShapefiles = new List<ShapeFileParser>();
 
         #endregion
 
@@ -93,9 +77,43 @@ namespace MapCraft
             ShowMapScale();
         }
 
-        
-        
-        // 是否显示经纬度
+        #region 菜单栏控件事件
+
+        // 点击新建地图菜单项
+        private void 新建地图ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // 点击新建图层菜单项
+        private void 新建图层ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CreateLayerForm createLayerForm = new CreateLayerForm(this);
+            createLayerForm.Show();
+        }
+
+        // 点击打开地图菜单项
+        private void 打开地图ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // 点击保存（地图）菜单项
+        private void 保存ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // 点击另存为（地图）菜单项
+        private void 另存为ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        #endregion
+
+
+        // 显示经纬度控件
         private void ChkShowLngLat_CheckedChanged(object sender, EventArgs e)
         {
             mShowLngLat = cbxProjectionCS.Checked;
@@ -430,7 +448,7 @@ namespace MapCraft
             {
                 //拉框缩小
                 moRectangle sBox = GetMapRectByTwoPoints(mStartMouseLocation, e.Location);
-                moMapControl1.ZoomToExtent(sBox);
+                moMapControl1.ZoomOutToExtent(sBox);
             }
         }
 
@@ -484,6 +502,9 @@ namespace MapCraft
                         sGeometries[i] = sFeatures.GetItem(i).Geometry;
                     moMapControl1.FlashShapes(sGeometries, 3, 800);
                 }
+                // 显示识别到的要素属性
+                IdentifyForm identifyForm = new IdentifyForm(sLayer, sFeatures);
+                identifyForm.Show();
             }
         }
 
@@ -535,9 +556,12 @@ namespace MapCraft
         // MapControl鼠标滑轮
         private void moMapControl1_MouseWheel(object sender, MouseEventArgs e)
         {
-            //计算地图空间中心点的地图坐标
-            double sY = moMapControl1.ClientRectangle.Width / 2;
-            double sX = moMapControl1.ClientRectangle.Height / 2;
+            // 计算地图空间中心点的地图坐标
+            //double sY = moMapControl1.ClientRectangle.Width / 2;
+            //double sX = moMapControl1.ClientRectangle.Height / 2;
+            // 使用鼠标位置为中心进行缩放
+            double sX = e.Location.X;
+            double sY = e.Location.Y;
             moPoint sPoint = moMapControl1.ToMapPoint(sX, sY);
             if (e.Delta > 0)
             {
@@ -572,10 +596,14 @@ namespace MapCraft
         #region 方法
 
         #region 图层操作
-        // 根据.shp文件的路径添加图层到当前地图
-        public void AddLayer(moMapLayer mapLayer, object shapefile)
+        // 添加图层到当前地图
+        public void AddLayer(moMapLayer mapLayer, ShapeFileParser shapefile)
         {
-
+            MapControl.Layers.Add(mapLayer);
+            mShapefiles.Add(shapefile);
+            treeView1.Nodes.Add(mapLayer.Name);
+            MapControl.RedrawMap();
+            MapControl.FullExtent();
         }
         #endregion
 
@@ -756,17 +784,28 @@ namespace MapCraft
                 }
             }
         }
-        public void AddLayer(moMapLayer mapLayer, ShapeFileParser shapefile)
+
+        // 重新加载图层
+        private void LoadTreeViewLayers()
         {
-            moMapControl1.Layers.Add(mapLayer);
-            mShapefiles.Add(shapefile);
-            treeView1.Nodes.Add(mapLayer.Name);
-            moMapControl1.FullExtent();
+            //清空TreeView
+            treeView1.Nodes.Clear();
+            //加载图层
+            Int32 sLayerCount = moMapControl1.Layers.Count;
+            for (Int32 i = 0; i <= sLayerCount - 1; i++)
+            {
+                moMapLayer sLayer = moMapControl1.Layers.GetItem(i);
+                TreeNode sNode = new TreeNode();
+                sNode.Text = sLayer.Name;
+                sNode.Tag = sLayer;
+                treeView1.Nodes.Add(sNode);
+            }
+            treeView1.ExpandAll();
         }
 
 
-        #endregion
 
+        #endregion
 
     }
 }
