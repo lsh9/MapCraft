@@ -60,17 +60,37 @@
     <Compile Include="Forms\AddNewField.Designer.cs">
       <DependentUpon>AddNewField.cs</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="Forms\AttributeTable.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\AttributeTable.Designer.cs">
       <DependentUpon>AttributeTable.cs</DependentUpon>
+=======
+    <Compile Include="Forms\CreateLayerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CreateLayerForm.Designer.cs">
+      <DependentUpon>CreateLayerForm.cs</DependentUpon>
+>>>>>>> 16b2bc2039332bee4fc123e42526c2a256e123cd
     </Compile>
     <Compile Include="Forms\CreateNewLayer.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\CreateNewLayer.Designer.cs">
       <DependentUpon>CreateNewLayer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\IdentifyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\IdentifyForm.Designer.cs">
+      <DependentUpon>IdentifyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SelectByAttributeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SelectByAttributeForm.Designer.cs">
+      <DependentUpon>SelectByAttributeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MapCraftForm.cs">
       <SubType>Form</SubType>
@@ -84,11 +104,19 @@
     <EmbeddedResource Include="Forms\AddNewField.resx">
       <DependentUpon>AddNewField.cs</DependentUpon>
     </EmbeddedResource>
+<<<<<<< HEAD
     <EmbeddedResource Include="Forms\AttributeTable.resx">
       <DependentUpon>AttributeTable.cs</DependentUpon>
+=======
+    <EmbeddedResource Include="Forms\CreateLayerForm.resx">
+      <DependentUpon>CreateLayerForm.cs</DependentUpon>
+>>>>>>> 16b2bc2039332bee4fc123e42526c2a256e123cd
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CreateNewLayer.resx">
       <DependentUpon>CreateNewLayer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SelectByAttributeForm.resx">
+      <DependentUpon>SelectByAttributeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MapCraftForm.resx">
       <DependentUpon>MapCraftForm.cs</DependentUpon>
@@ -169,6 +197,9 @@
       <Project>{0b25525d-96b3-458b-8ef6-5d315b6637f2}</Project>
       <Name>MyMapObjects</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="IO\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
