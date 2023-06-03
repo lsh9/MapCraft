@@ -28,10 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MapCraftForm));
             MyMapObjects.moLayers moLayers1 = new MyMapObjects.moLayers();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+
             this.新建地图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.新建图层ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.打开ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,10 +71,14 @@
             this.cbxProjectionCS = new System.Windows.Forms.CheckBox();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.moMapControl1 = new MyMapObjects.moMapControl();
+            this.LayerRightMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.打开属性表 = new System.Windows.Forms.ToolStripMenuItem();
+            this.另存为 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tStripMapOperator.SuspendLayout();
             this.tStripFeatureEditor.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.LayerRightMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -431,12 +437,16 @@
             // 
             // treeView1
             // 
+            this.treeView1.AllowDrop = true;
+            this.treeView1.CheckBoxes = true;
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Left;
             this.treeView1.Location = new System.Drawing.Point(0, 102);
             this.treeView1.Margin = new System.Windows.Forms.Padding(2);
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(159, 387);
             this.treeView1.TabIndex = 5;
+            this.treeView1.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterCheck);
+            this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
             // 
             // moMapControl1
             // 
@@ -455,6 +465,28 @@
             this.moMapControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.moMapControl1_MouseDown);
             this.moMapControl1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.moMapControl1_MouseMove);
             this.moMapControl1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.moMapControl1_MouseUp);
+            // 
+            // LayerRightMenu
+            // 
+            this.LayerRightMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.打开属性表,
+            this.另存为});
+            this.LayerRightMenu.Name = "contextMenuStrip1";
+            this.LayerRightMenu.Size = new System.Drawing.Size(181, 70);
+            // 
+            // 打开属性表
+            // 
+            this.打开属性表.Name = "打开属性表";
+            this.打开属性表.Size = new System.Drawing.Size(180, 22);
+            this.打开属性表.Text = "打开属性表";
+            this.打开属性表.Click += new System.EventHandler(this.打开属性表_Click);
+            // 
+            // 另存为
+            // 
+            this.另存为.Name = "另存为";
+            this.另存为.Size = new System.Drawing.Size(180, 22);
+            this.另存为.Text = "另存为";
+            this.另存为.Click += new System.EventHandler(this.另存为_Click);
             // 
             // MapCraftForm
             // 
@@ -481,6 +513,7 @@
             this.tStripFeatureEditor.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.LayerRightMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -525,7 +558,10 @@
         private System.Windows.Forms.ToolStripStatusLabel coordinateStatusLabel;
         private System.Windows.Forms.CheckBox cbxProjectionCS;
         private System.Windows.Forms.TreeView treeView1;
-        private MyMapObjects.moMapControl moMapControl1;
+        internal MyMapObjects.moMapControl moMapControl1;
+        private System.Windows.Forms.ContextMenuStrip LayerRightMenu;
+        private System.Windows.Forms.ToolStripMenuItem 打开属性表;
+        private System.Windows.Forms.ToolStripMenuItem 另存为;
         private System.Windows.Forms.ToolStripMenuItem 新建图层ToolStripMenuItem;
     }
 }

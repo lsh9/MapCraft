@@ -7,6 +7,10 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using MyMapObjects;
+using MapCraft.Forms;
+using MapCraft.FileProcessor;
+using MapCraft.Forms;
 
 
 namespace MapCraft
@@ -29,6 +33,10 @@ namespace MapCraft
         private moSimpleMarkerSymbol mEditingVertexSymbol;  // 正在编辑的图形的顶点的符号
         private moSimpleLineSymbol mElasticSymbol;          // 橡皮筋符号
         private bool mShowLngLat = false;                   // 是否显示经纬度
+
+        private List<AttributeTable> AttributeTables = new List<AttributeTable>();
+        private static int AttributeTableIndex;
+        private int SelectedLayerIndex = -1;  //选中的图层索引
 
         // 与地图操作有关的变量
         private MapOpConstant mMapOpStyle = 0;  // 地图操作方式
@@ -119,6 +127,77 @@ namespace MapCraft
             mShowLngLat = cbxProjectionCS.Checked;
         }
 
+        #region treeview operation
+
+        
+        private void treeView1_AfterCheck(object sender, TreeViewEventArgs e)
+        {
+            int sIndex = e.Node.Index;
+            moMapLayer sMapLayer = moMapControl1.Layers.GetItem(sIndex);
+            sMapLayer.Visible = e.Node.Checked;
+            moMapControl1.RedrawMap();
+        }
+
+        private void 另存为_Click(object sender, EventArgs e)
+        {
+            string shpFilePath;
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Title = "保存文件";
+            saveFileDialog.Filter = "ShapeFile文件(*.shp)|*.shp|所有文件(*.*)|*.*";
+            saveFileDialog.FilterIndex = 1;
+
+            saveFileDialog.RestoreDirectory = true;
+
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                shpFilePath = saveFileDialog.FileName;
+                saveFileDialog.Dispose();
+            }
+            else
+            {
+                saveFileDialog.Dispose();
+                return;
+            }
+            try
+            {
+                string layerPath = shpFilePath.Substring(0, shpFilePath.IndexOf(".shp", StringComparison.Ordinal));
+                mShapefiles[SelectedLayerIndex].Write_ShapeFile(layerPath);
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.ToString());
+
+            }
+        }
+
+
+        private void 打开属性表_Click(object sender, EventArgs e)
+        {
+            AttributeTable attributeTable = new AttributeTable(this, SelectedLayerIndex);
+            attributeTable.Owner = this;
+            attributeTable.Name = moMapControl1.Layers.GetItem(SelectedLayerIndex).Name;
+            attributeTable.Show();
+            attributeTable.SetDesktopLocation(Location.X + (Width - attributeTable.Width) / 2,
+                Location.Y + (Height - attributeTable.Height) / 2);
+            attributeTable.RefreshDataFormByMainForm();
+            AttributeTables.Add(attributeTable);//将新打开的添加进去
+            attributeTable.FormIndex = AttributeTableIndex;
+            AttributeTableIndex++;
+        }
+
+        private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            foreach (TreeNode n in treeView1.Nodes)
+            {
+                n.BackColor = Color.Empty;
+            }
+            SelectedLayerIndex = e.Node.Index;
+            e.Node.BackColor = Color.LightGray;
+        }
+
+        #endregion
+
         #region 按钮控件点击事件
         // 点击添加图层按钮
         private void btnAddData_Click(object sender, EventArgs e)
@@ -143,21 +222,13 @@ namespace MapCraft
                 string layerPath = shpFilePath.Substring(0, shpFilePath.IndexOf(".shp", StringComparison.Ordinal));
 
                 ShapeFileParser fileProcessor = new ShapeFileParser(layerPath);
-                int a = 0;
+                moFeatures sFeatures =  fileProcessor.Read_ShapeFile();
+
                 // convert to mapLayer
                 moMapLayer mapLayer =
                     new moMapLayer(layerName, fileProcessor.GeometryType, fileProcessor.Fields);
 
-                // construct features, using geometries and attributes list
-                moFeatures features = new moFeatures();
-                for (int i = 0; i < fileProcessor.Geometries.Count; ++i)
-                {
-                    moFeature feature = new moFeature(fileProcessor.GeometryType,
-                        fileProcessor.Geometries[i], fileProcessor.AttributesList[i]);
-                    features.Add(feature);
-                }
-
-                mapLayer.Features = features;
+                mapLayer.Features = sFeatures;
                 AddLayer(mapLayer, fileProcessor);
             }
             catch (Exception error)
@@ -220,6 +291,8 @@ namespace MapCraft
         // 点击按属性选择按钮
         private void btnSelectByAttribute_Click(object sender, EventArgs e)
         {
+
+            mMapOpStyle = MapOpConstant.SelectByAttribute;
             SelectByAttributeForm sSelectByAttributeForm = new SelectByAttributeForm(this);
             sSelectByAttributeForm.Show();
 
@@ -228,7 +301,6 @@ namespace MapCraft
         // 点击清除选择按钮
         private void btnClearSelection_Click(object sender, EventArgs e)
         {
-            // 清除每个图层选中的要素
             for (int i = 0; i < moMapControl1.Layers.Count; i++)
             {
                 moMapLayer sLayer = moMapControl1.Layers.GetItem(i);
@@ -788,24 +860,39 @@ namespace MapCraft
         // 重新加载图层
         private void LoadTreeViewLayers()
         {
-            //清空TreeView
+            moMapControl1.Layers.Add(mapLayer);
+            mShapefiles.Add(shapefile);
+            //treeView1.Nodes.Add(mapLayer.Name);
+            RefreshLayersTree();
+            if(moMapControl1.Layers.Count ==1)
+                moMapControl1.FullExtent();
+            else
+                moMapControl1.RedrawMap();
+        }
+
+
+        private void RefreshLayersTree()
+        {
             treeView1.Nodes.Clear();
-            //加载图层
-            Int32 sLayerCount = moMapControl1.Layers.Count;
-            for (Int32 i = 0; i <= sLayerCount - 1; i++)
+            for (int i = 0; i < moMapControl1.Layers.Count; i++)
             {
-                moMapLayer sLayer = moMapControl1.Layers.GetItem(i);
-                TreeNode sNode = new TreeNode();
-                sNode.Text = sLayer.Name;
-                sNode.Tag = sLayer;
-                treeView1.Nodes.Add(sNode);
+                TreeNode layerNode = new TreeNode
+                {
+                    Text = moMapControl1.Layers.GetItem(i).Name,
+                    Checked = moMapControl1.Layers.GetItem(i).Visible,
+                    ContextMenuStrip = LayerRightMenu
+                };
+                treeView1.Nodes.Add(layerNode);
             }
-            treeView1.ExpandAll();
+            treeView1.Refresh();
         }
 
 
 
         #endregion
+
+        #endregion
+
 
     }
 }
