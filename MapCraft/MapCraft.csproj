@@ -33,6 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -54,31 +55,17 @@
     <Compile Include="FileProcessor\ShpParser.cs" />
     <Compile Include="FileProcessor\ShxParser.cs" />
     <Compile Include="FileTools.cs" />
-    <Compile Include="Forms\AddNewField.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\AddNewField.Designer.cs">
-      <DependentUpon>AddNewField.cs</DependentUpon>
-    </Compile>
-<<<<<<< HEAD
     <Compile Include="Forms\AttributeTable.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\AttributeTable.Designer.cs">
       <DependentUpon>AttributeTable.cs</DependentUpon>
-=======
+    </Compile>
     <Compile Include="Forms\CreateLayerForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\CreateLayerForm.Designer.cs">
       <DependentUpon>CreateLayerForm.cs</DependentUpon>
->>>>>>> 16b2bc2039332bee4fc123e42526c2a256e123cd
-    </Compile>
-    <Compile Include="Forms\CreateNewLayer.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\CreateNewLayer.Designer.cs">
-      <DependentUpon>CreateNewLayer.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\IdentifyForm.cs">
       <SubType>Form</SubType>
@@ -101,19 +88,11 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FileProcessor\ShapeFileParser.cs" />
-    <EmbeddedResource Include="Forms\AddNewField.resx">
-      <DependentUpon>AddNewField.cs</DependentUpon>
-    </EmbeddedResource>
-<<<<<<< HEAD
     <EmbeddedResource Include="Forms\AttributeTable.resx">
       <DependentUpon>AttributeTable.cs</DependentUpon>
-=======
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\CreateLayerForm.resx">
       <DependentUpon>CreateLayerForm.cs</DependentUpon>
->>>>>>> 16b2bc2039332bee4fc123e42526c2a256e123cd
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\CreateNewLayer.resx">
-      <DependentUpon>CreateNewLayer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SelectByAttributeForm.resx">
       <DependentUpon>SelectByAttributeForm.cs</DependentUpon>

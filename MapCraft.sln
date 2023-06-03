@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapCraft", "MapCraft\MapCraft.csproj", "{6FA02537-A5F8-4640-AD97-F583D8A72825}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyMapObjects", "MyMapObjects\MyMapObjects.csproj", "{0B25525D-96B3-458B-8EF6-5D315B6637F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapCraft", "MapCraft\MapCraft.csproj", "{6FA02537-A5F8-4640-AD97-F583D8A72825}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6FA02537-A5F8-4640-AD97-F583D8A72825}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6FA02537-A5F8-4640-AD97-F583D8A72825}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6FA02537-A5F8-4640-AD97-F583D8A72825}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6FA02537-A5F8-4640-AD97-F583D8A72825}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0B25525D-96B3-458B-8EF6-5D315B6637F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0B25525D-96B3-458B-8EF6-5D315B6637F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B25525D-96B3-458B-8EF6-5D315B6637F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B25525D-96B3-458B-8EF6-5D315B6637F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FA02537-A5F8-4640-AD97-F583D8A72825}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FA02537-A5F8-4640-AD97-F583D8A72825}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FA02537-A5F8-4640-AD97-F583D8A72825}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FA02537-A5F8-4640-AD97-F583D8A72825}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
