@@ -47,7 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums.cs" />
-
     <Compile Include="FileProcessor\AttributesList.cs" />
     <Compile Include="FileProcessor\DbfFieldDescriptor.cs" />
     <Compile Include="FileProcessor\DbfFileHeader.cs" />
@@ -55,12 +54,17 @@
     <Compile Include="FileProcessor\ShpParser.cs" />
     <Compile Include="FileProcessor\ShxParser.cs" />
     <Compile Include="FileTools.cs" />
-
     <Compile Include="Forms\AddNewField.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\AddNewField.Designer.cs">
       <DependentUpon>AddNewField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AttributeTable.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AttributeTable.Designer.cs">
+      <DependentUpon>AttributeTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\CreateNewLayer.cs">
       <SubType>Form</SubType>
@@ -79,6 +83,9 @@
     <Compile Include="FileProcessor\ShapeFileParser.cs" />
     <EmbeddedResource Include="Forms\AddNewField.resx">
       <DependentUpon>AddNewField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AttributeTable.resx">
+      <DependentUpon>AttributeTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CreateNewLayer.resx">
       <DependentUpon>CreateNewLayer.cs</DependentUpon>

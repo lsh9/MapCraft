@@ -400,7 +400,7 @@ namespace MyMapObjects
         }
 
         /// <summary>
-        /// 根据指定选择盒与指定选择方式j进行选择
+        /// 根据指定选择盒与指定选择方式进行选择
         /// </summary>
         /// <param name="selectingBox"></param>
         /// <param name="tolerance"></param>

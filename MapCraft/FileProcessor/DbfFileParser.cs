@@ -19,6 +19,7 @@ namespace MapCraft.FileProcessor
 
         private AttributesList _attributesList;
 
+        public string DbfFilePath;
         public moFields Fields => _dbfFileHeader.ConvertToMoFields();
         public List<moAttributes> AttributesList => _attributesList.sAttributesList;
         #endregion
@@ -39,7 +40,20 @@ namespace MapCraft.FileProcessor
         /// <param name="dbfFilePath"></param>
         public DbfFileParser(string dbfFilePath)
         {
-            FileStream fs = new FileStream(dbfFilePath, FileMode.Open);
+            DbfFilePath = dbfFilePath;
+            _dbfFileHeader = new DbfFileHeader();
+            _attributesList = new AttributesList();
+        }
+
+
+        #endregion
+
+
+        #region Methods
+
+        public void Read()
+        {
+            FileStream fs = new FileStream(DbfFilePath, FileMode.Open);
             BinaryReader br = new BinaryReader(fs);
 
             _dbfFileHeader = new DbfFileHeader(br);
@@ -49,12 +63,6 @@ namespace MapCraft.FileProcessor
             fs.Dispose();
 
         }
-
-
-        #endregion
-
-
-        #region Methods
 
         /// <summary>
         /// Add a new field and set initial attributes
