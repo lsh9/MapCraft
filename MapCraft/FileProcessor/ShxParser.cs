@@ -11,10 +11,11 @@ namespace MapCraft.FileProcessor
     {
         #region 属性
 
-        public long RecordCount { get; }
+        public long RecordCount { get; set; }
         private byte[] _reservedHeader;
-        public List<int> RecordOffsets { get; }
-        public List<int> RecordLengths { get; }
+        public List<int> RecordOffsets { get; set; }
+        public List<int> RecordLengths { get; set; }
+        public string ShxFilePath { get; set; }
 
         #endregion
 
@@ -30,7 +31,20 @@ namespace MapCraft.FileProcessor
 
         public ShxParser(string shxFilePath)
         {
-            FileStream fs = new FileStream(shxFilePath, FileMode.Open);
+            ShxFilePath = shxFilePath;
+            _reservedHeader = new byte[100];
+            RecordCount = 0;
+            RecordOffsets = new List<int>();
+            RecordLengths = new List<int>();
+        }
+
+        #endregion
+
+        #region 方法
+
+        public void Read()
+        {
+            FileStream fs = new FileStream(ShxFilePath, FileMode.Open);
             BinaryReader br = new BinaryReader(fs);
 
             _reservedHeader = br.ReadBytes(100);
@@ -54,15 +68,11 @@ namespace MapCraft.FileProcessor
             fs.Dispose();
         }
 
-        #endregion
-
-        #region 方法
-
         /// <summary>
         /// 
         /// </summary>
         /// <param name="shxFilePath"></param>
-        public void WriteToFile(string shxFilePath)
+        public void SaveToFile(string shxFilePath)
         {
             FileStream fs = new FileStream(shxFilePath, FileMode.Create, FileAccess.Write);
             BinaryWriter bw = new BinaryWriter(fs);
@@ -73,6 +83,8 @@ namespace MapCraft.FileProcessor
                 FileTools.WriteInt32InBigEndian(RecordOffsets[i] / 2, bw);
                 FileTools.WriteInt32InBigEndian(RecordLengths[i] / 2, bw);
             }
+            fs.Dispose();
+            bw.Dispose();
         }
 
         #endregion
