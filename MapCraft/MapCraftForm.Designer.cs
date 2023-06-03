@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MapCraftForm));
-            MyMapObjects.moLayers moLayers1 = new MyMapObjects.moLayers();
+            MyMapObjects.moLayers moLayers2 = new MyMapObjects.moLayers();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 
@@ -190,6 +190,7 @@
             this.tStripMapOperator.Size = new System.Drawing.Size(746, 39);
             this.tStripMapOperator.TabIndex = 1;
             this.tStripMapOperator.Text = "toolStrip1";
+            this.tStripMapOperator.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.tStripMapOperator_ItemClicked);
             // 
             // btnAddData
             // 
@@ -454,7 +455,7 @@
             this.moMapControl1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.moMapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.moMapControl1.FlashColor = System.Drawing.Color.Green;
-            this.moMapControl1.Layers = moLayers1;
+            this.moMapControl1.Layers = moLayers2;
             this.moMapControl1.Location = new System.Drawing.Point(159, 102);
             this.moMapControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.moMapControl1.Name = "moMapControl1";

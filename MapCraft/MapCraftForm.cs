@@ -219,23 +219,19 @@ namespace MapCraft
             try
             {
                 string layerName = Path.GetFileNameWithoutExtension(shpFilePath);
-                string layerPath = shpFilePath.Substring(0, shpFilePath.IndexOf(".shp", StringComparison.Ordinal));
+                string layerPath = Path.GetDirectoryName(shpFilePath) + layerName;
 
                 ShapeFileParser fileProcessor = new ShapeFileParser(layerPath);
-                moFeatures sFeatures =  fileProcessor.Read_ShapeFile();
+                AddLayer(fileProcessor);
 
-                // convert to mapLayer
-                moMapLayer mapLayer =
-                    new moMapLayer(layerName, fileProcessor.GeometryType, fileProcessor.Fields);
-
-                mapLayer.Features = sFeatures;
-                AddLayer(mapLayer, fileProcessor);
             }
             catch (Exception error)
             {
                 MessageBox.Show(error.ToString());
 
             }
+            btnAddData.BackColor = SystemColors.Control;
+            mMapOpStyle = MapOpConstant.None;
         }
 
         // 点击放大按钮
@@ -260,6 +256,8 @@ namespace MapCraft
         private void btnFullExtent_Click(object sender, EventArgs e)
         {
             moMapControl1.FullExtent();
+            btnFullExtent.BackColor = SystemColors.Control;
+            mMapOpStyle = MapOpConstant.None;
         }
 
         // 点击固定比例放大按钮
@@ -270,6 +268,8 @@ namespace MapCraft
             double sX = moMapControl1.ClientRectangle.Height / 2;
             moPoint sPoint = moMapControl1.ToMapPoint(sX, sY);
             moMapControl1.ZoomByCenter(sPoint, mZoomRatioFixed);
+            btnFixedZoomIn.BackColor = SystemColors.Control;
+            mMapOpStyle = MapOpConstant.None;
         }
 
         // 点击固定比例缩小按钮
@@ -280,6 +280,8 @@ namespace MapCraft
             double sX = moMapControl1.ClientRectangle.Height / 2;
             moPoint sPoint = moMapControl1.ToMapPoint(sX, sY);
             moMapControl1.ZoomByCenter(sPoint, 1 / mZoomRatioFixed);
+            btnFixedZoomOut.BackColor = SystemColors.Control;
+            mMapOpStyle = MapOpConstant.None;
         }
 
         // 点击按位置选择按钮
@@ -295,7 +297,8 @@ namespace MapCraft
             mMapOpStyle = MapOpConstant.SelectByAttribute;
             SelectByAttributeForm sSelectByAttributeForm = new SelectByAttributeForm(this);
             sSelectByAttributeForm.Show();
-
+            btnSelectByAttribute.BackColor = SystemColors.Control;
+            mMapOpStyle = MapOpConstant.None;
         }
 
         // 点击清除选择按钮
@@ -307,6 +310,8 @@ namespace MapCraft
                 sLayer.SelectedFeatures.Clear();
             }
             moMapControl1.RedrawMap();
+            btnClearSelection.BackColor = SystemColors.Control;
+            mMapOpStyle = MapOpConstant.None;
         }
 
         // 点击查询按钮
@@ -535,7 +540,7 @@ namespace MapCraft
             moMapControl1.PanDelta(sDeltaX, sDeltaY);
         }
 
-        
+
 
 
 
@@ -669,8 +674,17 @@ namespace MapCraft
 
         #region 图层操作
         // 添加图层到当前地图
-        public void AddLayer(moMapLayer mapLayer, ShapeFileParser shapefile)
+        public void AddLayer(ShapeFileParser shapefile)
         {
+            moMapLayer mapLayer = new moMapLayer(Path.GetFileNameWithoutExtension(shapefile.Filepath), shapefile.GeometryType, shapefile.Fields);
+
+            moFeatures features = shapefile.Read();
+            for (int i = 0; i < features.Count; ++i)
+            {
+                features.Add(features[i]);
+            }
+
+            mapLayer.Features = features;
             MapControl.Layers.Add(mapLayer);
             mShapefiles.Add(shapefile);
             treeView1.Nodes.Add(mapLayer.Name);
@@ -860,9 +874,6 @@ namespace MapCraft
         // 重新加载图层
         private void LoadTreeViewLayers()
         {
-            moMapControl1.Layers.Add(mapLayer);
-            mShapefiles.Add(shapefile);
-            //treeView1.Nodes.Add(mapLayer.Name);
             RefreshLayersTree();
             if(moMapControl1.Layers.Count ==1)
                 moMapControl1.FullExtent();
@@ -887,6 +898,21 @@ namespace MapCraft
             treeView1.Refresh();
         }
 
+        private void tStripMapOperator_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            // 清除所有按钮的选中状态
+            foreach (ToolStripItem sItem in tStripMapOperator.Items)
+            {
+                if (sItem.GetType() == typeof(ToolStripButton))
+                {
+                    ToolStripButton button = (ToolStripButton)sItem;
+                    button.BackColor = SystemColors.Control;
+                }
+            }
+            // 选中当前按钮
+            ToolStripButton sButton = (ToolStripButton)e.ClickedItem;
+            sButton.BackColor = Color.LightBlue;
+        }
 
 
         #endregion
