@@ -33,8 +33,9 @@
             MyMapObjects.moLayers moLayers1 = new MyMapObjects.moLayers();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.新建ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.创建图层ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+
+            this.新建地图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.新建图层ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.打开ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.保存ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.另存为ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -97,8 +98,8 @@
             // 文件ToolStripMenuItem
             // 
             this.文件ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.新建ToolStripMenuItem,
-            this.创建图层ToolStripMenuItem,
+            this.新建地图ToolStripMenuItem,
+            this.新建图层ToolStripMenuItem,
             this.打开ToolStripMenuItem,
             this.保存ToolStripMenuItem,
             this.另存为ToolStripMenuItem});
@@ -106,35 +107,40 @@
             this.文件ToolStripMenuItem.Size = new System.Drawing.Size(44, 22);
             this.文件ToolStripMenuItem.Text = "文件";
             // 
-            // 新建ToolStripMenuItem
+            // 新建地图ToolStripMenuItem
             // 
-            this.新建ToolStripMenuItem.Name = "新建ToolStripMenuItem";
-            this.新建ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.新建ToolStripMenuItem.Text = "新建地图";
+            this.新建地图ToolStripMenuItem.Name = "新建地图ToolStripMenuItem";
+            this.新建地图ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.新建地图ToolStripMenuItem.Text = "新建地图";
+            this.新建地图ToolStripMenuItem.Click += new System.EventHandler(this.新建地图ToolStripMenuItem_Click);
             // 
-            // 创建图层ToolStripMenuItem
+            // 新建图层ToolStripMenuItem
             // 
-            this.创建图层ToolStripMenuItem.Name = "创建图层ToolStripMenuItem";
-            this.创建图层ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.创建图层ToolStripMenuItem.Text = "新建图层";
+            this.新建图层ToolStripMenuItem.Name = "新建图层ToolStripMenuItem";
+            this.新建图层ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.新建图层ToolStripMenuItem.Text = "新建图层";
+            this.新建图层ToolStripMenuItem.Click += new System.EventHandler(this.新建图层ToolStripMenuItem_Click);
             // 
             // 打开ToolStripMenuItem
             // 
             this.打开ToolStripMenuItem.Name = "打开ToolStripMenuItem";
             this.打开ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.打开ToolStripMenuItem.Text = "打开地图";
+            this.打开ToolStripMenuItem.Click += new System.EventHandler(this.打开地图ToolStripMenuItem_Click);
             // 
             // 保存ToolStripMenuItem
             // 
             this.保存ToolStripMenuItem.Name = "保存ToolStripMenuItem";
             this.保存ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.保存ToolStripMenuItem.Text = "保存";
+            this.保存ToolStripMenuItem.Click += new System.EventHandler(this.保存ToolStripMenuItem_Click);
             // 
             // 另存为ToolStripMenuItem
             // 
             this.另存为ToolStripMenuItem.Name = "另存为ToolStripMenuItem";
             this.另存为ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.另存为ToolStripMenuItem.Text = "另存为";
+            this.另存为ToolStripMenuItem.Click += new System.EventHandler(this.另存为ToolStripMenuItem_Click);
             // 
             // 选择ToolStripMenuItem
             // 
@@ -517,7 +523,7 @@
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 文件ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 新建ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 新建地图ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 打开ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 保存ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 另存为ToolStripMenuItem;
@@ -553,10 +559,10 @@
         private System.Windows.Forms.CheckBox cbxProjectionCS;
         private System.Windows.Forms.TreeView treeView1;
         internal MyMapObjects.moMapControl moMapControl1;
-        private System.Windows.Forms.ToolStripMenuItem 创建图层ToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip LayerRightMenu;
         private System.Windows.Forms.ToolStripMenuItem 打开属性表;
         private System.Windows.Forms.ToolStripMenuItem 另存为;
+        private System.Windows.Forms.ToolStripMenuItem 新建图层ToolStripMenuItem;
     }
 }
 

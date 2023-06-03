@@ -282,6 +282,27 @@ namespace MyMapObjects
         }
 
         /// <summary>
+        /// 在指定范围内显示窗口
+        /// </summary>
+        /// <param name="extent"></param>
+        public void ZoomOutToExtent(moRectangle extent)
+        {
+            double sWindowWidth = extent.MaxX - extent.MinX;
+            double sWindowHeight = extent.MaxY - extent.MinY;
+            Rectangle clientRectangle = this.ClientRectangle;
+            moRectangle window = new moRectangle(clientRectangle.Left, clientRectangle.Right, clientRectangle.Bottom, clientRectangle.Top);
+            mMapDrawingReference.ZoomExtentToWindow(window, sWindowWidth, sWindowHeight);
+            this.UseWaitCursor = true;
+            DrawBufferMap1();
+            DrawBufferMap2();
+            this.UseWaitCursor = false;
+            Refresh();
+            //触发事件
+            if (MapScaleChanged != null)
+                MapScaleChanged(this);
+        }
+
+        /// <summary>
         /// 将地图平移指定量
         /// </summary>
         /// <param name="deltaX"></param>
