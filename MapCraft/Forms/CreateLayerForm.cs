@@ -21,6 +21,7 @@ namespace MapCraft.Forms
         public CreateLayerForm(MapCraftForm main)
         {
             InitializeComponent();
+            Owner = main;
             Main = main;
             cbBoxLayerType.Items.Add("Point");
             cbBoxLayerType.Items.Add("MultiPolyline");

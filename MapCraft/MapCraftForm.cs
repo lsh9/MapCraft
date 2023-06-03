@@ -77,9 +77,43 @@ namespace MapCraft
             ShowMapScale();
         }
 
-        
-        
-        // 是否显示经纬度
+        #region 菜单栏控件事件
+
+        // 点击新建地图菜单项
+        private void 新建地图ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // 点击新建图层菜单项
+        private void 新建图层ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CreateLayerForm createLayerForm = new CreateLayerForm(this);
+            createLayerForm.Show();
+        }
+
+        // 点击打开地图菜单项
+        private void 打开地图ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // 点击保存（地图）菜单项
+        private void 保存ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // 点击另存为（地图）菜单项
+        private void 另存为ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        #endregion
+
+
+        // 显示经纬度控件
         private void ChkShowLngLat_CheckedChanged(object sender, EventArgs e)
         {
             mShowLngLat = cbxProjectionCS.Checked;
@@ -414,7 +448,7 @@ namespace MapCraft
             {
                 //拉框缩小
                 moRectangle sBox = GetMapRectByTwoPoints(mStartMouseLocation, e.Location);
-                moMapControl1.ZoomToExtent(sBox);
+                moMapControl1.ZoomOutToExtent(sBox);
             }
         }
 
@@ -522,9 +556,12 @@ namespace MapCraft
         // MapControl鼠标滑轮
         private void moMapControl1_MouseWheel(object sender, MouseEventArgs e)
         {
-            //计算地图空间中心点的地图坐标
-            double sY = moMapControl1.ClientRectangle.Width / 2;
-            double sX = moMapControl1.ClientRectangle.Height / 2;
+            // 计算地图空间中心点的地图坐标
+            //double sY = moMapControl1.ClientRectangle.Width / 2;
+            //double sX = moMapControl1.ClientRectangle.Height / 2;
+            // 使用鼠标位置为中心进行缩放
+            double sX = e.Location.X;
+            double sY = e.Location.Y;
             moPoint sPoint = moMapControl1.ToMapPoint(sX, sY);
             if (e.Delta > 0)
             {
@@ -566,6 +603,7 @@ namespace MapCraft
             mShapefiles.Add(shapefile);
             treeView1.Nodes.Add(mapLayer.Name);
             MapControl.RedrawMap();
+            MapControl.FullExtent();
         }
         #endregion
 

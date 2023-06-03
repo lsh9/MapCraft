@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyMapObjects;
+using System;
 using System.Data;
 using System.Windows.Forms;
 
@@ -19,6 +20,7 @@ namespace MapCraft.Forms
         public SelectByAttributeForm(MapCraftForm main)
         {
             InitializeComponent();
+            Owner = main;
             MainForm = main;
             mLayerSelectIndex = -1;
             mFieldSelectIndex = -1;
@@ -153,10 +155,10 @@ namespace MapCraft.Forms
             if (mFieldSelectIndex < 0)
                 return;// 如果没有选择字段，就return
             ListBoxUniqueValues.Items.Clear();
-            MyMapObjects.moMapLayer layerTemp = MainForm.MapControl.Layers.GetItem(mLayerSelectIndex);
+            moMapLayer layerTemp = MainForm.MapControl.Layers.GetItem(mLayerSelectIndex);
             for (int i = 0; i < layerTemp.Features.Count; i++)
             {
-                if (layerTemp.AttributeFields.GetItem(mFieldSelectIndex).ValueType == MyMapObjects.moValueTypeConstant.dText)
+                if (layerTemp.AttributeFields.GetItem(mFieldSelectIndex).ValueType == moValueTypeConstant.dText)
                 {
                     ListBoxUniqueValues.Items.Add("\'" + layerTemp.Features.GetItem(i).Attributes.GetItem(mFieldSelectIndex) + "\'");
                 }
@@ -287,31 +289,31 @@ namespace MapCraft.Forms
             // 建表
             mDataTable = new DataTable();
             // 做一个中间值便于表示
-            MyMapObjects.moMapLayer layerTemp = MainForm.MapControl.Layers.GetItem(mLayerSelectIndex);
+            moMapLayer layerTemp = MainForm.MapControl.Layers.GetItem(mLayerSelectIndex);
             // 建立字段
             for (int i = 0; i < layerTemp.AttributeFields.Count; i++)
             {
-                if (layerTemp.AttributeFields.GetItem(i).ValueType == MyMapObjects.moValueTypeConstant.dDouble)
-                {
-                    mDataTable.Columns.Add(layerTemp.AttributeFields.GetItem(i).Name, typeof(double));
-                }
-                else if (layerTemp.AttributeFields.GetItem(i).ValueType == MyMapObjects.moValueTypeConstant.dInt16)
+                if (layerTemp.AttributeFields.GetItem(i).ValueType == moValueTypeConstant.dInt16)
                 {
                     mDataTable.Columns.Add(layerTemp.AttributeFields.GetItem(i).Name, typeof(short));
                 }
-                else if (layerTemp.AttributeFields.GetItem(i).ValueType == MyMapObjects.moValueTypeConstant.dInt32)
+                else if (layerTemp.AttributeFields.GetItem(i).ValueType == moValueTypeConstant.dInt32)
                 {
                     mDataTable.Columns.Add(layerTemp.AttributeFields.GetItem(i).Name, typeof(int));
                 }
-                else if (layerTemp.AttributeFields.GetItem(i).ValueType == MyMapObjects.moValueTypeConstant.dInt64)
+                else if (layerTemp.AttributeFields.GetItem(i).ValueType == moValueTypeConstant.dInt64)
                 {
                     mDataTable.Columns.Add(layerTemp.AttributeFields.GetItem(i).Name, typeof(long));
                 }
-                else if (layerTemp.AttributeFields.GetItem(i).ValueType == MyMapObjects.moValueTypeConstant.dSingle)
+                else if (layerTemp.AttributeFields.GetItem(i).ValueType == moValueTypeConstant.dDouble)
+                {
+                    mDataTable.Columns.Add(layerTemp.AttributeFields.GetItem(i).Name, typeof(double));
+                }
+                else if (layerTemp.AttributeFields.GetItem(i).ValueType == moValueTypeConstant.dSingle)
                 {
                     mDataTable.Columns.Add(layerTemp.AttributeFields.GetItem(i).Name, typeof(float));
                 }
-                else if (layerTemp.AttributeFields.GetItem(i).ValueType == MyMapObjects.moValueTypeConstant.dText)
+                else if (layerTemp.AttributeFields.GetItem(i).ValueType == moValueTypeConstant.dText)
                 {
                     mDataTable.Columns.Add(layerTemp.AttributeFields.GetItem(i).Name, typeof(string));
                 }
