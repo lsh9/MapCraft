@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using MyMapObjects;
 using MapCraft.Forms;
 using MapCraft.FileProcessor;
-using MapCraft.Forms;
+
 
 
 namespace MapCraft
@@ -34,7 +34,7 @@ namespace MapCraft
         private moSimpleMarkerSymbol mEditingVertexSymbol; // 正在编辑的图形的顶点的符号
         private moSimpleLineSymbol mElasticSymbol;         // 橡皮筋符号
         private bool mShowLngLat = false;                               // 是否显示经纬度
-        private List<ShapeFileParser> mShapefiles = new List<ShapeFileParser>();
+        public List<ShapeFileParser> mShapefiles = new List<ShapeFileParser>();
 
         private List<AttributeTable> AttributeTables = new List<AttributeTable>();
         private static int AttributeTableIndex;
