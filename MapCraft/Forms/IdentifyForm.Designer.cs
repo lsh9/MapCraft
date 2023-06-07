@@ -13,11 +13,12 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
+            Hide();
+            //if (disposing && (components != null))
+            //{
+            //    components.Dispose();
+            //}
+            //base.Dispose(disposing);
         }
 
         #region Windows Form Designer generated code
@@ -29,69 +30,65 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.treeView = new System.Windows.Forms.TreeView();
-            this.table = new System.Windows.Forms.DataGridView();
-            this.lblLayerName = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.table)).BeginInit();
+            this.dataGridViewAttributes = new System.Windows.Forms.DataGridView();
+            this.treeViewFeatures = new System.Windows.Forms.TreeView();
+            this.cbBoxLayers = new System.Windows.Forms.ComboBox();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewAttributes)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 12F);
-            this.label1.Location = new System.Drawing.Point(44, 26);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(33, 21);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(79, 20);
+            this.label1.Size = new System.Drawing.Size(63, 16);
             this.label1.TabIndex = 0;
             this.label1.Text = "图层 ：";
             // 
-            // treeView
+            // dataGridViewAttributes
             // 
-            this.treeView.Location = new System.Drawing.Point(36, 74);
-            this.treeView.Margin = new System.Windows.Forms.Padding(4);
-            this.treeView.Name = "treeView";
-            this.treeView.Size = new System.Drawing.Size(389, 146);
-            this.treeView.TabIndex = 2;
-            this.treeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView_NodeMouseClick);
+            this.dataGridViewAttributes.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.dataGridViewAttributes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewAttributes.GridColor = System.Drawing.SystemColors.ButtonShadow;
+            this.dataGridViewAttributes.Location = new System.Drawing.Point(27, 196);
+            this.dataGridViewAttributes.Name = "dataGridViewAttributes";
+            this.dataGridViewAttributes.RowHeadersWidth = 51;
+            this.dataGridViewAttributes.RowTemplate.Height = 23;
+            this.dataGridViewAttributes.Size = new System.Drawing.Size(293, 235);
+            this.dataGridViewAttributes.TabIndex = 3;
             // 
-            // table
+            // treeViewFeatures
             // 
-            this.table.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.table.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.table.GridColor = System.Drawing.SystemColors.ButtonShadow;
-            this.table.Location = new System.Drawing.Point(36, 245);
-            this.table.Margin = new System.Windows.Forms.Padding(4);
-            this.table.Name = "table";
-            this.table.RowHeadersWidth = 51;
-            this.table.RowTemplate.Height = 23;
-            this.table.Size = new System.Drawing.Size(391, 294);
-            this.table.TabIndex = 3;
+            this.treeViewFeatures.Location = new System.Drawing.Point(27, 59);
+            this.treeViewFeatures.Name = "treeViewFeatures";
+            this.treeViewFeatures.Size = new System.Drawing.Size(293, 118);
+            this.treeViewFeatures.TabIndex = 2;
+            this.treeViewFeatures.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewFeatures_NodeMouseClick);
             // 
-            // lblLayerName
+            // cbBoxLayers
             // 
-            this.lblLayerName.AutoSize = true;
-            this.lblLayerName.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lblLayerName.Location = new System.Drawing.Point(186, 26);
-            this.lblLayerName.Name = "lblLayerName";
-            this.lblLayerName.Size = new System.Drawing.Size(59, 20);
-            this.lblLayerName.TabIndex = 4;
-            this.lblLayerName.Text = "Layer";
+            this.cbBoxLayers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbBoxLayers.FormattingEnabled = true;
+            this.cbBoxLayers.Location = new System.Drawing.Point(90, 21);
+            this.cbBoxLayers.Name = "cbBoxLayers";
+            this.cbBoxLayers.Size = new System.Drawing.Size(219, 20);
+            this.cbBoxLayers.TabIndex = 7;
+            this.cbBoxLayers.SelectedIndexChanged += new System.EventHandler(this.cbBoxLayers_SelectedIndexChanged);
             // 
-            // Identify
+            // IdentifyForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(464, 576);
-            this.Controls.Add(this.lblLayerName);
-            this.Controls.Add(this.table);
-            this.Controls.Add(this.treeView);
+            this.ClientSize = new System.Drawing.Size(348, 461);
+            this.Controls.Add(this.cbBoxLayers);
+            this.Controls.Add(this.dataGridViewAttributes);
+            this.Controls.Add(this.treeViewFeatures);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(4);
-            this.Name = "Identify";
+            this.Name = "IdentifyForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "识别";
-            ((System.ComponentModel.ISupportInitialize)(this.table)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewAttributes)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -100,8 +97,8 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TreeView treeView;
-        private System.Windows.Forms.DataGridView table;
-        private System.Windows.Forms.Label lblLayerName;
+        private System.Windows.Forms.DataGridView dataGridViewAttributes;
+        private System.Windows.Forms.TreeView treeViewFeatures;
+        private System.Windows.Forms.ComboBox cbBoxLayers;
     }
 }

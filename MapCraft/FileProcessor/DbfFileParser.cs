@@ -69,22 +69,22 @@ namespace MapCraft.FileProcessor
         /// </summary>
         /// <param name="newField"></param>
         /// <param name="newAttributes">the initial value of new field</param>
-        public void AddField(moField newField, moAttributes newAttributes)
+        public void AddField(moField newField)
         {
             // the length of new attributes should equal to the count
-            object[] newAttributesArray = newAttributes.ToArray();
-            if (newAttributesArray.Length != _attributesList.Count)
-            {
-                const string error = "新增属性值个数不等于要素个数！";
-                throw new Exception(error);
-            }
+            //object[] newAttributesArray = newAttributes.ToArray();
+            //if (newAttributesArray.Length != _attributesList.Count)
+            //{
+            //    const string error = "新增属性值个数不等于要素个数！";
+            //    throw new Exception(error);
+            //}
             //(1) update header
             _dbfFileHeader.AddFieldDescriptor(new DbfFieldDescriptor(newField));
             //(2) update attributes
-            for (int i = 0; i < newAttributesArray.Length; ++i)
-            {
-                _attributesList[i].Append(newAttributesArray[i]);
-            }
+            //for (int i = 0; i < newAttributesArray.Length; ++i)
+            //{
+            //    _attributesList[i].Append(newAttributesArray[i]);
+            //}
         }
 
         /// <summary>

@@ -46,5 +46,23 @@ namespace MyMapObjects
         }
 
         #endregion
+
+        public Dictionary<string, object> ToDictionary()
+        {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("LabelFeatures", _LabelFeatures);
+            dict.Add("TextSymbol", _TextSymbol.ToDictionary());
+            dict.Add("Field", _Field);
+            return dict;
+        }
+
+        public static moLabelRenderer FromDictionary(Dictionary<string, object> dict)
+        {
+            moLabelRenderer labelRenderer = new moLabelRenderer();
+            labelRenderer.LabelFeatures = Convert.ToBoolean(dict["LabelFeatures"]);
+            labelRenderer.TextSymbol = moTextSymbol.FromDictionary((Dictionary<string, object>)dict["TextSymbol"]);
+            labelRenderer.Field = Convert.ToString(dict["Field"]);
+            return labelRenderer;
+        }
     }
 }

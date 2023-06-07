@@ -18,7 +18,7 @@ namespace MapCraft.FileProcessor
         private byte[] HeaderByte;
         private byte[] DataByte;
         private int FileBanben = 1000;
-        private shpGeometryType shpGeometryType;
+        public shpGeometryType shpGeometryType;
         public double MinX { get; set; }
         public double MinY { get; set; }
         public double MaxX { get; set; }

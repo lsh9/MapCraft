@@ -84,6 +84,10 @@
             // 
             this.cbBoxLayerType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbBoxLayerType.FormattingEnabled = true;
+            this.cbBoxLayerType.Items.AddRange(new object[] {
+            "Point",
+            "MultiPolyline",
+            "MultiPolygon"});
             this.cbBoxLayerType.Location = new System.Drawing.Point(124, 34);
             this.cbBoxLayerType.Name = "cbBoxLayerType";
             this.cbBoxLayerType.Size = new System.Drawing.Size(219, 20);
@@ -120,6 +124,13 @@
             // 
             this.cbBoxValueType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbBoxValueType.FormattingEnabled = true;
+            this.cbBoxValueType.Items.AddRange(new object[] {
+            "短整型",
+            "整型",
+            "长整型",
+            "单精度浮点型",
+            "双精度浮点型",
+            "文本型"});
             this.cbBoxValueType.Location = new System.Drawing.Point(124, 189);
             this.cbBoxValueType.Name = "cbBoxValueType";
             this.cbBoxValueType.Size = new System.Drawing.Size(219, 20);
