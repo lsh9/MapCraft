@@ -1001,7 +1001,10 @@ namespace MapCraft
         // 重新加载图层
         private void LoadTreeViewLayers()
         {
+<<<<<<< HEAD
             //treeView1.Nodes.Add(mapLayer.Name);
+=======
+>>>>>>> 4595ff60d40c767d71066960bb54e8b880a9c85f
             RefreshLayersTree();
             if (moMapControl1.Layers.Count == 1)
                 moMapControl1.FullExtent();
