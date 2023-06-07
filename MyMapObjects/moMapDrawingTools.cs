@@ -378,7 +378,11 @@ namespace MyMapObjects
         private static void DrawSimpleMarker(Graphics g,Rectangle drawingArea,double dpm,moSimpleMarkerSymbol symbol)
         {
             if (symbol.Style == moSimpleMarkerSymbolStyleConstant.Circle)
-            { throw new NotImplementedException(); }
+            {
+                Pen sPen = new Pen(symbol.Color);
+                g.DrawEllipse(sPen, drawingArea);
+                sPen.Dispose();
+            }
             else if (symbol.Style == moSimpleMarkerSymbolStyleConstant.SolidCircle)
             {
                 SolidBrush sBrush = new SolidBrush(symbol.Color);
@@ -386,11 +390,34 @@ namespace MyMapObjects
                 sBrush.Dispose();
             }
             else if (symbol.Style == moSimpleMarkerSymbolStyleConstant.Triangle)
-            { throw new NotImplementedException(); }
+            {
+                Pen sPen = new Pen(symbol.Color);
+                Point p1 = new Point(drawingArea.X + drawingArea.Width / 2, drawingArea.Y);
+                Point p2 = new Point(drawingArea.X, drawingArea.Y + drawingArea.Height);
+                Point p3 = new Point(drawingArea.X + drawingArea.Width, drawingArea.Y + drawingArea.Height);
+
+                g.DrawLine(sPen, p1, p2); g.DrawLine(sPen, p3, p1); g.DrawLine(sPen, p2, p3);
+                sPen.Dispose();
+            }
             else if (symbol.Style == moSimpleMarkerSymbolStyleConstant.SolidTriangle)
-            { throw new NotImplementedException(); }
+            {
+                SolidBrush sBrush = new SolidBrush(symbol.Color);
+
+                Point p1 = new Point(drawingArea.X + drawingArea.Width / 2, drawingArea.Y);
+                Point p2 = new Point(drawingArea.X, drawingArea.Y + drawingArea.Height);
+                Point p3 = new Point(drawingArea.X + drawingArea.Width, drawingArea.Y + drawingArea.Height);
+
+                Point[] trianglePoints = { p1, p2, p3 };
+                g.FillPolygon(sBrush, trianglePoints);
+                sBrush.Dispose();
+
+            }
             else if (symbol.Style == moSimpleMarkerSymbolStyleConstant.Square)
-            { throw new NotImplementedException(); }
+            {
+                Pen sPen = new Pen(symbol.Color);
+                g.DrawRectangle(sPen, drawingArea);
+                sPen.Dispose();
+            }
             else if (symbol.Style == moSimpleMarkerSymbolStyleConstant.SolidSquare)
             {
                 SolidBrush sBrush = new SolidBrush(symbol.Color);
@@ -398,9 +425,28 @@ namespace MyMapObjects
                 sBrush.Dispose();
             }
             else if (symbol.Style == moSimpleMarkerSymbolStyleConstant.CircleDot)
-            { throw new NotImplementedException(); }
+            {
+                Pen sPen = new Pen(symbol.Color);
+                g.DrawEllipse(sPen, drawingArea);
+                SolidBrush sBrush = new SolidBrush(symbol.Color);
+                int centerX = drawingArea.X + (drawingArea.Width) / 2;
+                int centerY = drawingArea.Y + (drawingArea.Height) / 2;
+                int pSize = 7;
+                g.FillEllipse(sBrush, centerX - pSize / 2, centerY - pSize / 2, pSize, pSize);
+                sPen.Dispose();
+                sBrush.Dispose();
+
+            }
             else if (symbol.Style == moSimpleMarkerSymbolStyleConstant.CircleCircle)
-            { throw new NotImplementedException(); }
+            {
+                Pen sPen = new Pen(symbol.Color);
+                g.DrawEllipse(sPen, drawingArea);
+                int centerX = drawingArea.X + (int)((drawingArea.Width + 1) / 2);
+                int centerY = drawingArea.Y + (int)((drawingArea.Height + 1) / 2);
+                int pSize = 7;
+                g.DrawEllipse(sPen, centerX - (pSize + 1) / 2, centerY - (pSize + 1) / 2, pSize, pSize);
+                sPen.Dispose();
+            }
         }
 
         #endregion

@@ -112,7 +112,7 @@ namespace MapCraft.Forms
             dataGridView.DefaultCellStyle.SelectionForeColor = Color.LightBlue;
             RefreshDataFormByMainForm();
         }
-        
+
         public void RefreshDataFormByMainForm()
         {
             for (int i = 0; i < Layer.SelectedFeatures.Count; i++)
@@ -122,10 +122,10 @@ namespace MapCraft.Forms
                 int index = -1;
                 object[] temp = sFeature.Attributes.ToArray();
                 bool flag = true;
-                for(int m = 0; m < Layer.Features.Count; m++)
+                for (int m = 0; m < Layer.Features.Count; m++)
                 {
                     object[] temp1 = sFeatures.GetItem(m).Attributes.ToArray();
-                    for(int n = 0; n < temp.Length; n++)
+                    for (int n = 0; n < temp.Length; n++)
                     {
                         if (temp1[n] != temp[n])
                         {
@@ -137,13 +137,14 @@ namespace MapCraft.Forms
                     {
                         index = m;
                         break;
-                    }  
+                    }
                 }
-                dataGridView.Rows[index].Selected = true; //将该序号设置为亮
+                if (index >= 0)
+                    dataGridView.Rows[index].Selected = true; //将该序号设置为亮
             }
             RefreshSelectedText();
         }
-        
+
         public void AddNewField()
         {
             //moAttributes attributes = new moAttributes();
@@ -152,8 +153,8 @@ namespace MapCraft.Forms
             //    array.Add(0);
             //attributes.FromArray(array.ToArray());
             moField field = new moField(NewFieldName, NewFieldType);
-            if (NewFieldType==moValueTypeConstant.dText)
-                field = new moField(NewFieldName, NewFieldType,NewFieldLength);
+            if (NewFieldType == moValueTypeConstant.dText)
+                field = new moField(NewFieldName, NewFieldType, NewFieldLength);
             Layer = Main.moMapControl1.Layers.GetItem(LayerIndex);
             Layer.AttributeFields.Append(field);
             Main.Shapefiles[LayerIndex].Add_Field(field);
