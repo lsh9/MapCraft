@@ -105,5 +105,28 @@ namespace MapCraft.FileProcessor
         {
             _dbfFile.AddField(newfield);
         }
+
+        public void CreateShapefile(moGeometryTypeConstant geometryTypeConstant,moFields fields)
+        {
+            switch (geometryTypeConstant)
+            {
+                case moGeometryTypeConstant.Point:
+                    _shpFile.shpGeometryType = shpGeometryType.point;
+                    break;
+                case moGeometryTypeConstant.MultiPolyline:
+                    _shpFile.shpGeometryType = shpGeometryType.polyline;
+                    break;
+                case moGeometryTypeConstant.MultiPolygon:
+                    _shpFile.shpGeometryType = shpGeometryType.polygon;
+                    break;
+                default:
+                    break;
+            }
+            for(int i=0;i<fields.Count;i++)
+            {
+                _dbfFile.AddField(fields[i]);
+            }
+            Write_ShapeFile(FilePath);
+        }
     }
 }
