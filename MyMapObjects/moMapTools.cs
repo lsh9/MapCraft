@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyMapObjects
 {
-    internal static class moMapTools
+    public static class moMapTools
     {
         #region 基本部分
 

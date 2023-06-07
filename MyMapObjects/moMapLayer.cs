@@ -189,6 +189,34 @@ namespace MyMapObjects
         }
 
         /// <summary>
+        /// 删除选择要素
+        /// </summary>
+        public void RemoveSelection()
+        {
+            moFeatures sFeatures=new moFeatures();
+            List<int> selectIndexs=new List<int>();
+            for(int i=0;i<_SelectedFeatures.Count;i++)
+            {
+                for(int j=0;i<_Features.Count;j++)
+                {
+                    if(_Features.GetItem(i)==_SelectedFeatures.GetItem(j))
+                    {
+                        selectIndexs.Add(i);
+                        break;
+                    }
+                }
+            }
+            for(int i=0;i<_Features.Count;i++)
+            {
+                if(selectIndexs.Contains(i)==false)
+                    sFeatures.Add(_Features.GetItem(i));
+            }
+            _Features = sFeatures;
+            _SelectedFeatures.Clear();
+            UpdateExtent();
+        }
+
+        /// <summary>
         /// 根据矩形和执行搜索
         /// </summary>
         /// <param name="selectingBox"></param>

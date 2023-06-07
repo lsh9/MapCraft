@@ -41,5 +41,11 @@ namespace MapCraft
         FixedZoomOut = 6,
         SelectByAttribute = 8,
 
+        //要素编辑操作
+        MoveFeature=10,
+        CreateFeature=11,
+        MoveNode=12,
+        AddNode=13,
+        DeleteNode=14,
     }
 }

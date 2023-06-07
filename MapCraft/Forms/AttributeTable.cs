@@ -139,6 +139,7 @@ namespace MapCraft.Forms
                         break;
                     }
                 }
+
                 if (index >= 0)
                     dataGridView.Rows[index].Selected = true; //将该序号设置为亮
             }
