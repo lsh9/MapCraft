@@ -235,14 +235,23 @@ namespace MapCraft.Forms
                 // 唯一值渲染
                 moUniqueValueRenderer uniqueValueRenderer = new moUniqueValueRenderer();
                 layer.Renderer = uniqueValueRenderer;
-                Int32 FieldIndex = cbFieldsName.SelectedIndex;
-                string sFieldName = cbUniqueValueField.SelectedItem.ToString();
-                int sFieldIndex = layer.AttributeFields.FindField(sFieldName);
-                if (sFieldIndex < 0)
+                Int32 FieldIndex = cbUniqueValueField.SelectedIndex;
+                if (cbUniqueValueField.SelectedIndex >= 0 || cbUniqueValueField.SelectedIndex < layer.AttributeFields.Count)
                 {
+                    uniqueValueRenderer.Field = layer.AttributeFields.GetItem(FieldIndex).Name;
+                }
+                else
+                {
+                    MessageBox.Show("请选择字段");
                     return;
                 }
-                uniqueValueRenderer.Field = sFieldName;
+                //string sFieldName = cbUniqueValueField.SelectedItem.ToString();
+                //int sFieldIndex = layer.AttributeFields.FindField(sFieldName);
+                //if (sFieldIndex < 0)
+                //{
+                //    return;
+                //}
+                //uniqueValueRenderer.Field = sFieldName;
                 // 获取唯一值
                 List<string> uniqueValues = new List<string>();
                 //for (int i = 0; i < dataGridViewUnique.Rows.Count; i++)
@@ -291,23 +300,62 @@ namespace MapCraft.Forms
             }
             else if (tabControlInner.SelectedIndex == 2)
             {
-                // 唯一值渲染
-                moUniqueValueRenderer sUniqueValueRenderer = new moUniqueValueRenderer();
-                Int32 FieldIndex = cbFieldsName.SelectedIndex;
-                if (FieldIndex >= 0 || FieldIndex < layer.AttributeFields.Count)
-                {
-                    sUniqueValueRenderer.Field = layer.AttributeFields.GetItem(FieldIndex).Name;
-                }
-                else
+                // 分级渲染
+                moClassBreaksRenderer classBreaksRenderer = new moClassBreaksRenderer();
+                string fieldName=cbClassBreaksField.SelectedItem.ToString();
+                int fieldIndex=layer.AttributeFields.FindField(fieldName);
+                if(fieldIndex<0)
                 {
                     MessageBox.Show("请选择字段");
                     return;
                 }
-                //sUniqueValueRenderer.DefaultSymbol.FillColor = btnColor.BackColor;
-                layer.Renderer = sUniqueValueRenderer;
+                if (layer.AttributeFields.GetItem(fieldIndex).ValueType == moValueTypeConstant.dText)
+                    return;
+                //创建分级渲染
+                classBreaksRenderer.Field = fieldName;
+                //搜索所有值
+                List<double> sValues = new List<double>();
+                Int32 sFeatureCount = layer.Features.Count;
+                for (int i = 0; i < sFeatureCount; i++)
+                {
+                    double sValue = (double)layer.Features.GetItem(i).Attributes.GetItem(fieldIndex);
+                    sValues.Add(sValue);
+                }
+                double sMinValue = sValues.Min();
+                double sMaxValue = sValues.Max();
+                //分级渲染
+                int classNum=(int)nupClasses.Value;
+                for(int i=0;i<classNum;i++)
+                {
+                    double sValue = sMinValue + (sMaxValue - sMinValue) * (i + 1) / classNum;
+                    if(layer.ShapeType==moGeometryTypeConstant.Point)
+                    {
+                        moSimpleMarkerSymbol sSymbol= new moSimpleMarkerSymbol();
+                        classBreaksRenderer.AddBreakValue(sValue, sSymbol);
+                    }
+                    else if(layer.ShapeType==moGeometryTypeConstant.MultiPolyline)
+                    {
+                        moSimpleLineSymbol sSymbol= new moSimpleLineSymbol();
+                        classBreaksRenderer.AddBreakValue(sValue, sSymbol);
+                    }
+                    else if(layer.ShapeType==moGeometryTypeConstant.MultiPolygon)
+                    {
+                        moSimpleFillSymbol sSymbol= new moSimpleFillSymbol();
+                        moSimpleLineSymbol outLineSymbol= new moSimpleLineSymbol();
+                        outLineSymbol.Color = btnOutlineColor.BackColor;
+                        outLineSymbol.Visible=cbShowOutline.Checked;
+                        sSymbol.Outline=outLineSymbol;
+                        classBreaksRenderer.AddBreakValue(sValue, sSymbol);
+                    }
+                }
+                //生成渐变色
+                Color startColor = btnStartColor.BackColor;
+                Color endColor = btnEndColor.BackColor;
+                classBreaksRenderer.RampColor(startColor, endColor);
+                classBreaksRenderer.DefaultSymbol=new moSimpleFillSymbol();
+                layer.Renderer = classBreaksRenderer;
             }
             Main.MapControl.RedrawMap();
-
         }
 
 
@@ -315,7 +363,7 @@ namespace MapCraft.Forms
         {
             moMapLayer layer = Main.MapControl.Layers.GetItem(cbBoxLayers.SelectedIndex);
             moUniqueValueRenderer sUniqueValueRenderer = new moUniqueValueRenderer();
-            Int32 FieldIndex = cbFieldsName.SelectedIndex;
+            Int32 FieldIndex = cbUniqueValueField.SelectedIndex;
             // 重新绘制DataGridView
             string field =  cbUniqueValueField.SelectedItem.ToString();
             DataTable dataTable = new DataTable();
@@ -387,7 +435,19 @@ namespace MapCraft.Forms
             {
                 cbUniqueValueField.Items.Add(layer.AttributeFields.GetItem(i).Name);
             }
-            cbUniqueValueField.SelectedItem = 0;
+            cbUniqueValueField.SelectedIndex = 0;
+        }
+
+        private void tabPageClass_Enter(object sender, EventArgs e)
+        {
+            // 根据图层更新字段
+            moMapLayer layer = Main.MapControl.Layers.GetItem(cbBoxLayers.SelectedIndex);
+            cbClassBreaksField.Items.Clear();
+            for (int i = 0; i < layer.AttributeFields.Count; i++)
+            {
+                cbClassBreaksField.Items.Add(layer.AttributeFields.GetItem(i).Name);
+            }
+            cbClassBreaksField.SelectedIndex = 0;
         }
 
         private void btnGetUniqueValue_Click(object sender, EventArgs e)
@@ -501,6 +561,33 @@ namespace MapCraft.Forms
             }
         }
 
+        private void btnStartColor_Click(object sender, EventArgs e)
+        {
+            ColorDialog colorDialog = new ColorDialog();
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                btnStartColor.BackColor = colorDialog.Color;
+            }
+        }
+
+        private void btnEndColor_Click(object sender, EventArgs e)
+        {
+            ColorDialog colorDialog = new ColorDialog();
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                btnEndColor.BackColor = colorDialog.Color;
+            }
+        }
+
+        private void btnOutlineColor_Click(object sender, EventArgs e)
+        {
+            ColorDialog colorDialog = new ColorDialog();
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                btnOutlineColor.BackColor = colorDialog.Color;
+            }
+        }
+
         private Color CreateRandomColor()
         {
             //总体思想：每个随机颜色RGB中总有一个为252，其他两个值的取值范围为179-245，这样取值的目的在于让地图颜色偏浅，美观
@@ -530,5 +617,7 @@ namespace MapCraft.Forms
             }
             return Color.FromArgb(A, R, G, B);
         }
+
+
     }
 }

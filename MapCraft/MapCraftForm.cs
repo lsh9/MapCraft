@@ -35,7 +35,7 @@ namespace MapCraft
         private moSimpleLineSymbol mElasticSymbol;          // 橡皮筋符号
         private bool mShowLngLat = false;                   // 是否显示经纬度
 
-        private int mSelectedLayerIndex = -1;  //选中的图层索引
+        private int SelectedLayerIndex = -1;  //选中的图层索引
         private int mEditingLayerIndex = -1;   //编辑的图层索引
         private List<ShapeFileParser> mShapefiles = new List<ShapeFileParser>();// 图层路径记录
         private List<AttributeTable> AttributeTables = new List<AttributeTable>();
@@ -263,7 +263,7 @@ namespace MapCraft
         /// <param name="e"></param>
         private void ChkShowLngLat_CheckedChanged(object sender, EventArgs e)
         {
-            mShowLngLat = cbxProjectionCS.Checked;
+            mShowLngLat = !cbxProjectionCS.Checked;
         }
 
         #region 图层TreeView控件操作
@@ -352,7 +352,7 @@ namespace MapCraft
             try
             {
                 string layerPath = shpFilePath.Substring(0, shpFilePath.IndexOf(".shp", StringComparison.Ordinal));
-                mShapefiles[mSelectedLayerIndex].Write_ShapeFile(layerPath);
+                mShapefiles[SelectedLayerIndex].Write_ShapeFile(layerPath);
             }
             catch (Exception error)
             {
@@ -364,9 +364,9 @@ namespace MapCraft
 
         private void 打开属性表_Click(object sender, EventArgs e)
         {
-            AttributeTable attributeTable = new AttributeTable(this, mSelectedLayerIndex);
+            AttributeTable attributeTable = new AttributeTable(this, SelectedLayerIndex);
             attributeTable.Owner = this;
-            attributeTable.Name = moMapControl1.Layers.GetItem(mSelectedLayerIndex).Name;
+            attributeTable.Name = moMapControl1.Layers.GetItem(SelectedLayerIndex).Name;
             attributeTable.Show();
             attributeTable.SetDesktopLocation(Location.X + (Width - attributeTable.Width) / 2,
                 Location.Y + (Height - attributeTable.Height) / 2);
@@ -664,7 +664,7 @@ namespace MapCraft
             {
                 n.BackColor = Color.Empty;
             }
-            mSelectedLayerIndex = e.Node.Index;
+            SelectedLayerIndex = e.Node.Index;
             e.Node.BackColor = Color.LightGray;
         }
 
@@ -694,18 +694,18 @@ namespace MapCraft
             }
             // 选中当前按钮
             ToolStripButton sButton = (ToolStripButton)e.ClickedItem;
-            // 使用按钮图标修改鼠标图标,如果按钮是放大\缩小\平移\按位置选择\识别
-            if (sButton.Name == "btnZoomIn" || sButton.Name == "btnZoomOut" || sButton.Name == "btnSelectByLocation" || sButton.Name == "btnIdentify" || sButton.Name == "btnPan")
-            {
-                Bitmap sBitmap = (Bitmap)sButton.Image;
-                IntPtr sCursorHandle = sBitmap.GetHicon();
-                Cursor sCursor = new Cursor(sCursorHandle);
-                moMapControl1.Cursor = sCursor;
-            }
-            else
-            {
-                moMapControl1.Cursor = Cursors.Default;
-            }
+            //// 使用按钮图标修改鼠标图标,如果按钮是放大\缩小\平移\按位置选择\识别
+            //if (sButton.Name == "btnZoomIn" || sButton.Name == "btnZoomOut" || sButton.Name == "btnSelectByLocation" || sButton.Name == "btnIdentify" || sButton.Name == "btnPan")
+            //{
+            //    Bitmap sBitmap = (Bitmap)sButton.Image;
+            //    IntPtr sCursorHandle = sBitmap.GetHicon();
+            //    Cursor sCursor = new Cursor(sCursorHandle);
+            //    moMapControl1.Cursor = sCursor;
+            //}
+            //else
+            //{
+            //    moMapControl1.Cursor = Cursors.Default;
+            //}
             sButton.BackColor = Color.LightBlue;
         }
 
@@ -841,7 +841,7 @@ namespace MapCraft
         /// <param name="e"></param>
         private void ddbtnEditor_Click(object sender, EventArgs e)
         {
-            if (mSelectedLayerIndex != -1)
+            if (SelectedLayerIndex != -1)
                 开始编辑ToolStripMenuItem.Enabled = true;
         }
 
@@ -852,7 +852,7 @@ namespace MapCraft
         /// <param name="e"></param>
         private void 开始编辑ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            mEditingLayerIndex= mSelectedLayerIndex;
+            mEditingLayerIndex= SelectedLayerIndex;
             开始编辑ToolStripMenuItem.Enabled = false;
             结束编辑ToolStripMenuItem.Enabled = true;
             保存编辑内容ToolStripMenuItem.Enabled = true;
@@ -2156,7 +2156,7 @@ namespace MapCraft
         private void 删除ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             mIsLayerChanged = true;
-            moMapControl1.Layers.GetItem(mSelectedLayerIndex).ClearSelection();
+            moMapControl1.Layers.GetItem(SelectedLayerIndex).RemoveSelection();
             moMapControl1.RedrawMap();
         }
         #endregion
@@ -2778,5 +2778,6 @@ namespace MapCraft
 
         #endregion
 
+        #endregion
     }
 }
