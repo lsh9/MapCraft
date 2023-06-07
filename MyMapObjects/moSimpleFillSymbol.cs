@@ -100,6 +100,27 @@ namespace MyMapObjects
             return sSymbol;
         }
 
+        public override Dictionary <string, object> ToDictionary()
+        {
+            Dictionary<string, object> sDictionary = new Dictionary<string, object>();
+            sDictionary.Add("SymbolType", SymbolType);
+            sDictionary.Add("Label", _Label);
+            sDictionary.Add("Visible", _Visible);
+            sDictionary.Add("Color", _Color.ToArgb());
+            sDictionary.Add("Outline", _Outline.ToDictionary());
+            return sDictionary;
+        }
+
+        public static new moSimpleFillSymbol FromDictionary(Dictionary<string, object> dictionary)
+        {
+            moSimpleFillSymbol sSymbol = new moSimpleFillSymbol();
+            sSymbol._Label = dictionary["Label"].ToString();
+            sSymbol._Visible = Convert.ToBoolean(dictionary["Visible"]);
+            sSymbol._Color = Color.FromArgb(Convert.ToInt32(dictionary["Color"]));
+            sSymbol._Outline = moSimpleLineSymbol.FromDictionary((Dictionary<string, object>)dictionary["Outline"]);
+            return sSymbol;
+        }
+
         #endregion
 
         #region 私有函数

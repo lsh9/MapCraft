@@ -116,6 +116,41 @@ namespace MyMapObjects
             return symbol;
         }
 
+        public Dictionary<string, object> ToDictionary()
+        {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            // 将Font对象的Family和Size属性存入字典
+            Dictionary<string, object> fontDict = new Dictionary<string, object>();
+            fontDict.Add("Family", _Font.FontFamily.Name);
+            fontDict.Add("Size", _Font.Size);
+            dict.Add("Font", fontDict);
+            dict.Add("FontColor", _FontColor.ToArgb());
+            dict.Add("Alignment", _Alignment);
+            dict.Add("OffsetX", _OffsetX);
+            dict.Add("OffsetY", _OffsetY);
+            dict.Add("UseMask", _UseMask);
+            dict.Add("MaskWidth", _MaskWidth);
+            dict.Add("MaskColor", _MaskColor.ToArgb());
+            return dict;
+        }
+
+        public static moTextSymbol FromDictionary(Dictionary<string, object> dict)
+        {
+            moTextSymbol symbol = new moTextSymbol();
+            // 根据Family和Size构造Font对象
+            string family = Convert.ToString(((Dictionary<string, object>)dict["Font"])["Family"]);
+            float size = Convert.ToSingle(((Dictionary<string, object>)dict["Font"])["Size"]);
+            symbol._Font = new Font(family, size);
+            symbol._FontColor = Color.FromArgb(Convert.ToInt32(dict["FontColor"]));
+            symbol._Alignment = (moTextSymbolAlignmentConstant)dict["Alignment"];
+            symbol._OffsetX = Convert.ToDouble(dict["OffsetX"]);
+            symbol._OffsetY = Convert.ToDouble(dict["OffsetY"]);
+            symbol._UseMask = Convert.ToBoolean(dict["UseMask"]);
+            symbol._MaskWidth = Convert.ToDouble(dict["MaskWidth"]);
+            symbol._MaskColor = Color.FromArgb(Convert.ToInt32(dict["MaskColor"]));
+            return symbol;
+        }
+
         #endregion
     }
 }

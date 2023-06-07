@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
 using System.Windows.Forms;
+using System.Text.Json;
 
 
 namespace MapCraft
@@ -342,7 +342,6 @@ namespace MapCraft
                 string layerPath = Path.Combine(Path.GetDirectoryName(shpFilePath), layerName);
                 ShapeFileParser fileProcessor = new ShapeFileParser(layerPath);
                 AddLayer(fileProcessor);
-
             }
             catch (Exception error)
             {
@@ -1001,10 +1000,7 @@ namespace MapCraft
         // 重新加载图层
         private void LoadTreeViewLayers()
         {
-<<<<<<< HEAD
             //treeView1.Nodes.Add(mapLayer.Name);
-=======
->>>>>>> 4595ff60d40c767d71066960bb54e8b880a9c85f
             RefreshLayersTree();
             if (moMapControl1.Layers.Count == 1)
                 moMapControl1.FullExtent();
@@ -1075,8 +1071,8 @@ namespace MapCraft
                     Features = features,
                     Description = layerInfo.Description
                 };
-                //layer.Renderer = JsonSerializer.Deserialize<moRenderer>(layerInfo.Renderer);
-                //layer.LabelRenderer = JsonSerializer.Deserialize<moLabelRenderer>(layerInfo.LabelRenderer);
+                layer.Renderer = moRenderer.FromDictionary(layerInfo.Renderer);
+                layer.LabelRenderer = moLabelRenderer.FromDictionary(layerInfo.LabelRenderer);
                 mShapefiles.Add(shapeFile);
                 MapControl.Layers.Add(layer);
             }
@@ -1103,11 +1099,8 @@ namespace MapCraft
                 layerInfo.Path = mShapefiles[i].FilePath;
                 layerInfo.Name = layer.Name;
                 layerInfo.Description = layer.Description;
-                //Dictionary<string, object> renderer = new Dictionary<string, object>();
-                //renderer.Add("Type", layer.Renderer.RendererType);
-                //layerInfo.Renderer = JsonSerializer.Serialize(renderer);
-                //layerInfo.Renderer = JsonSerializer.Serialize(layer.Renderer);
-                //layerInfo.LabelRenderer = JsonSerializer.Serialize(layer.LabelRenderer);
+                layerInfo.Renderer = layer.Renderer.ToDictionary();
+                layerInfo.LabelRenderer = layer.LabelRenderer.ToDictionary();
                 projectInfo.Layers.Add(layerInfo);
             }
             McFile.Write(path, projectInfo);
