@@ -110,6 +110,7 @@ namespace MapCraft.Forms
                 string layerPath = Path.Combine(Path.GetDirectoryName(savePath), layerName);
                 ShapeFileParser shapeFileParser = new ShapeFileParser(layerPath);
                 //shapeFileParser.GeometryType = geometryType;
+                //shapeFileParser.Fields = mFields;
                 shapeFileParser.Write_ShapeFile(layerPath);
                 Main.AddLayer(shapeFileParser);
                 Close();

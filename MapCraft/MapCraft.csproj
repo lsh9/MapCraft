@@ -76,6 +76,12 @@
     <Compile Include="Forms\IdentifyForm.Designer.cs">
       <DependentUpon>IdentifyForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\LayerDetailForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LayerDetailForm.Designer.cs">
+      <DependentUpon>LayerDetailForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\SelectByAttributeForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,6 +105,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\IdentifyForm.resx">
       <DependentUpon>IdentifyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LayerDetailForm.resx">
+      <DependentUpon>LayerDetailForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SelectByAttributeForm.resx">
       <DependentUpon>SelectByAttributeForm.cs</DependentUpon>

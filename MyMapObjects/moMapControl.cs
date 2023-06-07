@@ -546,7 +546,7 @@ namespace MyMapObjects
             Graphics g = Graphics.FromHwnd(this.Handle);
             double dpm = g.DpiX / 0.0254;
             g.Dispose();
-            double mpu = 1.0;
+            double mpu = _ProjectionCS.ToMeters(1);
             mMapDrawingReference = new moMapDrawingReference(0, 0, 1000000, dpm, mpu);
         }
 
