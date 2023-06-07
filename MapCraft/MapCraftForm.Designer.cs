@@ -563,6 +563,13 @@
             // 
             // 另存为
             // 
+            this.另存为.Name = "另存为";
+            this.另存为.Size = new System.Drawing.Size(170, 30);
+            this.另存为.Text = "另存为";
+            this.另存为.Click += new System.EventHandler(this.另存为_Click);
+            // 
+            // 渲染
+            // 
             this.渲染.Name = "渲染";
             this.渲染.Size = new System.Drawing.Size(170, 30);
             this.渲染.Text = "渲染";

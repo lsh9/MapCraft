@@ -30,11 +30,13 @@ namespace MapCraft
         private moSimpleMarkerSymbol mEditingVertexSymbol; // 正在编辑的图形的顶点的符号
         private moSimpleLineSymbol mElasticSymbol;         // 橡皮筋符号
         private bool mShowLngLat = false;                               // 是否显示经纬度
-        public List<ShapeFileParser> mShapefiles = new List<ShapeFileParser>();
 
+        private List<ShapeFileParser> mShapefiles = new List<ShapeFileParser>();// 图层路径记录
         private List<AttributeTable> AttributeTables = new List<AttributeTable>();
         private static int AttributeTableIndex;
         private int SelectedLayerIndex = -1;  //选中的图层索引
+        private string mProjectPath = "";  // 项目路径
+        private IdentifyForm mIdentifyForm = null;
 
         // 与地图操作有关的变量
         private MapOpConstant mMapOpStyle = 0;  // 地图操作方式
@@ -49,10 +51,6 @@ namespace MapCraft
         private List<moPoints> mSketchingShape;   // 正在描绘的图形，用多点集合存储
         public Renderer Render = new Renderer();
 
-        // 图层路径记录
-        private List<ShapeFileParser> mShapefiles = new List<ShapeFileParser>();
-        private string mProjectPath = "";  // 项目路径
-        private IdentifyForm mIdentifyForm = null;
         #endregion
 
         #region 属性

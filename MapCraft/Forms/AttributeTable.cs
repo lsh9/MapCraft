@@ -156,7 +156,7 @@ namespace MapCraft.Forms
                 field = new moField(NewFieldName, NewFieldType,NewFieldLength);
             Layer = Main.moMapControl1.Layers.GetItem(LayerIndex);
             Layer.AttributeFields.Append(field);
-            Main.mShapefiles[LayerIndex].Add_Field(field);
+            Main.Shapefiles[LayerIndex].Add_Field(field);
 
 
             BeginRefresh();//重新加载一下
