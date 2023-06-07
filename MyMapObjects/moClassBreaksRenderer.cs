@@ -254,6 +254,54 @@ namespace MyMapObjects
             sRenderer._ShowDefaultSymbol = _ShowDefaultSymbol;
             return sRenderer;
         }
+
+        public override Dictionary<string, object> ToDictionary()
+        {
+            Dictionary<string, object> sDic = new Dictionary<string, object>();
+            sDic.Add("RendererType", (Int32)RendererType);
+            sDic.Add("Field", _Field);
+            sDic.Add("HeadTitle", _HeadTitle);
+            sDic.Add("ShowHead", _ShowHead);
+            sDic.Add("ShowDefaultSymbol", _ShowDefaultSymbol);
+            Int32 sBreakCount = _BreakValues.Count;
+            for (Int32 i = 0; i <= sBreakCount - 1; i++)
+            {
+                double sBreakValue = _BreakValues[i];
+                moSymbol sSymbol = null;
+                if (_Symbols[i] != null)
+                    sSymbol = _Symbols[i].Clone();
+                sDic.Add("BreakValue" + i.ToString(), sBreakValue);
+                sDic.Add("Symbol" + i.ToString(), sSymbol);
+            }
+            if (_DefaultSymbol != null)
+            {
+                sDic.Add("DefaultSymbol", _DefaultSymbol.Clone());
+            }
+            return sDic;
+        }
+
+        public static new moClassBreaksRenderer FromDictionary(Dictionary<string, object> sDic)
+        {
+            moClassBreaksRenderer sRenderer = new moClassBreaksRenderer();
+            sRenderer._Field = sDic["Field"].ToString();
+            sRenderer._HeadTitle = sDic["HeadTitle"].ToString();
+            sRenderer._ShowHead = Convert.ToBoolean(sDic["ShowHead"]);
+            sRenderer._ShowDefaultSymbol = Convert.ToBoolean(sDic["ShowDefaultSymbol"]);
+            Int32 sBreakCount = (sDic.Count - 5) / 2;
+            for (Int32 i = 0; i <= sBreakCount - 1; i++)
+            {
+                double sBreakValue = Convert.ToDouble(sDic["BreakValue" + i.ToString()]);
+                moSymbol sSymbol = null;
+                if (sDic["Symbol" + i.ToString()] != null)
+                    sSymbol = (moSymbol)sDic["Symbol" + i.ToString()];
+                sRenderer.AddBreakValue(sBreakValue, sSymbol);
+            }
+            if (sDic["DefaultSymbol"] != null)
+            {
+                sRenderer.DefaultSymbol = (moSymbol)sDic["DefaultSymbol"];
+            }
+            return sRenderer;
+        }
         #endregion
 
         #region 私有函数

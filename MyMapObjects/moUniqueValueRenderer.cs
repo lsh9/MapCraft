@@ -169,6 +169,55 @@ namespace MyMapObjects
             sRenderer._ShowDefaultSymbol = _ShowDefaultSymbol;
             return sRenderer;
         }
+
+        public override Dictionary<string, object> ToDictionary()
+        {
+            Dictionary<string, object> sDictionary = new Dictionary<string, object>();
+            sDictionary.Add("RendererType", (Int32)RendererType);
+            sDictionary.Add("Field", _Field);
+            sDictionary.Add("HeadTitle", _HeadTitle);
+            sDictionary.Add("ShowHead", _ShowHead);
+            Int32 sValueCount = _Values.Count;
+            List<string> sValues = new List<string>();
+            List<Dictionary<string, object>> sSymbols = new List<Dictionary<string, object>>();
+            for (Int32 i = 0; i <= sValueCount - 1; i++)
+            {
+                sValues.Add(_Values[i]);
+                if (_Symbols[i] != null)
+                    sSymbols.Add(_Symbols[i].ToDictionary());
+                else
+                    sSymbols.Add(null);
+            }
+            sDictionary.Add("Values", sValues);
+            sDictionary.Add("Symbols", sSymbols);
+            if (_DefaultSymbol != null)
+                sDictionary.Add("DefaultSymbol", _DefaultSymbol.ToDictionary());
+            sDictionary.Add("ShowDefaultSymbol", _ShowDefaultSymbol);
+            return sDictionary;
+        }
+
+        public static new moUniqueValueRenderer FromDictionary(Dictionary<string, object> dictionary)
+        {
+            moUniqueValueRenderer sRenderer = new moUniqueValueRenderer();
+            sRenderer._Field = dictionary["Field"].ToString();
+            sRenderer._HeadTitle = dictionary["HeadTitle"].ToString();
+            sRenderer._ShowHead = Convert.ToBoolean(dictionary["ShowHead"]);
+            List<string> sValues = dictionary["Values"] as List<string>;
+            List<Dictionary<string, object>> sSymbols = dictionary["Symbols"] as List<Dictionary<string, object>>;
+            Int32 sValueCount = sValues.Count;
+            for (Int32 i = 0; i <= sValueCount - 1; i++)
+            {
+                string sValue = sValues[i];
+                moSymbol sSymbol = null;
+                if (sSymbols[i] != null)
+                    sSymbol = moSymbol.FromDictionary(sSymbols[i]);
+                sRenderer.AddUniqueValue(sValue, sSymbol);
+            }
+            if (dictionary.ContainsKey("DefaultSymbol"))
+                sRenderer._DefaultSymbol = moSymbol.FromDictionary(dictionary["DefaultSymbol"] as Dictionary<string, object>);
+            sRenderer._ShowDefaultSymbol = Convert.ToBoolean(dictionary["ShowDefaultSymbol"]);
+            return sRenderer;
+        }
         #endregion
     }
 }

@@ -109,6 +109,28 @@ namespace MyMapObjects
             return sSymbol;
         }
 
+        public override Dictionary<string, object> ToDictionary()
+        {
+            Dictionary<string, object> sDictionary = new Dictionary<string, object>();
+            sDictionary.Add("SymbolType", SymbolType);
+            sDictionary.Add("Label", _Label);
+            sDictionary.Add("Visible", _Visible);
+            sDictionary.Add("Style", _Style);
+            sDictionary.Add("Color", _Color.ToArgb());
+            sDictionary.Add("Size", _Size);
+            return sDictionary;
+        }
+
+        public static new moSimpleLineSymbol FromDictionary(Dictionary<string, object> dict)
+        {
+            moSimpleLineSymbol sSymbol = new moSimpleLineSymbol();
+            sSymbol._Label = Convert.ToString(dict["Label"]);
+            sSymbol._Visible = Convert.ToBoolean(dict["Visible"]);
+            sSymbol._Style = (moSimpleLineSymbolStyleConstant)dict["Style"];
+            sSymbol._Color = Color.FromArgb(Convert.ToInt32(dict["Color"]));
+            sSymbol._Size = Convert.ToDouble(dict["Size"]);
+            return sSymbol;
+        }
         #endregion
 
         #region 私有函数

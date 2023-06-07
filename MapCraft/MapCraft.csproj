@@ -36,6 +36,8 @@
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL" />
+    <Reference Include="System.Text.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,6 +54,7 @@
     <Compile Include="FileProcessor\DbfFieldDescriptor.cs" />
     <Compile Include="FileProcessor\DbfFileHeader.cs" />
     <Compile Include="FileProcessor\DbfFileParser.cs" />
+    <Compile Include="FileProcessor\McFile.cs" />
     <Compile Include="FileProcessor\ShpParser.cs" />
     <Compile Include="FileProcessor\ShxParser.cs" />
     <Compile Include="FileTools.cs" />
@@ -93,6 +96,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CreateLayerForm.resx">
       <DependentUpon>CreateLayerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\IdentifyForm.resx">
+      <DependentUpon>IdentifyForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SelectByAttributeForm.resx">
       <DependentUpon>SelectByAttributeForm.cs</DependentUpon>
