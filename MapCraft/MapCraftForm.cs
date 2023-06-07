@@ -8,8 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using MapCraft.Render;
-
-
+using System.Text.Json;
 
 namespace MapCraft
 {
@@ -51,8 +50,8 @@ namespace MapCraft
         public Renderer Render = new Renderer();
 
         // 图层路径记录
-        //private List<Shapefile> mShapefiles = new List<Shapefile>();
-
+        private List<ShapeFileParser> mShapefiles = new List<ShapeFileParser>();
+        private string mProjectPath = "";  // 项目路径
         #endregion
 
         #region 属性
@@ -90,7 +89,27 @@ namespace MapCraft
         // 点击新建地图菜单项
         private void 新建地图ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // 如果至少有一个图层,提示保存
+            if (moMapControl1.Layers.Count != 0)
+            {
+                DialogResult result = MessageBox.Show("是否保存当前地图？", "提示", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    保存ToolStripMenuItem_Click(sender, e);
+                }
+                else if (result == DialogResult.Cancel)
+                {
+                    return;
+                }
+                // 关闭所有shp
+                foreach (ShapeFileParser shapefile in mShapefiles)
+                {
+                    //shapefile.Close();
+                }
+            }
 
+            mProjectPath = "";
+            ReLoad();
         }
 
         // 点击新建图层菜单项
@@ -103,19 +122,70 @@ namespace MapCraft
         // 点击打开地图菜单项
         private void 打开地图ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            // 提示保存
+            if (moMapControl1.Layers.Count != 0)
+            {
+                DialogResult result = MessageBox.Show("是否保存当前地图？", "提示", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    保存ToolStripMenuItem_Click(sender, e);
+                }
+                else if (result == DialogResult.Cancel)
+                {
+                    return;
+                }
+            }
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Title = "打开文件";
+            openFileDialog.Filter = "MapCraft文件(*.mc)|*.mc";
+            openFileDialog.FilterIndex = 1;
+            openFileDialog.RestoreDirectory = true;
+            openFileDialog.ShowDialog();
+            if (openFileDialog.FileName == string.Empty)
+            {
+                return;
+            }
+            OpenProject(openFileDialog.FileName);
         }
 
         // 点击保存（地图）菜单项
         private void 保存ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            if (mProjectPath == string.Empty)
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    Title = "保存文件",
+                    Filter = "MapCraft文件(*.mc)|*.mc",
+                    FilterIndex = 1,
+                    RestoreDirectory = true
+                };
+                saveFileDialog.ShowDialog();
+                if (saveFileDialog.FileName == string.Empty)
+                {
+                    return;
+                }
+                mProjectPath = saveFileDialog.FileName;
+            }
+            SaveProject(mProjectPath);
         }
 
         // 点击另存为（地图）菜单项
         private void 另存为ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Title = "另存为文件",
+                Filter = "MapCraft文件(*.mc)|*.mc",
+                FilterIndex = 1,
+                RestoreDirectory = true
+            };
+            saveFileDialog.ShowDialog();
+            if (saveFileDialog.FileName == string.Empty)
+            {
+                return;
+            }
+            SaveProject(saveFileDialog.FileName);
         }
 
         #endregion
@@ -127,9 +197,60 @@ namespace MapCraft
             mShowLngLat = cbxProjectionCS.Checked;
         }
 
-        #region treeview operation
+        #region 图层控件操作
 
-        
+        private void TreeView1_DragDrop(object sender, DragEventArgs e)
+        {
+            if (treeView1.Nodes.Count <= 1)
+            {
+                return;
+            }
+            TreeNode moveNode = (TreeNode)e.Data.GetData("System.Windows.Forms.TreeNode");
+            //根据鼠标坐标确定要移动到的目标节点
+            int fromIndex = moveNode.Index;
+            int toIndex = 0;
+            Point pt = ((TreeView)(sender)).PointToClient(new Point(e.X, e.Y));
+            int sNodesNum = treeView1.Nodes.Count;
+            Rectangle sFirstRect = treeView1.Nodes[0].Bounds;
+            Rectangle sLastRect = treeView1.Nodes[sNodesNum - 1].Bounds;
+            if (pt.Y <= sFirstRect.Y)
+            {
+                toIndex = 0;
+            }
+            else if (pt.Y >= (sLastRect.Y + sLastRect.Height))
+            {
+                toIndex = sNodesNum - 1;
+            }
+            else
+            {
+                for (int i = 0; i < sNodesNum; ++i)
+                {
+                    Rectangle sCurRect = treeView1.Nodes[i].Bounds;
+                    if ((pt.Y > sCurRect.Y) && (pt.Y <= (sCurRect.Y + sCurRect.Height)))
+                    {
+                        toIndex = i;
+                        break;
+                    }
+                }
+            }
+            MoveLayer(fromIndex, toIndex);
+            RefreshLayersTree();    //刷新图层列表
+            MapControl.RedrawMap();  //刷新地图
+        }
+
+        private void TreeView1_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = e.Data.GetDataPresent("System.Windows.Forms.TreeNode") ? DragDropEffects.Move : DragDropEffects.None;
+        }
+
+        private void TreeView1_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                DoDragDrop(e.Item, DragDropEffects.Move);
+            }
+        }
+
         private void treeView1_AfterCheck(object sender, TreeViewEventArgs e)
         {
             int sIndex = e.Node.Index;
@@ -501,23 +622,17 @@ namespace MapCraft
             try
             {
                 string layerName = Path.GetFileNameWithoutExtension(shpFilePath);
-                string layerPath = shpFilePath.Substring(0, shpFilePath.IndexOf(".shp", StringComparison.Ordinal));
-
+                string layerPath = Path.Combine(Path.GetDirectoryName(shpFilePath), layerName);
                 ShapeFileParser fileProcessor = new ShapeFileParser(layerPath);
-                moFeatures sFeatures =  fileProcessor.Read_ShapeFile();
-
-                // convert to mapLayer
-                moMapLayer mapLayer =
-                    new moMapLayer(layerName, fileProcessor.GeometryType, fileProcessor.Fields);
-
-                mapLayer.Features = sFeatures;
-                AddLayer(mapLayer, fileProcessor);
+                AddLayer(fileProcessor);
             }
             catch (Exception error)
             {
                 MessageBox.Show(error.ToString());
 
             }
+            btnAddData.BackColor = SystemColors.Control;
+            mMapOpStyle = MapOpConstant.None;
         }
 
         // 点击放大按钮
@@ -542,6 +657,8 @@ namespace MapCraft
         private void btnFullExtent_Click(object sender, EventArgs e)
         {
             moMapControl1.FullExtent();
+            btnFullExtent.BackColor = SystemColors.Control;
+            mMapOpStyle = MapOpConstant.None;
         }
 
         // 点击固定比例放大按钮
@@ -552,6 +669,8 @@ namespace MapCraft
             double sX = moMapControl1.ClientRectangle.Height / 2;
             moPoint sPoint = moMapControl1.ToMapPoint(sX, sY);
             moMapControl1.ZoomByCenter(sPoint, mZoomRatioFixed);
+            btnFixedZoomIn.BackColor = SystemColors.Control;
+            mMapOpStyle = MapOpConstant.None;
         }
 
         // 点击固定比例缩小按钮
@@ -562,6 +681,8 @@ namespace MapCraft
             double sX = moMapControl1.ClientRectangle.Height / 2;
             moPoint sPoint = moMapControl1.ToMapPoint(sX, sY);
             moMapControl1.ZoomByCenter(sPoint, 1 / mZoomRatioFixed);
+            btnFixedZoomOut.BackColor = SystemColors.Control;
+            mMapOpStyle = MapOpConstant.None;
         }
 
         // 点击按位置选择按钮
@@ -577,7 +698,8 @@ namespace MapCraft
             mMapOpStyle = MapOpConstant.SelectByAttribute;
             SelectByAttributeForm sSelectByAttributeForm = new SelectByAttributeForm(this);
             sSelectByAttributeForm.Show();
-
+            btnSelectByAttribute.BackColor = SystemColors.Control;
+            mMapOpStyle = MapOpConstant.None;
         }
 
         // 点击清除选择按钮
@@ -589,6 +711,8 @@ namespace MapCraft
                 sLayer.SelectedFeatures.Clear();
             }
             moMapControl1.RedrawMap();
+            btnClearSelection.BackColor = SystemColors.Control;
+            mMapOpStyle = MapOpConstant.None;
         }
 
         // 点击查询按钮
@@ -817,7 +941,7 @@ namespace MapCraft
             moMapControl1.PanDelta(sDeltaX, sDeltaY);
         }
 
-        
+
 
 
 
@@ -950,9 +1074,26 @@ namespace MapCraft
         #region 方法
 
         #region 图层操作
-        // 添加图层到当前地图
-        public void AddLayer(moMapLayer mapLayer, ShapeFileParser shapefile)
+        private void MoveLayer(Int32 from, Int32 to)
         {
+            if (from == to) return;
+            if (from < 0 || from >= MapControl.Layers.Count) return;
+            if (to < 0 || to >= MapControl.Layers.Count) return;
+            // 移动MapControl中的图层
+            MapControl.Layers.MoveTo(from, to);
+            // 移动mShapefiles的顺序
+            ShapeFileParser shapefile = mShapefiles[from];
+            mShapefiles.RemoveAt(from);
+            mShapefiles.Insert(to, shapefile);
+        }
+
+        // 添加图层到当前地图
+        public void AddLayer(ShapeFileParser shapefile)
+        {
+            moFeatures features = shapefile.Read_ShapeFile();
+            moMapLayer mapLayer = new moMapLayer(Path.GetFileNameWithoutExtension(shapefile.FilePath), shapefile.GeometryType, shapefile.Fields);
+            mapLayer.Features = features;
+
             MapControl.Layers.Add(mapLayer);
             mShapefiles.Add(shapefile);
             treeView1.Nodes.Add(mapLayer.Name);
@@ -1141,8 +1282,6 @@ namespace MapCraft
         }
 
 
-
-
         private void RefreshLayersTree()
         {
             treeView1.Nodes.Clear();
@@ -1159,13 +1298,90 @@ namespace MapCraft
             treeView1.Refresh();
         }
 
+        // 某个操作按钮被点击
+        private void tStripMapOperator_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            // 清除所有按钮的选中状态
+            foreach (ToolStripItem sItem in tStripMapOperator.Items)
+            {
+                if (sItem.GetType() == typeof(ToolStripButton))
+                {
+                    ToolStripButton button = (ToolStripButton)sItem;
+                    button.BackColor = SystemColors.Control;
+                }
+            }
+            // 选中当前按钮
+            ToolStripButton sButton = (ToolStripButton)e.ClickedItem;
+            sButton.BackColor = Color.LightBlue;
+        }
 
+        private void ReLoad()
+        {
+            Controls.Clear();
+            InitializeComponent();
+            moMapControl1.MouseWheel += moMapControl1_MouseWheel;
+            InitializeSymbols();
+            InitializeSketchingShape();
+            ShowMapScale();
+            RefreshLayersTree();
+            moMapControl1.RedrawMap();
+        }
+
+        #region 项目文件管理
+
+        // 打开项目
+        private void OpenProject(string path)
+        {
+            mProjectPath = path;
+            McFile.ProjectInfo projectInfo = McFile.Read(path);
+            for (Int32 i = 0; i < projectInfo.Layers.Count; i++)
+            {
+                McFile.LayerInfo layerInfo = projectInfo.Layers[i];
+                ShapeFileParser shapeFile = new ShapeFileParser(layerInfo.Path);
+                moFeatures features = shapeFile.Read_ShapeFile();
+                moMapLayer layer = new moMapLayer(layerInfo.Name, shapeFile.GeometryType, shapeFile.Fields)
+                {
+                    Features = features,
+                    Description = layerInfo.Description
+                };
+                layer.Renderer = moRenderer.FromDictionary(layerInfo.Renderer);
+                layer.LabelRenderer = moLabelRenderer.FromDictionary(layerInfo.LabelRenderer);
+                mShapefiles.Add(shapeFile);
+                MapControl.Layers.Add(layer);
+            }
+            Text = projectInfo.ProjectName;
+            RefreshLayersTree();
+            MapControl.RedrawMap();
+            MapControl.FullExtent();
+        }
+
+        // 保存项目
+        private void SaveProject(string path)
+        {
+            // 新地图没保存过,设置项目路径
+            if (mProjectPath == string.Empty)
+            {
+                mProjectPath = path;
+            }
+            McFile.ProjectInfo projectInfo = new McFile.ProjectInfo();
+            projectInfo.Layers.Clear();
+            for (Int32 i = 0; i < moMapControl1.Layers.Count; i++)
+            {
+                moMapLayer layer = moMapControl1.Layers.GetItem(i);
+                McFile.LayerInfo layerInfo = new McFile.LayerInfo();
+                layerInfo.Path = mShapefiles[i].FilePath;
+                layerInfo.Name = layer.Name;
+                layerInfo.Description = layer.Description;
+                layerInfo.Renderer = layer.Renderer.ToDictionary();
+                layerInfo.LabelRenderer = layer.LabelRenderer.ToDictionary();
+                projectInfo.Layers.Add(layerInfo);
+            }
+            McFile.Write(path, projectInfo);
+        }
 
 
 
         #endregion
-
-
 
     }
 }

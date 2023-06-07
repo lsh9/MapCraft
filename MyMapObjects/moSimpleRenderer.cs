@@ -46,6 +46,21 @@ namespace MyMapObjects
             sRenderer.Symbol = this.Symbol.Clone();
             return sRenderer;
         }
+
+        public override Dictionary<string, object> ToDictionary()
+        {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("RendererType", (Int32)RendererType);
+            dict.Add("Symbol", _symbol.ToDictionary());
+            return dict;
+        }
+
+        public static new moSimpleRenderer FromDictionary(Dictionary<string, object> dict)
+        {
+            moSimpleRenderer sRenderer = new moSimpleRenderer();
+            sRenderer.Symbol = moSymbol.FromDictionary(dict["Symbol"] as Dictionary<string, object>);
+            return sRenderer;
+        }
         #endregion
     }
 }

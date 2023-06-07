@@ -39,19 +39,17 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 12F);
-            this.label1.Location = new System.Drawing.Point(44, 26);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(33, 21);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(79, 20);
+            this.label1.Size = new System.Drawing.Size(63, 16);
             this.label1.TabIndex = 0;
             this.label1.Text = "图层 ：";
             // 
             // treeView
             // 
-            this.treeView.Location = new System.Drawing.Point(36, 74);
-            this.treeView.Margin = new System.Windows.Forms.Padding(4);
+            this.treeView.Location = new System.Drawing.Point(27, 59);
             this.treeView.Name = "treeView";
-            this.treeView.Size = new System.Drawing.Size(389, 146);
+            this.treeView.Size = new System.Drawing.Size(293, 118);
             this.treeView.TabIndex = 2;
             this.treeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView_NodeMouseClick);
             // 
@@ -60,35 +58,34 @@
             this.table.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.table.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.table.GridColor = System.Drawing.SystemColors.ButtonShadow;
-            this.table.Location = new System.Drawing.Point(36, 245);
-            this.table.Margin = new System.Windows.Forms.Padding(4);
+            this.table.Location = new System.Drawing.Point(27, 196);
             this.table.Name = "table";
             this.table.RowHeadersWidth = 51;
             this.table.RowTemplate.Height = 23;
-            this.table.Size = new System.Drawing.Size(391, 294);
+            this.table.Size = new System.Drawing.Size(293, 235);
             this.table.TabIndex = 3;
             // 
             // lblLayerName
             // 
             this.lblLayerName.AutoSize = true;
             this.lblLayerName.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lblLayerName.Location = new System.Drawing.Point(186, 26);
+            this.lblLayerName.Location = new System.Drawing.Point(140, 21);
+            this.lblLayerName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblLayerName.Name = "lblLayerName";
-            this.lblLayerName.Size = new System.Drawing.Size(59, 20);
+            this.lblLayerName.Size = new System.Drawing.Size(47, 16);
             this.lblLayerName.TabIndex = 4;
-            this.lblLayerName.Text = "Layer";
+            this.lblLayerName.Text = "LayerInfo";
             // 
-            // Identify
+            // IdentifyForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(464, 576);
+            this.ClientSize = new System.Drawing.Size(348, 461);
             this.Controls.Add(this.lblLayerName);
             this.Controls.Add(this.table);
             this.Controls.Add(this.treeView);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(4);
-            this.Name = "Identify";
+            this.Name = "IdentifyForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "识别";
             ((System.ComponentModel.ISupportInitialize)(this.table)).EndInit();

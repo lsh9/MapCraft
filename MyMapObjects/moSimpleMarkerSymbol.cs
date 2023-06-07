@@ -109,6 +109,29 @@ namespace MyMapObjects
             sSymbol._Size = _Size;
             return sSymbol;
         }
+
+        public override Dictionary<string, object> ToDictionary()
+        {
+            Dictionary<string, object> sDict = new Dictionary<string, object>();
+            sDict.Add("SymbolType", SymbolType);
+            sDict.Add("Label", _Label);
+            sDict.Add("Visible", _Visible);
+            sDict.Add("Style", _Style);
+            sDict.Add("Color", _Color.ToArgb());
+            sDict.Add("Size", _Size);
+            return sDict;
+        }
+
+        public static new moSimpleMarkerSymbol FromDictionary(Dictionary<string, object> dict)
+        {
+            moSimpleMarkerSymbol sSymbol = new moSimpleMarkerSymbol();
+            sSymbol._Label = Convert.ToString(dict["Label"]);
+            sSymbol._Visible = Convert.ToBoolean(dict["Visible"]);
+            sSymbol._Style = (moSimpleMarkerSymbolStyleConstant)dict["Style"];
+            sSymbol._Color = Color.FromArgb(Convert.ToInt32(dict["Color"]));
+            sSymbol._Size = Convert.ToDouble(dict["Size"]);
+            return sSymbol;
+        }
         #endregion
 
         #region 私有方法
