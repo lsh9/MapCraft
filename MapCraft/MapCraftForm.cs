@@ -182,7 +182,7 @@ namespace MapCraft
                 Title = "另存为文件",
                 Filter = "MapCraft文件(*.mc)|*.mc",
                 FilterIndex = 1,
-                RestoreDirectory = true
+                RestoreDirectory = true,
             };
             saveFileDialog.ShowDialog();
             if (saveFileDialog.FileName == string.Empty)
@@ -192,6 +192,25 @@ namespace MapCraft
             SaveProject(saveFileDialog.FileName);
         }
 
+        // 点击导出（导出为图片）菜单项
+        private void 导出ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // 将MapControl的BufferMap1导出为图片
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Title = "导出为图片",
+                Filter = "BMP文件(*.bmp)|*.bmp|JPG文件(*.jpg)|*.jpg|PNG文件(*.png)|*.png",
+                FilterIndex = 1,
+                RestoreDirectory = true
+            };
+            saveFileDialog.ShowDialog();
+            if (saveFileDialog.FileName == string.Empty)
+            {
+                return;
+            }
+            string fileName = saveFileDialog.FileName;
+            MapControl.SaveImage(fileName);
+        }
         #endregion
 
 

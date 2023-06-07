@@ -52,6 +52,10 @@
             this.btnIn = new System.Windows.Forms.Button();
             this.btnIs = new System.Windows.Forms.Button();
             this.labelSQL = new System.Windows.Forms.Label();
+            this.btnNull = new System.Windows.Forms.Button();
+            this.btnLine = new System.Windows.Forms.Button();
+            this.btnBracket = new System.Windows.Forms.Button();
+            this.btnPercnt = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // SelectBoxLayer
@@ -92,7 +96,7 @@
             // 
             // btnEq
             // 
-            this.btnEq.Location = new System.Drawing.Point(44, 232);
+            this.btnEq.Location = new System.Drawing.Point(44, 219);
             this.btnEq.Name = "btnEq";
             this.btnEq.Size = new System.Drawing.Size(40, 30);
             this.btnEq.TabIndex = 3;
@@ -102,7 +106,7 @@
             // 
             // btnGt
             // 
-            this.btnGt.Location = new System.Drawing.Point(43, 264);
+            this.btnGt.Location = new System.Drawing.Point(43, 251);
             this.btnGt.Name = "btnGt";
             this.btnGt.Size = new System.Drawing.Size(40, 30);
             this.btnGt.TabIndex = 4;
@@ -112,7 +116,7 @@
             // 
             // btnLt
             // 
-            this.btnLt.Location = new System.Drawing.Point(43, 296);
+            this.btnLt.Location = new System.Drawing.Point(43, 283);
             this.btnLt.Name = "btnLt";
             this.btnLt.Size = new System.Drawing.Size(40, 30);
             this.btnLt.TabIndex = 5;
@@ -122,7 +126,7 @@
             // 
             // btnNeq
             // 
-            this.btnNeq.Location = new System.Drawing.Point(84, 232);
+            this.btnNeq.Location = new System.Drawing.Point(84, 219);
             this.btnNeq.Name = "btnNeq";
             this.btnNeq.Size = new System.Drawing.Size(40, 30);
             this.btnNeq.TabIndex = 6;
@@ -132,7 +136,7 @@
             // 
             // btnLike
             // 
-            this.btnLike.Location = new System.Drawing.Point(125, 232);
+            this.btnLike.Location = new System.Drawing.Point(125, 219);
             this.btnLike.Name = "btnLike";
             this.btnLike.Size = new System.Drawing.Size(40, 30);
             this.btnLike.TabIndex = 7;
@@ -142,7 +146,7 @@
             // 
             // btnGe
             // 
-            this.btnGe.Location = new System.Drawing.Point(84, 264);
+            this.btnGe.Location = new System.Drawing.Point(84, 251);
             this.btnGe.Name = "btnGe";
             this.btnGe.Size = new System.Drawing.Size(40, 30);
             this.btnGe.TabIndex = 8;
@@ -152,7 +156,7 @@
             // 
             // btnLe
             // 
-            this.btnLe.Location = new System.Drawing.Point(84, 296);
+            this.btnLe.Location = new System.Drawing.Point(84, 283);
             this.btnLe.Name = "btnLe";
             this.btnLe.Size = new System.Drawing.Size(40, 30);
             this.btnLe.TabIndex = 9;
@@ -162,7 +166,7 @@
             // 
             // btnAnd
             // 
-            this.btnAnd.Location = new System.Drawing.Point(125, 264);
+            this.btnAnd.Location = new System.Drawing.Point(125, 251);
             this.btnAnd.Name = "btnAnd";
             this.btnAnd.Size = new System.Drawing.Size(40, 30);
             this.btnAnd.TabIndex = 10;
@@ -172,7 +176,7 @@
             // 
             // btnOr
             // 
-            this.btnOr.Location = new System.Drawing.Point(125, 296);
+            this.btnOr.Location = new System.Drawing.Point(125, 283);
             this.btnOr.Name = "btnOr";
             this.btnOr.Size = new System.Drawing.Size(40, 30);
             this.btnOr.TabIndex = 11;
@@ -182,7 +186,7 @@
             // 
             // btnGetUniqueValue
             // 
-            this.btnGetUniqueValue.Location = new System.Drawing.Point(181, 361);
+            this.btnGetUniqueValue.Location = new System.Drawing.Point(181, 348);
             this.btnGetUniqueValue.Name = "btnGetUniqueValue";
             this.btnGetUniqueValue.Size = new System.Drawing.Size(131, 30);
             this.btnGetUniqueValue.TabIndex = 19;
@@ -194,7 +198,7 @@
             // 
             this.ListBoxUniqueValues.FormattingEnabled = true;
             this.ListBoxUniqueValues.ItemHeight = 12;
-            this.ListBoxUniqueValues.Location = new System.Drawing.Point(181, 232);
+            this.ListBoxUniqueValues.Location = new System.Drawing.Point(181, 219);
             this.ListBoxUniqueValues.Name = "ListBoxUniqueValues";
             this.ListBoxUniqueValues.Size = new System.Drawing.Size(131, 124);
             this.ListBoxUniqueValues.TabIndex = 20;
@@ -262,7 +266,7 @@
             // 
             // btnNot
             // 
-            this.btnNot.Location = new System.Drawing.Point(125, 332);
+            this.btnNot.Location = new System.Drawing.Point(125, 319);
             this.btnNot.Name = "btnNot";
             this.btnNot.Size = new System.Drawing.Size(40, 30);
             this.btnNot.TabIndex = 32;
@@ -272,7 +276,7 @@
             // 
             // btnIn
             // 
-            this.btnIn.Location = new System.Drawing.Point(84, 332);
+            this.btnIn.Location = new System.Drawing.Point(84, 319);
             this.btnIn.Name = "btnIn";
             this.btnIn.Size = new System.Drawing.Size(40, 30);
             this.btnIn.TabIndex = 31;
@@ -282,7 +286,7 @@
             // 
             // btnIs
             // 
-            this.btnIs.Location = new System.Drawing.Point(43, 332);
+            this.btnIs.Location = new System.Drawing.Point(43, 319);
             this.btnIs.Name = "btnIs";
             this.btnIs.Size = new System.Drawing.Size(40, 30);
             this.btnIs.TabIndex = 30;
@@ -300,11 +304,56 @@
             this.labelSQL.Size = new System.Drawing.Size(0, 12);
             this.labelSQL.TabIndex = 33;
             // 
+            // btnNull
+            // 
+            this.btnNull.Location = new System.Drawing.Point(125, 355);
+            this.btnNull.Name = "btnNull";
+            this.btnNull.Size = new System.Drawing.Size(40, 30);
+            this.btnNull.TabIndex = 36;
+            this.btnNull.Text = "Null";
+            this.btnNull.UseVisualStyleBackColor = true;
+            this.btnNull.Click += new System.EventHandler(this.btnNull_Click);
+            // 
+            // btnLine
+            // 
+            this.btnLine.Location = new System.Drawing.Point(84, 355);
+            this.btnLine.Name = "btnLine";
+            this.btnLine.Size = new System.Drawing.Size(19, 30);
+            this.btnLine.TabIndex = 35;
+            this.btnLine.Text = "_";
+            this.btnLine.UseVisualStyleBackColor = true;
+            this.btnLine.Click += new System.EventHandler(this.btnLine_Click);
+            // 
+            // btnBracket
+            // 
+            this.btnBracket.Location = new System.Drawing.Point(43, 355);
+            this.btnBracket.Name = "btnBracket";
+            this.btnBracket.Size = new System.Drawing.Size(40, 30);
+            this.btnBracket.TabIndex = 34;
+            this.btnBracket.Text = "()";
+            this.btnBracket.UseVisualStyleBackColor = true;
+            this.btnBracket.Click += new System.EventHandler(this.btnBracket_Click);
+            // 
+            // btnPercnt
+            // 
+            this.btnPercnt.Location = new System.Drawing.Point(105, 355);
+            this.btnPercnt.Name = "btnPercnt";
+            this.btnPercnt.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.btnPercnt.Size = new System.Drawing.Size(19, 30);
+            this.btnPercnt.TabIndex = 37;
+            this.btnPercnt.Text = "%";
+            this.btnPercnt.UseVisualStyleBackColor = true;
+            this.btnPercnt.Click += new System.EventHandler(this.btnPercnt_Click);
+            // 
             // SelectByAttributeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(347, 549);
+            this.Controls.Add(this.btnPercnt);
+            this.Controls.Add(this.btnNull);
+            this.Controls.Add(this.btnLine);
+            this.Controls.Add(this.btnBracket);
             this.Controls.Add(this.labelSQL);
             this.Controls.Add(this.btnNot);
             this.Controls.Add(this.btnIn);
@@ -362,5 +411,9 @@
         private System.Windows.Forms.Button btnIn;
         private System.Windows.Forms.Button btnIs;
         private System.Windows.Forms.Label labelSQL;
+        private System.Windows.Forms.Button btnNull;
+        private System.Windows.Forms.Button btnLine;
+        private System.Windows.Forms.Button btnBracket;
+        private System.Windows.Forms.Button btnPercnt;
     }
 }

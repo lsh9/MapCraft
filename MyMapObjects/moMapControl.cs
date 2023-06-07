@@ -688,7 +688,14 @@ namespace MyMapObjects
             return new moUserDrawingTool(g, sExtent, sMapScale, dpm, mpu);
         }
 
-
+        /// <summary>
+        /// 将地图保存成图片
+        /// </summary>
+        /// <param name="path"></param>
+        public void SaveImage(string path)
+        {
+            mBufferMap1.Save(path);
+        }
 
         #endregion
 
