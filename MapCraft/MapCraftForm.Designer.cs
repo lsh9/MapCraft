@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MapCraftForm));
             MyMapObjects.moLayers moLayers1 = new MyMapObjects.moLayers();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MapCraftForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.新建ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,6 +43,24 @@
             this.按位置选择ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.帮助ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tStripMapOperator = new System.Windows.Forms.ToolStrip();
+            this.tStripFeatureEditor = new System.Windows.Forms.ToolStrip();
+            this.ddbtnEditor = new System.Windows.Forms.ToolStripDropDownButton();
+            this.开始编辑ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.结束编辑ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.保存编辑内容ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.coordinateStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.cbxProjectionCS = new System.Windows.Forms.CheckBox();
+            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.moMapControl1 = new MyMapObjects.moMapControl();
+            this.LayerRightMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.另存为 = new System.Windows.Forms.ToolStripMenuItem();
+            this.MapScaleButton = new System.Windows.Forms.ToolStripSplitButton();
+            this.btnStartEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnCreateFeature = new System.Windows.Forms.ToolStripButton();
+            this.btnMoveNode = new System.Windows.Forms.ToolStripButton();
+            this.btnAddNode = new System.Windows.Forms.ToolStripButton();
+            this.btnDeleteNode = new System.Windows.Forms.ToolStripButton();
             this.btnAddData = new System.Windows.Forms.ToolStripButton();
             this.btnZoomIn = new System.Windows.Forms.ToolStripButton();
             this.btnZoomOut = new System.Windows.Forms.ToolStripButton();
@@ -54,25 +72,8 @@
             this.btnSelectByAttribute = new System.Windows.Forms.ToolStripButton();
             this.btnClearSelection = new System.Windows.Forms.ToolStripButton();
             this.btnIdentify = new System.Windows.Forms.ToolStripButton();
-            this.tStripFeatureEditor = new System.Windows.Forms.ToolStrip();
-            this.ddbtnEditor = new System.Windows.Forms.ToolStripDropDownButton();
-            this.开始编辑ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.结束编辑ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.保存编辑内容ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnStartEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnCreateFeature = new System.Windows.Forms.ToolStripButton();
-            this.btnMoveNode = new System.Windows.Forms.ToolStripButton();
-            this.btnAddNode = new System.Windows.Forms.ToolStripButton();
-            this.btnDeleteNode = new System.Windows.Forms.ToolStripButton();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.MapScaleButton = new System.Windows.Forms.ToolStripSplitButton();
-            this.coordinateStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.cbxProjectionCS = new System.Windows.Forms.CheckBox();
-            this.treeView1 = new System.Windows.Forms.TreeView();
-            this.moMapControl1 = new MyMapObjects.moMapControl();
-            this.LayerRightMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.渲染 = new System.Windows.Forms.ToolStripMenuItem();
             this.打开属性表 = new System.Windows.Forms.ToolStripMenuItem();
-            this.另存为 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tStripMapOperator.SuspendLayout();
             this.tStripFeatureEditor.SuspendLayout();
@@ -185,6 +186,187 @@
             this.tStripMapOperator.TabIndex = 1;
             this.tStripMapOperator.Text = "toolStrip1";
             // 
+            // tStripFeatureEditor
+            // 
+            this.tStripFeatureEditor.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.tStripFeatureEditor.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ddbtnEditor,
+            this.btnStartEdit,
+            this.btnCreateFeature,
+            this.btnMoveNode,
+            this.btnAddNode,
+            this.btnDeleteNode});
+            this.tStripFeatureEditor.Location = new System.Drawing.Point(0, 63);
+            this.tStripFeatureEditor.Name = "tStripFeatureEditor";
+            this.tStripFeatureEditor.Padding = new System.Windows.Forms.Padding(0);
+            this.tStripFeatureEditor.Size = new System.Drawing.Size(746, 39);
+            this.tStripFeatureEditor.TabIndex = 2;
+            this.tStripFeatureEditor.Text = "toolStrip2";
+            // 
+            // ddbtnEditor
+            // 
+            this.ddbtnEditor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.ddbtnEditor.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.开始编辑ToolStripMenuItem,
+            this.结束编辑ToolStripMenuItem,
+            this.保存编辑内容ToolStripMenuItem});
+            this.ddbtnEditor.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ddbtnEditor.Name = "ddbtnEditor";
+            this.ddbtnEditor.Size = new System.Drawing.Size(57, 36);
+            this.ddbtnEditor.Text = "编辑器";
+            // 
+            // 开始编辑ToolStripMenuItem
+            // 
+            this.开始编辑ToolStripMenuItem.Name = "开始编辑ToolStripMenuItem";
+            this.开始编辑ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.开始编辑ToolStripMenuItem.Text = "开始编辑";
+            // 
+            // 结束编辑ToolStripMenuItem
+            // 
+            this.结束编辑ToolStripMenuItem.Name = "结束编辑ToolStripMenuItem";
+            this.结束编辑ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.结束编辑ToolStripMenuItem.Text = "结束编辑";
+            // 
+            // 保存编辑内容ToolStripMenuItem
+            // 
+            this.保存编辑内容ToolStripMenuItem.Name = "保存编辑内容ToolStripMenuItem";
+            this.保存编辑内容ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.保存编辑内容ToolStripMenuItem.Text = "保存编辑内容";
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MapScaleButton,
+            this.coordinateStatusLabel});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 489);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 7, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(746, 41);
+            this.statusStrip1.TabIndex = 3;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // coordinateStatusLabel
+            // 
+            this.coordinateStatusLabel.AutoSize = false;
+            this.coordinateStatusLabel.Name = "coordinateStatusLabel";
+            this.coordinateStatusLabel.Size = new System.Drawing.Size(250, 36);
+            this.coordinateStatusLabel.Text = "坐标";
+            // 
+            // cbxProjectionCS
+            // 
+            this.cbxProjectionCS.AutoSize = true;
+            this.cbxProjectionCS.Location = new System.Drawing.Point(392, 540);
+            this.cbxProjectionCS.Margin = new System.Windows.Forms.Padding(2);
+            this.cbxProjectionCS.Name = "cbxProjectionCS";
+            this.cbxProjectionCS.Size = new System.Drawing.Size(84, 16);
+            this.cbxProjectionCS.TabIndex = 4;
+            this.cbxProjectionCS.Text = "投影坐标系";
+            this.cbxProjectionCS.UseVisualStyleBackColor = true;
+            // 
+            // treeView1
+            // 
+            this.treeView1.AllowDrop = true;
+            this.treeView1.CheckBoxes = true;
+            this.treeView1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.treeView1.Location = new System.Drawing.Point(0, 102);
+            this.treeView1.Margin = new System.Windows.Forms.Padding(2);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.Size = new System.Drawing.Size(159, 387);
+            this.treeView1.TabIndex = 5;
+            this.treeView1.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterCheck);
+            this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
+            // 
+            // moMapControl1
+            // 
+            this.moMapControl1.BackColor = System.Drawing.Color.White;
+            this.moMapControl1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.moMapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.moMapControl1.FlashColor = System.Drawing.Color.Green;
+            this.moMapControl1.Layers = moLayers1;
+            this.moMapControl1.Location = new System.Drawing.Point(159, 102);
+            this.moMapControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.moMapControl1.Name = "moMapControl1";
+            this.moMapControl1.SelectionColor = System.Drawing.Color.Cyan;
+            this.moMapControl1.Size = new System.Drawing.Size(587, 387);
+            this.moMapControl1.TabIndex = 6;
+            this.moMapControl1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.moMapControl1_MouseClick);
+            this.moMapControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.moMapControl1_MouseDown);
+            this.moMapControl1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.moMapControl1_MouseMove);
+            this.moMapControl1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.moMapControl1_MouseUp);
+            // 
+            // LayerRightMenu
+            // 
+            this.LayerRightMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.另存为,
+            this.打开属性表,
+            this.渲染});
+            this.LayerRightMenu.Name = "contextMenuStrip1";
+            this.LayerRightMenu.Size = new System.Drawing.Size(181, 92);
+            // 
+            // 另存为
+            // 
+            this.另存为.Name = "另存为";
+            this.另存为.Size = new System.Drawing.Size(180, 22);
+            this.另存为.Text = "另存为";
+            this.另存为.Click += new System.EventHandler(this.另存为_Click);
+            // 
+            // MapScaleButton
+            // 
+            this.MapScaleButton.AutoSize = false;
+            this.MapScaleButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.MapScaleButton.Image = ((System.Drawing.Image)(resources.GetObject("MapScaleButton.Image")));
+            this.MapScaleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.MapScaleButton.Margin = new System.Windows.Forms.Padding(0, 4, 10, 0);
+            this.MapScaleButton.Name = "MapScaleButton";
+            this.MapScaleButton.Size = new System.Drawing.Size(250, 37);
+            this.MapScaleButton.Text = "地图比例尺";
+            // 
+            // btnStartEdit
+            // 
+            this.btnStartEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnStartEdit.Image = global::MapCraft.Properties.Resources.编辑要素;
+            this.btnStartEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnStartEdit.Name = "btnStartEdit";
+            this.btnStartEdit.Size = new System.Drawing.Size(36, 36);
+            this.btnStartEdit.Text = "toolStripButton12";
+            // 
+            // btnCreateFeature
+            // 
+            this.btnCreateFeature.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnCreateFeature.Image = global::MapCraft.Properties.Resources.创建要素;
+            this.btnCreateFeature.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCreateFeature.Name = "btnCreateFeature";
+            this.btnCreateFeature.Size = new System.Drawing.Size(36, 36);
+            this.btnCreateFeature.Text = "toolStripButton13";
+            // 
+            // btnMoveNode
+            // 
+            this.btnMoveNode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnMoveNode.Image = global::MapCraft.Properties.Resources.移动节点;
+            this.btnMoveNode.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMoveNode.Name = "btnMoveNode";
+            this.btnMoveNode.Size = new System.Drawing.Size(36, 36);
+            this.btnMoveNode.Text = "toolStripButton14";
+            // 
+            // btnAddNode
+            // 
+            this.btnAddNode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnAddNode.Image = global::MapCraft.Properties.Resources.添加结点;
+            this.btnAddNode.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnAddNode.Name = "btnAddNode";
+            this.btnAddNode.Size = new System.Drawing.Size(36, 36);
+            this.btnAddNode.Text = "toolStripButton15";
+            // 
+            // btnDeleteNode
+            // 
+            this.btnDeleteNode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnDeleteNode.Image = global::MapCraft.Properties.Resources.删除节点;
+            this.btnDeleteNode.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnDeleteNode.Name = "btnDeleteNode";
+            this.btnDeleteNode.Size = new System.Drawing.Size(36, 36);
+            this.btnDeleteNode.Text = "toolStripButton16";
+            // 
             // btnAddData
             // 
             this.btnAddData.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -295,178 +477,12 @@
             this.btnIdentify.Text = "toolStripButton11";
             this.btnIdentify.Click += new System.EventHandler(this.btnIdentify_Click);
             // 
-            // tStripFeatureEditor
+            // 渲染
             // 
-            this.tStripFeatureEditor.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.tStripFeatureEditor.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ddbtnEditor,
-            this.btnStartEdit,
-            this.btnCreateFeature,
-            this.btnMoveNode,
-            this.btnAddNode,
-            this.btnDeleteNode});
-            this.tStripFeatureEditor.Location = new System.Drawing.Point(0, 63);
-            this.tStripFeatureEditor.Name = "tStripFeatureEditor";
-            this.tStripFeatureEditor.Padding = new System.Windows.Forms.Padding(0);
-            this.tStripFeatureEditor.Size = new System.Drawing.Size(746, 39);
-            this.tStripFeatureEditor.TabIndex = 2;
-            this.tStripFeatureEditor.Text = "toolStrip2";
-            // 
-            // ddbtnEditor
-            // 
-            this.ddbtnEditor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.ddbtnEditor.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.开始编辑ToolStripMenuItem,
-            this.结束编辑ToolStripMenuItem,
-            this.保存编辑内容ToolStripMenuItem});
-            this.ddbtnEditor.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ddbtnEditor.Name = "ddbtnEditor";
-            this.ddbtnEditor.Size = new System.Drawing.Size(57, 36);
-            this.ddbtnEditor.Text = "编辑器";
-            // 
-            // 开始编辑ToolStripMenuItem
-            // 
-            this.开始编辑ToolStripMenuItem.Name = "开始编辑ToolStripMenuItem";
-            this.开始编辑ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.开始编辑ToolStripMenuItem.Text = "开始编辑";
-            // 
-            // 结束编辑ToolStripMenuItem
-            // 
-            this.结束编辑ToolStripMenuItem.Name = "结束编辑ToolStripMenuItem";
-            this.结束编辑ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.结束编辑ToolStripMenuItem.Text = "结束编辑";
-            // 
-            // 保存编辑内容ToolStripMenuItem
-            // 
-            this.保存编辑内容ToolStripMenuItem.Name = "保存编辑内容ToolStripMenuItem";
-            this.保存编辑内容ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.保存编辑内容ToolStripMenuItem.Text = "保存编辑内容";
-            // 
-            // btnStartEdit
-            // 
-            this.btnStartEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnStartEdit.Image = global::MapCraft.Properties.Resources.编辑要素;
-            this.btnStartEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnStartEdit.Name = "btnStartEdit";
-            this.btnStartEdit.Size = new System.Drawing.Size(36, 36);
-            this.btnStartEdit.Text = "toolStripButton12";
-            // 
-            // btnCreateFeature
-            // 
-            this.btnCreateFeature.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnCreateFeature.Image = global::MapCraft.Properties.Resources.创建要素;
-            this.btnCreateFeature.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnCreateFeature.Name = "btnCreateFeature";
-            this.btnCreateFeature.Size = new System.Drawing.Size(36, 36);
-            this.btnCreateFeature.Text = "toolStripButton13";
-            // 
-            // btnMoveNode
-            // 
-            this.btnMoveNode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnMoveNode.Image = global::MapCraft.Properties.Resources.移动节点;
-            this.btnMoveNode.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMoveNode.Name = "btnMoveNode";
-            this.btnMoveNode.Size = new System.Drawing.Size(36, 36);
-            this.btnMoveNode.Text = "toolStripButton14";
-            // 
-            // btnAddNode
-            // 
-            this.btnAddNode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnAddNode.Image = global::MapCraft.Properties.Resources.添加结点;
-            this.btnAddNode.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnAddNode.Name = "btnAddNode";
-            this.btnAddNode.Size = new System.Drawing.Size(36, 36);
-            this.btnAddNode.Text = "toolStripButton15";
-            // 
-            // btnDeleteNode
-            // 
-            this.btnDeleteNode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnDeleteNode.Image = global::MapCraft.Properties.Resources.删除节点;
-            this.btnDeleteNode.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnDeleteNode.Name = "btnDeleteNode";
-            this.btnDeleteNode.Size = new System.Drawing.Size(36, 36);
-            this.btnDeleteNode.Text = "toolStripButton16";
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MapScaleButton,
-            this.coordinateStatusLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 489);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 7, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(746, 41);
-            this.statusStrip1.TabIndex = 3;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // MapScaleButton
-            // 
-            this.MapScaleButton.AutoSize = false;
-            this.MapScaleButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.MapScaleButton.Image = ((System.Drawing.Image)(resources.GetObject("MapScaleButton.Image")));
-            this.MapScaleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.MapScaleButton.Margin = new System.Windows.Forms.Padding(0, 4, 10, 0);
-            this.MapScaleButton.Name = "MapScaleButton";
-            this.MapScaleButton.Size = new System.Drawing.Size(250, 37);
-            this.MapScaleButton.Text = "地图比例尺";
-            // 
-            // coordinateStatusLabel
-            // 
-            this.coordinateStatusLabel.AutoSize = false;
-            this.coordinateStatusLabel.Name = "coordinateStatusLabel";
-            this.coordinateStatusLabel.Size = new System.Drawing.Size(250, 36);
-            this.coordinateStatusLabel.Text = "坐标";
-            // 
-            // cbxProjectionCS
-            // 
-            this.cbxProjectionCS.AutoSize = true;
-            this.cbxProjectionCS.Location = new System.Drawing.Point(392, 540);
-            this.cbxProjectionCS.Margin = new System.Windows.Forms.Padding(2);
-            this.cbxProjectionCS.Name = "cbxProjectionCS";
-            this.cbxProjectionCS.Size = new System.Drawing.Size(84, 16);
-            this.cbxProjectionCS.TabIndex = 4;
-            this.cbxProjectionCS.Text = "投影坐标系";
-            this.cbxProjectionCS.UseVisualStyleBackColor = true;
-            // 
-            // treeView1
-            // 
-            this.treeView1.AllowDrop = true;
-            this.treeView1.CheckBoxes = true;
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.treeView1.Location = new System.Drawing.Point(0, 102);
-            this.treeView1.Margin = new System.Windows.Forms.Padding(2);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(159, 387);
-            this.treeView1.TabIndex = 5;
-            this.treeView1.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterCheck);
-            this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
-            // 
-            // moMapControl1
-            // 
-            this.moMapControl1.BackColor = System.Drawing.Color.White;
-            this.moMapControl1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.moMapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.moMapControl1.FlashColor = System.Drawing.Color.Green;
-            this.moMapControl1.Layers = moLayers1;
-            this.moMapControl1.Location = new System.Drawing.Point(159, 102);
-            this.moMapControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.moMapControl1.Name = "moMapControl1";
-            this.moMapControl1.SelectionColor = System.Drawing.Color.Cyan;
-            this.moMapControl1.Size = new System.Drawing.Size(587, 387);
-            this.moMapControl1.TabIndex = 6;
-            this.moMapControl1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.moMapControl1_MouseClick);
-            this.moMapControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.moMapControl1_MouseDown);
-            this.moMapControl1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.moMapControl1_MouseMove);
-            this.moMapControl1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.moMapControl1_MouseUp);
-            // 
-            // LayerRightMenu
-            // 
-            this.LayerRightMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.打开属性表,
-            this.另存为});
-            this.LayerRightMenu.Name = "contextMenuStrip1";
-            this.LayerRightMenu.Size = new System.Drawing.Size(181, 70);
+            this.渲染.Name = "渲染";
+            this.渲染.Size = new System.Drawing.Size(180, 22);
+            this.渲染.Text = "渲染";
+            this.渲染.Click += new System.EventHandler(this.渲染ToolStripMenuItem_Click);
             // 
             // 打开属性表
             // 
@@ -474,13 +490,6 @@
             this.打开属性表.Size = new System.Drawing.Size(180, 22);
             this.打开属性表.Text = "打开属性表";
             this.打开属性表.Click += new System.EventHandler(this.打开属性表_Click);
-            // 
-            // 另存为
-            // 
-            this.另存为.Name = "另存为";
-            this.另存为.Size = new System.Drawing.Size(180, 22);
-            this.另存为.Text = "另存为";
-            this.另存为.Click += new System.EventHandler(this.另存为_Click);
             // 
             // MapCraftForm
             // 
@@ -555,8 +564,9 @@
         internal MyMapObjects.moMapControl moMapControl1;
         private System.Windows.Forms.ToolStripMenuItem 创建图层ToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip LayerRightMenu;
-        private System.Windows.Forms.ToolStripMenuItem 打开属性表;
         private System.Windows.Forms.ToolStripMenuItem 另存为;
+        private System.Windows.Forms.ToolStripMenuItem 打开属性表;
+        private System.Windows.Forms.ToolStripMenuItem 渲染;
     }
 }
 
