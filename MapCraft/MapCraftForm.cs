@@ -1462,7 +1462,7 @@ namespace MapCraft
         }
 
 
-        private void RefreshLayersTree()
+        public void RefreshLayersTree()
         {
             treeView1.Nodes.Clear();
             for (int i = 0; i < moMapControl1.Layers.Count; i++)

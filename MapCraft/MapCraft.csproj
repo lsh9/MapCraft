@@ -88,6 +88,12 @@
     <Compile Include="Forms\LayerDetailForm.Designer.cs">
       <DependentUpon>LayerDetailForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\RenderPointForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RenderPointForm.Designer.cs">
+      <DependentUpon>RenderPointForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PolygonRenderer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -127,6 +133,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LayerDetailForm.resx">
       <DependentUpon>LayerDetailForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RenderPointForm.resx">
+      <DependentUpon>RenderPointForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SelectByAttributeForm.resx">
       <DependentUpon>SelectByAttributeForm.cs</DependentUpon>
