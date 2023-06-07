@@ -90,6 +90,28 @@ namespace MapCraft.Forms
             TextBoxSQL.AppendText("Not ");
         }
 
+        private void btnBracket_Click(object sender, EventArgs e)
+        {
+            TextBoxSQL.AppendText("() ");
+            TextBoxSQL.Enabled = true;
+            TextBoxSQL.Select(TextBoxSQL.Text.Length - 2, 0);
+        }
+
+        private void btnLine_Click(object sender, EventArgs e)
+        {
+            TextBoxSQL.AppendText("_ ");
+        }
+
+        private void btnPercnt_Click(object sender, EventArgs e)
+        {
+            TextBoxSQL.AppendText("% ");
+        }
+
+        private void btnNull_Click(object sender, EventArgs e)
+        {
+            TextBoxSQL.AppendText("Null ");
+        }
+
         #endregion
 
         #region 输入与查看事件

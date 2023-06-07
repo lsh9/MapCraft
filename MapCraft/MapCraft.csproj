@@ -119,6 +119,9 @@
     <EmbeddedResource Include="Forms\IdentifyForm.resx">
       <DependentUpon>IdentifyForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LayerDetailForm.resx">
+      <DependentUpon>LayerDetailForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\SelectByAttributeForm.resx">
       <DependentUpon>SelectByAttributeForm.cs</DependentUpon>
     </EmbeddedResource>

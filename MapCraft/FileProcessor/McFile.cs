@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using static System.Text.Json.JsonElement;
@@ -10,7 +9,7 @@ namespace MapCraft.FileProcessor
     {
         private static JsonSerializerOptions sOptions = new JsonSerializerOptions()
         {
-            WriteIndented = true
+            WriteIndented = true,
         };
 
         public class ProjectInfo

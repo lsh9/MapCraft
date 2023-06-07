@@ -52,6 +52,7 @@ namespace MapCraft
         // 图层路径记录
         private List<ShapeFileParser> mShapefiles = new List<ShapeFileParser>();
         private string mProjectPath = "";  // 项目路径
+        private IdentifyForm mIdentifyForm = null;
         #endregion
 
         #region 属性
@@ -62,12 +63,18 @@ namespace MapCraft
         {
             get { return moMapControl1; }
         }
+
+        public List<ShapeFileParser> Shapefiles
+        {
+            get { return mShapefiles; }
+        }
         #endregion
 
         #region 构造函数
         public MapCraftForm()
         {
             InitializeComponent();
+            mIdentifyForm = new IdentifyForm(this);
             moMapControl1.MouseWheel += moMapControl1_MouseWheel;
         }
         #endregion
@@ -178,7 +185,7 @@ namespace MapCraft
                 Title = "另存为文件",
                 Filter = "MapCraft文件(*.mc)|*.mc",
                 FilterIndex = 1,
-                RestoreDirectory = true
+                RestoreDirectory = true,
             };
             saveFileDialog.ShowDialog();
             if (saveFileDialog.FileName == string.Empty)
@@ -188,6 +195,25 @@ namespace MapCraft
             SaveProject(saveFileDialog.FileName);
         }
 
+        // 点击导出（导出为图片）菜单项
+        private void 导出ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // 将MapControl的BufferMap1导出为图片
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Title = "导出为图片",
+                Filter = "BMP文件(*.bmp)|*.bmp|JPG文件(*.jpg)|*.jpg|PNG文件(*.png)|*.png",
+                FilterIndex = 1,
+                RestoreDirectory = true
+            };
+            saveFileDialog.ShowDialog();
+            if (saveFileDialog.FileName == string.Empty)
+            {
+                return;
+            }
+            string fileName = saveFileDialog.FileName;
+            MapControl.SaveImage(fileName);
+        }
         #endregion
 
 
@@ -197,7 +223,7 @@ namespace MapCraft
             mShowLngLat = cbxProjectionCS.Checked;
         }
 
-        #region 图层控件操作
+        #region 图层TreeView控件操作
 
         private void TreeView1_DragDrop(object sender, DragEventArgs e)
         {
@@ -599,9 +625,35 @@ namespace MapCraft
             e.Node.BackColor = Color.LightGray;
         }
 
+        private void treeView1_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            // 如果是图层节点被点击
+            if (true)
+            {
+                LayerDetailForm layerDetailForm = new LayerDetailForm(this, SelectedLayerIndex);
+                layerDetailForm.Show();
+            }
+        }
         #endregion
 
         #region 按钮控件点击事件
+        // 某个操作按钮被点击
+        private void tStripMapOperator_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            // 清除所有按钮的选中状态
+            foreach (ToolStripItem sItem in tStripMapOperator.Items)
+            {
+                if (sItem.GetType() == typeof(ToolStripButton))
+                {
+                    ToolStripButton button = (ToolStripButton)sItem;
+                    button.BackColor = SystemColors.Control;
+                }
+            }
+            // 选中当前按钮
+            ToolStripButton sButton = (ToolStripButton)e.ClickedItem;
+            sButton.BackColor = Color.LightBlue;
+        }
+
         // 点击添加图层按钮
         private void btnAddData_Click(object sender, EventArgs e)
         {
@@ -667,7 +719,9 @@ namespace MapCraft
             //计算地图空间中心点的地图坐标
             double sY = moMapControl1.ClientRectangle.Width / 2;
             double sX = moMapControl1.ClientRectangle.Height / 2;
+            Console.WriteLine(sX + " " + sY);
             moPoint sPoint = moMapControl1.ToMapPoint(sX, sY);
+            Console.WriteLine(sPoint.X + " " + sPoint.Y);
             moMapControl1.ZoomByCenter(sPoint, mZoomRatioFixed);
             btnFixedZoomIn.BackColor = SystemColors.Control;
             mMapOpStyle = MapOpConstant.None;
@@ -679,7 +733,9 @@ namespace MapCraft
             //计算地图空间中心点的地图坐标
             double sY = moMapControl1.ClientRectangle.Width / 2;
             double sX = moMapControl1.ClientRectangle.Height / 2;
+            Console.WriteLine(sX + " " + sY);
             moPoint sPoint = moMapControl1.ToMapPoint(sX, sY);
+            Console.WriteLine(sPoint.X + " " + sPoint.Y);
             moMapControl1.ZoomByCenter(sPoint, 1 / mZoomRatioFixed);
             btnFixedZoomOut.BackColor = SystemColors.Control;
             mMapOpStyle = MapOpConstant.None;
@@ -941,11 +997,6 @@ namespace MapCraft
             moMapControl1.PanDelta(sDeltaX, sDeltaY);
         }
 
-
-
-
-
-
         //选择操作-鼠标松开
         private void OnSelectByLocation_MouseUp(MouseEventArgs e)
         {
@@ -970,7 +1021,24 @@ namespace MapCraft
                 return;
             else
             {
-                moMapLayer sLayer = moMapControl1.Layers.GetItem(0);
+                Int32 index;
+                if (mIdentifyForm.IdentifyIndex >= 0)
+                {
+                    index = mIdentifyForm.IdentifyIndex;
+                }
+                else if (SelectedLayerIndex >= 0)
+                {
+                    index = SelectedLayerIndex;
+                }
+                else if (moMapControl1.Layers.Count >= 0)
+                { 
+                    index = 0;
+                }
+                else
+                {
+                    return;
+                }
+                moMapLayer sLayer = moMapControl1.Layers.GetItem(index);
                 moFeatures sFeatures = sLayer.SearchByBox(sBox, tolerance);
                 int sSelFeatureCount = sFeatures.Count;
                 if (sSelFeatureCount > 0)
@@ -981,8 +1049,7 @@ namespace MapCraft
                     moMapControl1.FlashShapes(sGeometries, 3, 800);
                 }
                 // 显示识别到的要素属性
-                IdentifyForm identifyForm = new IdentifyForm(sLayer, sFeatures);
-                identifyForm.Show();
+                mIdentifyForm.Show(sFeatures, index);
             }
         }
 
@@ -1074,6 +1141,48 @@ namespace MapCraft
         #region 方法
 
         #region 图层操作
+
+        private void 置顶ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MoveLayer(SelectedLayerIndex, 0);
+            // 重新渲染TreeView控件
+            RefreshLayersTree();
+        }
+
+        private void 置底ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MoveLayer(SelectedLayerIndex, MapControl.Layers.Count - 1);
+            RefreshLayersTree();
+        }
+
+        private void 上移ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (SelectedLayerIndex == 0) return;
+            MoveLayer(SelectedLayerIndex, SelectedLayerIndex - 1);
+            RefreshLayersTree();
+        }
+
+        private void 下移ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (SelectedLayerIndex == MapControl.Layers.Count - 1) return;
+            MoveLayer(SelectedLayerIndex, SelectedLayerIndex + 1);
+            RefreshLayersTree();
+        }
+
+        private void 缩放至图层ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            moMapLayer layer = MapControl.Layers.GetItem(SelectedLayerIndex);
+            moRectangle rect = layer.Extent;
+            MapControl.ZoomToExtent(rect);
+        }
+
+        private void 移除ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MapControl.Layers.RemoveAt(SelectedLayerIndex);
+            mShapefiles.RemoveAt(SelectedLayerIndex);
+            RefreshLayersTree();
+        }
+
         private void MoveLayer(Int32 from, Int32 to)
         {
             if (from == to) return;
@@ -1298,27 +1407,12 @@ namespace MapCraft
             treeView1.Refresh();
         }
 
-        // 某个操作按钮被点击
-        private void tStripMapOperator_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-            // 清除所有按钮的选中状态
-            foreach (ToolStripItem sItem in tStripMapOperator.Items)
-            {
-                if (sItem.GetType() == typeof(ToolStripButton))
-                {
-                    ToolStripButton button = (ToolStripButton)sItem;
-                    button.BackColor = SystemColors.Control;
-                }
-            }
-            // 选中当前按钮
-            ToolStripButton sButton = (ToolStripButton)e.ClickedItem;
-            sButton.BackColor = Color.LightBlue;
-        }
 
         private void ReLoad()
         {
             Controls.Clear();
             InitializeComponent();
+            mIdentifyForm = new IdentifyForm(this);
             moMapControl1.MouseWheel += moMapControl1_MouseWheel;
             InitializeSymbols();
             InitializeSketchingShape();
@@ -1380,6 +1474,8 @@ namespace MapCraft
         }
 
 
+
+        #endregion
 
         #endregion
 

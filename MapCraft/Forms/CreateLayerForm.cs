@@ -107,17 +107,15 @@ namespace MapCraft.Forms
             else
             {
                 string layerName = Path.GetFileNameWithoutExtension(savePath);
-                string layerPath = Path.Combine(Path.GetDirectoryName(savePath), layerName);
+                string layerPath = Path.Combine(Path.GetDirectoryName(savePath), ".shp");
                 ShapeFileParser shapeFileParser = new ShapeFileParser(layerPath);
                 //shapeFileParser.GeometryType = geometryType;
+                //shapeFileParser.Fields = mFields;
                 shapeFileParser.Write_ShapeFile(layerPath);
                 Main.AddLayer(shapeFileParser);
                 Close();
             }
-
         }
-
-
 
         #endregion
 

@@ -546,7 +546,7 @@ namespace MyMapObjects
             Graphics g = Graphics.FromHwnd(this.Handle);
             double dpm = g.DpiX / 0.0254;
             g.Dispose();
-            double mpu = 1.0;
+            double mpu = _ProjectionCS.ToMeters(1);
             mMapDrawingReference = new moMapDrawingReference(0, 0, 1000000, dpm, mpu);
         }
 
@@ -688,7 +688,14 @@ namespace MyMapObjects
             return new moUserDrawingTool(g, sExtent, sMapScale, dpm, mpu);
         }
 
-
+        /// <summary>
+        /// 将地图保存成图片
+        /// </summary>
+        /// <param name="path"></param>
+        public void SaveImage(string path)
+        {
+            mBufferMap1.Save(path);
+        }
 
         #endregion
 
