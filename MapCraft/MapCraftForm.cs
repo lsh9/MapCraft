@@ -212,6 +212,17 @@ namespace MapCraft
             string fileName = saveFileDialog.FileName;
             MapControl.SaveImage(fileName);
         }
+
+        private void 按属性选择ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnSelectByAttribute_Click(sender, e);
+        }
+
+        private void 按位置选择ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnSelectByLocation_Click(sender, e);
+        }
+
         #endregion
 
 
@@ -649,6 +660,18 @@ namespace MapCraft
             }
             // 选中当前按钮
             ToolStripButton sButton = (ToolStripButton)e.ClickedItem;
+            // 使用按钮图标修改鼠标图标,如果按钮是放大\缩小\平移\按位置选择\识别
+            if (sButton.Name == "btnZoomIn" || sButton.Name == "btnZoomOut" || sButton.Name == "btnSelectByLocation" || sButton.Name == "btnIdentify" || sButton.Name == "btnPan")
+            {
+                Bitmap sBitmap = (Bitmap)sButton.Image;
+                IntPtr sCursorHandle = sBitmap.GetHicon();
+                Cursor sCursor = new Cursor(sCursorHandle);
+                moMapControl1.Cursor = sCursor;
+            }
+            else
+            {
+                moMapControl1.Cursor = Cursors.Default;
+            }
             sButton.BackColor = Color.LightBlue;
         }
 
@@ -717,9 +740,7 @@ namespace MapCraft
             //计算地图空间中心点的地图坐标
             double sY = moMapControl1.ClientRectangle.Width / 2;
             double sX = moMapControl1.ClientRectangle.Height / 2;
-            Console.WriteLine(sX + " " + sY);
             moPoint sPoint = moMapControl1.ToMapPoint(sX, sY);
-            Console.WriteLine(sPoint.X + " " + sPoint.Y);
             moMapControl1.ZoomByCenter(sPoint, mZoomRatioFixed);
             btnFixedZoomIn.BackColor = SystemColors.Control;
             mMapOpStyle = MapOpConstant.None;
@@ -854,6 +875,7 @@ namespace MapCraft
         // 鼠标在MapControl中移动
         private void moMapControl1_MouseMove(object sender, MouseEventArgs e)
         {
+            ShowCoordinates(e.Location);
             switch (mMapOpStyle)
             {
                 case MapOpConstant.ZoomIn:
@@ -979,8 +1001,10 @@ namespace MapCraft
             else
             {
                 //拉框缩小
-                moRectangle sBox = GetMapRectByTwoPoints(mStartMouseLocation, e.Location);
-                moMapControl1.ZoomOutToExtent(sBox);
+                //moRectangle sBox = GetMapRectByTwoPoints(mStartMouseLocation, e.Location);
+                //moMapControl1.ZoomOutToExtent(sBox);
+                moPoint sPoint = moMapControl1.ToMapPoint(mStartMouseLocation.X, mStartMouseLocation.Y);
+                moMapControl1.ZoomByCenter(sPoint, 1 / mZoomRatioFixed);
             }
         }
 
@@ -1122,6 +1146,56 @@ namespace MapCraft
             ShowMapScale();
         }
 
+
+        private void toolStripMenuItem1000_Click(object sender, EventArgs e)
+        {
+            moPoint point = MapControl.ToMapPoint(MapControl.Width / 2, MapControl.Height / 2);
+            double zoomRatio = MapControl.MapScale / 1000;
+            MapControl.ZoomByCenter(point, zoomRatio);
+        }
+
+        private void toolStripMenuItem10000_Click(object sender, EventArgs e)
+        {
+            moPoint point = MapControl.ToMapPoint(MapControl.Width / 2, MapControl.Height / 2);
+            double zoomRatio = MapControl.MapScale / 10000;
+            MapControl.ZoomByCenter(point, zoomRatio);
+        }
+
+        private void toolStripMenuItem100000_Click(object sender, EventArgs e)
+        {
+            moPoint point = MapControl.ToMapPoint(MapControl.Width / 2, MapControl.Height / 2);
+            double zoomRatio = MapControl.MapScale / 100000;
+            MapControl.ZoomByCenter(point, zoomRatio);
+        }
+
+        private void toolStripMenuItem500000_Click(object sender, EventArgs e)
+        {
+            moPoint point = MapControl.ToMapPoint(MapControl.Width / 2, MapControl.Height / 2);
+            double zoomRatio = MapControl.MapScale / 500000;
+            MapControl.ZoomByCenter(point, zoomRatio);
+        }
+
+        private void toolStripMenuItem1000000_Click(object sender, EventArgs e)
+        {
+            moPoint point = MapControl.ToMapPoint(MapControl.Width / 2, MapControl.Height / 2);
+            double zoomRatio = MapControl.MapScale / 1000000;
+            MapControl.ZoomByCenter(point, zoomRatio);
+        }
+
+        private void toolStripMenuItem3000000_Click(object sender, EventArgs e)
+        {
+            moPoint point = MapControl.ToMapPoint(MapControl.Width / 2, MapControl.Height / 2);
+            double zoomRatio = MapControl.MapScale / 3000000;
+            MapControl.ZoomByCenter(point, zoomRatio);
+        }
+
+        private void toolStripMenuItem10000000_Click(object sender, EventArgs e)
+        {
+            moPoint point = MapControl.ToMapPoint(MapControl.Width / 2, MapControl.Height / 2);
+            double zoomRatio = MapControl.MapScale / 10000000;
+            MapControl.ZoomByCenter(point, zoomRatio);
+        }
+
         // 地图控件绘制完毕
         private void moMap_AfterTrackingLayerDraw(object sender, moUserDrawingTool drawTool)
         {
@@ -1200,11 +1274,10 @@ namespace MapCraft
             moFeatures features = shapefile.Read_ShapeFile();
             moMapLayer mapLayer = new moMapLayer(Path.GetFileNameWithoutExtension(shapefile.FilePath), shapefile.GeometryType, shapefile.Fields);
             mapLayer.Features = features;
-
+            // 将图层添加到第一个
             MapControl.Layers.Add(mapLayer);
             mShapefiles.Add(shapefile);
-            treeView1.Nodes.Add(mapLayer.Name);
-            MapControl.RedrawMap();
+            MoveLayer(MapControl.Layers.Count - 1, 0);
             MapControl.FullExtent();
             RefreshLayersTree();
         }
