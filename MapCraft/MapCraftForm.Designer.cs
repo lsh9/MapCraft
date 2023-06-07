@@ -30,7 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MapCraftForm));
-            MyMapObjects.moLayers moLayers3 = new MyMapObjects.moLayers();
+
+            MyMapObjects.moLayers moLayers2 = new MyMapObjects.moLayers();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.新建地图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -191,6 +192,7 @@
             this.tStripMapOperator.Size = new System.Drawing.Size(1119, 41);
             this.tStripMapOperator.TabIndex = 1;
             this.tStripMapOperator.Text = "toolStrip1";
+            this.tStripMapOperator.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.tStripMapOperator_ItemClicked);
             // 
             // btnAddData
             // 
@@ -445,7 +447,10 @@
             this.treeView1.Size = new System.Drawing.Size(236, 640);
             this.treeView1.TabIndex = 5;
             this.treeView1.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterCheck);
+            this.treeView1.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TreeView1_ItemDrag);
             this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
+            this.treeView1.DragDrop += new System.Windows.Forms.DragEventHandler(this.TreeView1_DragDrop);
+            this.treeView1.DragEnter += new System.Windows.Forms.DragEventHandler(this.TreeView1_DragEnter);
             // 
             // moMapControl1
             // 
@@ -453,8 +458,10 @@
             this.moMapControl1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.moMapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.moMapControl1.FlashColor = System.Drawing.Color.Green;
-            this.moMapControl1.Layers = moLayers3;
-            this.moMapControl1.Location = new System.Drawing.Point(236, 114);
+
+            this.moMapControl1.Layers = moLayers2;
+            this.moMapControl1.Location = new System.Drawing.Point(159, 102);
+            this.moMapControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.moMapControl1.Name = "moMapControl1";
             this.moMapControl1.SelectionColor = System.Drawing.Color.Cyan;
             this.moMapControl1.Size = new System.Drawing.Size(883, 640);
@@ -480,6 +487,7 @@
             this.另存为.Size = new System.Drawing.Size(170, 30);
             this.另存为.Text = "另存为";
             this.另存为.Click += new System.EventHandler(this.另存为_Click);
+
             // 
             // 打开属性表
             // 
@@ -488,12 +496,13 @@
             this.打开属性表.Text = "打开属性表";
             this.打开属性表.Click += new System.EventHandler(this.打开属性表_Click);
             // 
-            // 渲染
+            // 
             // 
             this.渲染.Name = "渲染";
             this.渲染.Size = new System.Drawing.Size(170, 30);
             this.渲染.Text = "渲染";
             this.渲染.Click += new System.EventHandler(this.渲染ToolStripMenuItem_Click);
+
             // 
             // MapCraftForm
             // 
