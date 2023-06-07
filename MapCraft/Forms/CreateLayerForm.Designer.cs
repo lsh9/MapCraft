@@ -120,6 +120,13 @@
             // 
             this.cbBoxValueType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbBoxValueType.FormattingEnabled = true;
+            this.cbBoxValueType.Items.AddRange(new object[] {
+            "Int16",
+            "Int32",
+            "Int64",
+            "Single",
+            "Double",
+            "Text(文本)"});
             this.cbBoxValueType.Location = new System.Drawing.Point(124, 189);
             this.cbBoxValueType.Name = "cbBoxValueType";
             this.cbBoxValueType.Size = new System.Drawing.Size(219, 20);
