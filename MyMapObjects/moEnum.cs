@@ -61,6 +61,7 @@ namespace MyMapObjects
     /// </summary>
     public enum moGeometryTypeConstant
     {
+        None = -1,
         Point = 0,
         MultiPolyline = 1,
         MultiPolygon = 2,

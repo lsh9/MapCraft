@@ -125,7 +125,8 @@ namespace MapCraft.Forms
                         break;
                     }  
                 }
-                dataGridView.Rows[index].Selected = true; //将该序号设置为亮
+                if(index>-1)
+                    dataGridView.Rows[index].Selected = true; //将该序号设置为亮
             }
             RefreshSelectedText();
         }
