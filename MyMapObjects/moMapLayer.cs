@@ -199,7 +199,7 @@ namespace MyMapObjects
             {
                 for(int j=0;i<_Features.Count;j++)
                 {
-                    if(_Features.GetItem(i)==_SelectedFeatures.GetItem(j))
+                    if(_Features.GetItem(j)==_SelectedFeatures.GetItem(i))
                     {
                         selectIndexs.Add(i);
                         break;

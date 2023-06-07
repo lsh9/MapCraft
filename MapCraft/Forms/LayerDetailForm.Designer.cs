@@ -68,24 +68,14 @@
             this.label12 = new System.Windows.Forms.Label();
             this.cbUniqueValueField = new System.Windows.Forms.ComboBox();
             this.tabPageClass = new System.Windows.Forms.TabPage();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.nupClasses = new System.Windows.Forms.NumericUpDown();
             this.label11 = new System.Windows.Forms.Label();
-            this.Class_Apply = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
-            this.Class_OK = new System.Windows.Forms.Button();
-            this.Class_ToSize = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.Class_FromSize = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cbClassBreaksField = new System.Windows.Forms.ComboBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.Class_bdrColor = new System.Windows.Forms.PictureBox();
-            this.Class_ToColor = new System.Windows.Forms.PictureBox();
-            this.Class_FromColor = new System.Windows.Forms.PictureBox();
             this.tabPageLabel = new System.Windows.Forms.TabPage();
             this.labelSize = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
@@ -99,6 +89,16 @@
             this.btnFont = new System.Windows.Forms.Button();
             this.btnApply = new System.Windows.Forms.Button();
             this.labelField = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.btnStartColor = new System.Windows.Forms.Button();
+            this.btnEndColor = new System.Windows.Forms.Button();
+            this.btnOutlineColor = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.nupStartSize = new System.Windows.Forms.NumericUpDown();
+            this.nupEndSize = new System.Windows.Forms.NumericUpDown();
+            this.cbShowOutline = new System.Windows.Forms.CheckBox();
             this.tabControlOuter.SuspendLayout();
             this.tabPageGeneral.SuspendLayout();
             this.tabPageRender.SuspendLayout();
@@ -108,11 +108,12 @@
             this.tabPageUnique.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUnique)).BeginInit();
             this.tabPageClass.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Class_bdrColor)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Class_ToColor)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Class_FromColor)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nupClasses)).BeginInit();
             this.tabPageLabel.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nupStartSize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nupEndSize)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControlOuter
@@ -558,24 +559,8 @@
             // 
             // tabPageClass
             // 
-            this.tabPageClass.Controls.Add(this.numericUpDown1);
-            this.tabPageClass.Controls.Add(this.label11);
-            this.tabPageClass.Controls.Add(this.Class_Apply);
-            this.tabPageClass.Controls.Add(this.label7);
-            this.tabPageClass.Controls.Add(this.Class_OK);
-            this.tabPageClass.Controls.Add(this.Class_ToSize);
-            this.tabPageClass.Controls.Add(this.label8);
-            this.tabPageClass.Controls.Add(this.Class_FromSize);
-            this.tabPageClass.Controls.Add(this.label9);
-            this.tabPageClass.Controls.Add(this.label10);
-            this.tabPageClass.Controls.Add(this.label13);
-            this.tabPageClass.Controls.Add(this.label14);
-            this.tabPageClass.Controls.Add(this.label15);
-            this.tabPageClass.Controls.Add(this.comboBox1);
-            this.tabPageClass.Controls.Add(this.label16);
-            this.tabPageClass.Controls.Add(this.Class_bdrColor);
-            this.tabPageClass.Controls.Add(this.Class_ToColor);
-            this.tabPageClass.Controls.Add(this.Class_FromColor);
+            this.tabPageClass.Controls.Add(this.panel2);
+            this.tabPageClass.Controls.Add(this.panel1);
             this.tabPageClass.Location = new System.Drawing.Point(4, 22);
             this.tabPageClass.Name = "tabPageClass";
             this.tabPageClass.Padding = new System.Windows.Forms.Padding(3);
@@ -583,120 +568,67 @@
             this.tabPageClass.TabIndex = 2;
             this.tabPageClass.Text = "分级符号法";
             this.tabPageClass.UseVisualStyleBackColor = true;
+            this.tabPageClass.Enter += new System.EventHandler(this.tabPageClass_Enter);
             // 
-            // numericUpDown1
+            // nupClasses
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(288, 29);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 21);
-            this.numericUpDown1.TabIndex = 58;
+            this.nupClasses.Location = new System.Drawing.Point(103, 47);
+            this.nupClasses.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            this.nupClasses.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.nupClasses.Name = "nupClasses";
+            this.nupClasses.Size = new System.Drawing.Size(121, 21);
+            this.nupClasses.TabIndex = 58;
+            this.nupClasses.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
             // 
             // label11
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label11.Location = new System.Drawing.Point(169, 113);
+            this.label11.Location = new System.Drawing.Point(107, 99);
             this.label11.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(89, 12);
+            this.label11.Size = new System.Drawing.Size(53, 12);
             this.label11.TabIndex = 56;
-            this.label11.Text = "最高级别填充色";
-            // 
-            // Class_Apply
-            // 
-            this.Class_Apply.Location = new System.Drawing.Point(198, 333);
-            this.Class_Apply.Margin = new System.Windows.Forms.Padding(2);
-            this.Class_Apply.Name = "Class_Apply";
-            this.Class_Apply.Size = new System.Drawing.Size(57, 23);
-            this.Class_Apply.TabIndex = 55;
-            this.Class_Apply.Text = "应用";
-            this.Class_Apply.UseVisualStyleBackColor = true;
+            this.label11.Text = "终止颜色";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label7.Location = new System.Drawing.Point(340, 113);
+            this.label7.Location = new System.Drawing.Point(107, 156);
             this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(53, 12);
             this.label7.TabIndex = 53;
             this.label7.Text = "轮廓颜色";
             // 
-            // Class_OK
-            // 
-            this.Class_OK.Location = new System.Drawing.Point(277, 333);
-            this.Class_OK.Margin = new System.Windows.Forms.Padding(2);
-            this.Class_OK.Name = "Class_OK";
-            this.Class_OK.Size = new System.Drawing.Size(53, 23);
-            this.Class_OK.TabIndex = 51;
-            this.Class_OK.Text = "确定";
-            this.Class_OK.UseVisualStyleBackColor = true;
-            // 
-            // Class_ToSize
-            // 
-            this.Class_ToSize.Location = new System.Drawing.Point(180, 208);
-            this.Class_ToSize.Margin = new System.Windows.Forms.Padding(2);
-            this.Class_ToSize.Name = "Class_ToSize";
-            this.Class_ToSize.Size = new System.Drawing.Size(49, 21);
-            this.Class_ToSize.TabIndex = 50;
-            this.Class_ToSize.Text = "20";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(139, 210);
-            this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(17, 12);
-            this.label8.TabIndex = 49;
-            this.label8.Text = "to";
-            // 
-            // Class_FromSize
-            // 
-            this.Class_FromSize.Location = new System.Drawing.Point(67, 208);
-            this.Class_FromSize.Margin = new System.Windows.Forms.Padding(2);
-            this.Class_FromSize.Name = "Class_FromSize";
-            this.Class_FromSize.Size = new System.Drawing.Size(48, 21);
-            this.Class_FromSize.TabIndex = 48;
-            this.Class_FromSize.Text = "5";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label9.Location = new System.Drawing.Point(65, 183);
-            this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(29, 12);
-            this.label9.TabIndex = 47;
-            this.label9.Text = "尺寸";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(140, 144);
-            this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(17, 12);
-            this.label10.TabIndex = 46;
-            this.label10.Text = "to";
-            // 
             // label13
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label13.Location = new System.Drawing.Point(39, 113);
+            this.label13.Location = new System.Drawing.Point(107, 47);
             this.label13.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(89, 12);
+            this.label13.Size = new System.Drawing.Size(53, 12);
             this.label13.TabIndex = 43;
-            this.label13.Text = "最低级别填充色";
+            this.label13.Text = "起始颜色";
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(91, 135);
+            this.label14.Location = new System.Drawing.Point(145, 77);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(0, 12);
             this.label14.TabIndex = 7;
@@ -704,61 +636,28 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(244, 33);
+            this.label15.Location = new System.Drawing.Point(56, 49);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(29, 12);
             this.label15.TabIndex = 4;
             this.label15.Text = "级数";
             // 
-            // comboBox1
+            // cbClassBreaksField
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(82, 28);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 20);
-            this.comboBox1.TabIndex = 1;
+            this.cbClassBreaksField.FormattingEnabled = true;
+            this.cbClassBreaksField.Location = new System.Drawing.Point(103, 18);
+            this.cbClassBreaksField.Name = "cbClassBreaksField";
+            this.cbClassBreaksField.Size = new System.Drawing.Size(121, 20);
+            this.cbClassBreaksField.TabIndex = 1;
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(35, 31);
+            this.label16.Location = new System.Drawing.Point(56, 21);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(29, 12);
             this.label16.TabIndex = 0;
             this.label16.Text = "字段";
-            // 
-            // Class_bdrColor
-            // 
-            this.Class_bdrColor.BackColor = System.Drawing.Color.Black;
-            this.Class_bdrColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Class_bdrColor.Location = new System.Drawing.Point(353, 135);
-            this.Class_bdrColor.Margin = new System.Windows.Forms.Padding(2);
-            this.Class_bdrColor.Name = "Class_bdrColor";
-            this.Class_bdrColor.Size = new System.Drawing.Size(28, 28);
-            this.Class_bdrColor.TabIndex = 54;
-            this.Class_bdrColor.TabStop = false;
-            // 
-            // Class_ToColor
-            // 
-            this.Class_ToColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.Class_ToColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Class_ToColor.Location = new System.Drawing.Point(195, 135);
-            this.Class_ToColor.Margin = new System.Windows.Forms.Padding(2);
-            this.Class_ToColor.Name = "Class_ToColor";
-            this.Class_ToColor.Size = new System.Drawing.Size(28, 28);
-            this.Class_ToColor.TabIndex = 45;
-            this.Class_ToColor.TabStop = false;
-            // 
-            // Class_FromColor
-            // 
-            this.Class_FromColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.Class_FromColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Class_FromColor.Location = new System.Drawing.Point(67, 135);
-            this.Class_FromColor.Margin = new System.Windows.Forms.Padding(2);
-            this.Class_FromColor.Name = "Class_FromColor";
-            this.Class_FromColor.Size = new System.Drawing.Size(28, 28);
-            this.Class_FromColor.TabIndex = 44;
-            this.Class_FromColor.TabStop = false;
             // 
             // tabPageLabel
             // 
@@ -918,6 +817,121 @@
             this.labelField.Text = "字段:";
             this.labelField.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.nupClasses);
+            this.panel1.Controls.Add(this.label15);
+            this.panel1.Controls.Add(this.cbClassBreaksField);
+            this.panel1.Controls.Add(this.label16);
+            this.panel1.Location = new System.Drawing.Point(64, 6);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(291, 83);
+            this.panel1.TabIndex = 59;
+            // 
+            // btnStartColor
+            // 
+            this.btnStartColor.BackColor = System.Drawing.Color.Lime;
+            this.btnStartColor.Location = new System.Drawing.Point(181, 41);
+            this.btnStartColor.Name = "btnStartColor";
+            this.btnStartColor.Size = new System.Drawing.Size(71, 24);
+            this.btnStartColor.TabIndex = 60;
+            this.btnStartColor.UseVisualStyleBackColor = false;
+            this.btnStartColor.Click += new System.EventHandler(this.btnStartColor_Click);
+            // 
+            // btnEndColor
+            // 
+            this.btnEndColor.BackColor = System.Drawing.Color.Red;
+            this.btnEndColor.Location = new System.Drawing.Point(181, 93);
+            this.btnEndColor.Name = "btnEndColor";
+            this.btnEndColor.Size = new System.Drawing.Size(71, 24);
+            this.btnEndColor.TabIndex = 61;
+            this.btnEndColor.UseVisualStyleBackColor = false;
+            this.btnEndColor.Click += new System.EventHandler(this.btnEndColor_Click);
+            // 
+            // btnOutlineColor
+            // 
+            this.btnOutlineColor.BackColor = System.Drawing.Color.Black;
+            this.btnOutlineColor.Location = new System.Drawing.Point(181, 150);
+            this.btnOutlineColor.Name = "btnOutlineColor";
+            this.btnOutlineColor.Size = new System.Drawing.Size(71, 24);
+            this.btnOutlineColor.TabIndex = 62;
+            this.btnOutlineColor.UseVisualStyleBackColor = false;
+            this.btnOutlineColor.Click += new System.EventHandler(this.btnOutlineColor_Click);
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.nupEndSize);
+            this.panel2.Controls.Add(this.cbShowOutline);
+            this.panel2.Controls.Add(this.nupStartSize);
+            this.panel2.Controls.Add(this.label9);
+            this.panel2.Controls.Add(this.btnOutlineColor);
+            this.panel2.Controls.Add(this.label8);
+            this.panel2.Controls.Add(this.btnEndColor);
+            this.panel2.Controls.Add(this.btnStartColor);
+            this.panel2.Controls.Add(this.label11);
+            this.panel2.Controls.Add(this.label7);
+            this.panel2.Controls.Add(this.label13);
+            this.panel2.Controls.Add(this.label14);
+            this.panel2.Location = new System.Drawing.Point(6, 95);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(419, 333);
+            this.panel2.TabIndex = 63;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(110, 230);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(53, 12);
+            this.label8.TabIndex = 64;
+            this.label8.Text = "起始尺寸";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(110, 260);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(53, 12);
+            this.label9.TabIndex = 65;
+            this.label9.Text = "终止尺寸";
+            // 
+            // nupStartSize
+            // 
+            this.nupStartSize.Location = new System.Drawing.Point(181, 227);
+            this.nupStartSize.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nupStartSize.Name = "nupStartSize";
+            this.nupStartSize.Size = new System.Drawing.Size(82, 21);
+            this.nupStartSize.TabIndex = 66;
+            this.nupStartSize.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // nupEndSize
+            // 
+            this.nupEndSize.Location = new System.Drawing.Point(181, 254);
+            this.nupEndSize.Name = "nupEndSize";
+            this.nupEndSize.Size = new System.Drawing.Size(82, 21);
+            this.nupEndSize.TabIndex = 67;
+            // 
+            // cbShowOutline
+            // 
+            this.cbShowOutline.AutoSize = true;
+            this.cbShowOutline.Checked = true;
+            this.cbShowOutline.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbShowOutline.Location = new System.Drawing.Point(270, 154);
+            this.cbShowOutline.Name = "cbShowOutline";
+            this.cbShowOutline.Size = new System.Drawing.Size(72, 16);
+            this.cbShowOutline.TabIndex = 63;
+            this.cbShowOutline.Text = "显示轮廓";
+            this.cbShowOutline.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.cbShowOutline.UseVisualStyleBackColor = true;
+            // 
             // LayerDetailForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -938,13 +952,15 @@
             this.tabPageUnique.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUnique)).EndInit();
             this.tabPageClass.ResumeLayout(false);
-            this.tabPageClass.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Class_bdrColor)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Class_ToColor)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Class_FromColor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nupClasses)).EndInit();
             this.tabPageLabel.ResumeLayout(false);
             this.tabPageLabel.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nupStartSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nupEndSize)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -979,23 +995,13 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.ComboBox cbUniqueValueField;
         private System.Windows.Forms.TabPage tabPageClass;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown nupClasses;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Button Class_Apply;
-        private System.Windows.Forms.PictureBox Class_bdrColor;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button Class_OK;
-        private System.Windows.Forms.TextBox Class_ToSize;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox Class_FromSize;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.PictureBox Class_ToColor;
-        private System.Windows.Forms.PictureBox Class_FromColor;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cbClassBreaksField;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TabPage tabPageLabel;
         private System.Windows.Forms.Label labelSize;
@@ -1022,5 +1028,15 @@
         private System.Windows.Forms.ComboBox cbSymble;
         private System.Windows.Forms.Button btnFillColor;
         private System.Windows.Forms.Label labelFill;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button btnOutlineColor;
+        private System.Windows.Forms.Button btnEndColor;
+        private System.Windows.Forms.Button btnStartColor;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.NumericUpDown nupEndSize;
+        private System.Windows.Forms.NumericUpDown nupStartSize;
+        private System.Windows.Forms.CheckBox cbShowOutline;
     }
 }
