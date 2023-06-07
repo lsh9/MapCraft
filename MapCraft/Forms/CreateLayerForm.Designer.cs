@@ -40,7 +40,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnAddField = new System.Windows.Forms.Button();
             this.listBoxFields = new System.Windows.Forms.ListBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnDeleteField = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBoxSavePath
@@ -161,21 +161,22 @@
             this.listBoxFields.Size = new System.Drawing.Size(219, 124);
             this.listBoxFields.TabIndex = 13;
             // 
-            // button1
+            // btnDeleteField
             // 
-            this.button1.Location = new System.Drawing.Point(243, 236);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 31);
-            this.button1.TabIndex = 14;
-            this.button1.Text = "删除字段";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnDeleteField.Location = new System.Drawing.Point(243, 236);
+            this.btnDeleteField.Name = "btnDeleteField";
+            this.btnDeleteField.Size = new System.Drawing.Size(100, 31);
+            this.btnDeleteField.TabIndex = 14;
+            this.btnDeleteField.Text = "删除字段";
+            this.btnDeleteField.UseVisualStyleBackColor = true;
+            this.btnDeleteField.Click += new System.EventHandler(this.btnDeleteField_Click);
             // 
             // CreateLayerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(450, 496);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnDeleteField);
             this.Controls.Add(this.listBoxFields);
             this.Controls.Add(this.btnAddField);
             this.Controls.Add(this.cbBoxValueType);
@@ -209,6 +210,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnAddField;
         private System.Windows.Forms.ListBox listBoxFields;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnDeleteField;
     }
 }
