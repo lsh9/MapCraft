@@ -1,8 +1,6 @@
 ﻿using MyMapObjects;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Reflection.Emit;
 using System.Windows.Forms;
 
 namespace MapCraft.Forms
@@ -51,7 +49,7 @@ namespace MapCraft.Forms
             {
                 mLayer = Main.MapControl.Layers.GetItem(index);
             }
-            else
+            else if (features.Count == 0)
             {
                 return;
             }
@@ -62,7 +60,6 @@ namespace MapCraft.Forms
                 moFeature sFeature = mFeatures.GetItem(i);
                 treeViewFeatures.Nodes.Add(Convert.ToString(sFeature.Attributes.GetItem(0)));
             }
-            treeViewFeatures.Nodes[0].Expand();
             UpdateAttributes(0);
             this.Show();
             this.TopMost = true;
