@@ -58,7 +58,7 @@ namespace MapCraft.FileProcessor
                 case moValueTypeConstant.dText:
                 default:
                     FieldType = DbfFieldType.Text;
-                    FieldLength = 100;
+                    FieldLength = (byte)(mapField.Width);
                     break;
             }
             //reserved bytes set to 0

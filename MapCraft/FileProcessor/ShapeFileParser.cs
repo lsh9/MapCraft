@@ -18,6 +18,7 @@ namespace MapCraft.FileProcessor
         public moFields Fields => _dbfFile.Fields;
         public List<moGeometry> Geometries => _shpFile.Geometries;
         public List<moAttributes> AttributesList => _dbfFile.AttributesList;
+
         public moGeometryTypeConstant GeometryType => _shpFile.GetMoGeometryType();
 
         #endregion
@@ -98,6 +99,11 @@ namespace MapCraft.FileProcessor
         public void Read_dbf()
         {
             _dbfFile.Read();
+        }
+
+        public void Add_Field(moField newfield)
+        {
+            _dbfFile.AddField(newfield);
         }
     }
 }
