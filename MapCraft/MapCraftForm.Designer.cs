@@ -33,7 +33,6 @@
             MyMapObjects.moLayers moLayers2 = new MyMapObjects.moLayers();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-
             this.新建地图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.新建图层ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.打开ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -447,7 +446,10 @@
             this.treeView1.Size = new System.Drawing.Size(159, 387);
             this.treeView1.TabIndex = 5;
             this.treeView1.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterCheck);
+            this.treeView1.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TreeView1_ItemDrag);
             this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
+            this.treeView1.DragDrop += new System.Windows.Forms.DragEventHandler(this.TreeView1_DragDrop);
+            this.treeView1.DragEnter += new System.Windows.Forms.DragEventHandler(this.TreeView1_DragEnter);
             // 
             // moMapControl1
             // 
@@ -473,19 +475,19 @@
             this.打开属性表,
             this.另存为});
             this.LayerRightMenu.Name = "contextMenuStrip1";
-            this.LayerRightMenu.Size = new System.Drawing.Size(181, 70);
+            this.LayerRightMenu.Size = new System.Drawing.Size(137, 48);
             // 
             // 打开属性表
             // 
             this.打开属性表.Name = "打开属性表";
-            this.打开属性表.Size = new System.Drawing.Size(180, 22);
+            this.打开属性表.Size = new System.Drawing.Size(136, 22);
             this.打开属性表.Text = "打开属性表";
             this.打开属性表.Click += new System.EventHandler(this.打开属性表_Click);
             // 
             // 另存为
             // 
             this.另存为.Name = "另存为";
-            this.另存为.Size = new System.Drawing.Size(180, 22);
+            this.另存为.Size = new System.Drawing.Size(136, 22);
             this.另存为.Text = "另存为";
             this.另存为.Click += new System.EventHandler(this.另存为_Click);
             // 
