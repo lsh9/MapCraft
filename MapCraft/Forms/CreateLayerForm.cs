@@ -43,7 +43,6 @@ namespace MapCraft.Forms
             saveFileDialog.RestoreDirectory = true;
             if (saveFileDialog.ShowDialog() != DialogResult.OK) return;
             textBoxSavePath.Text = saveFileDialog.FileName;
-            textBoxFieldName.Text = Path.GetFileNameWithoutExtension("FID");
         }
 
         // 添加字段按钮点击

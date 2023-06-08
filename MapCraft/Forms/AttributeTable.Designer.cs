@@ -48,6 +48,7 @@
             // 
             // toolStrip1
             // 
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.开始编辑,
             this.添加字段,
@@ -58,7 +59,7 @@
             this.清除选择});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(736, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(736, 27);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -68,7 +69,7 @@
             this.开始编辑.Image = ((System.Drawing.Image)(resources.GetObject("开始编辑.Image")));
             this.开始编辑.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.开始编辑.Name = "开始编辑";
-            this.开始编辑.Size = new System.Drawing.Size(60, 22);
+            this.开始编辑.Size = new System.Drawing.Size(73, 24);
             this.开始编辑.Text = "开始编辑";
             this.开始编辑.Click += new System.EventHandler(this.开始编辑_Click);
             // 
@@ -78,7 +79,7 @@
             this.添加字段.Image = ((System.Drawing.Image)(resources.GetObject("添加字段.Image")));
             this.添加字段.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.添加字段.Name = "添加字段";
-            this.添加字段.Size = new System.Drawing.Size(60, 22);
+            this.添加字段.Size = new System.Drawing.Size(73, 24);
             this.添加字段.Text = "添加字段";
             this.添加字段.Click += new System.EventHandler(this.添加字段_Click);
             // 
@@ -88,7 +89,7 @@
             this.删除字段.Image = ((System.Drawing.Image)(resources.GetObject("删除字段.Image")));
             this.删除字段.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.删除字段.Name = "删除字段";
-            this.删除字段.Size = new System.Drawing.Size(60, 22);
+            this.删除字段.Size = new System.Drawing.Size(73, 24);
             this.删除字段.Text = "删除字段";
             this.删除字段.Click += new System.EventHandler(this.删除字段_Click);
             // 
@@ -98,7 +99,7 @@
             this.停止编辑.Image = ((System.Drawing.Image)(resources.GetObject("停止编辑.Image")));
             this.停止编辑.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.停止编辑.Name = "停止编辑";
-            this.停止编辑.Size = new System.Drawing.Size(60, 22);
+            this.停止编辑.Size = new System.Drawing.Size(73, 24);
             this.停止编辑.Text = "停止编辑";
             this.停止编辑.Click += new System.EventHandler(this.停止编辑_Click);
             // 
@@ -108,7 +109,7 @@
             this.按属性选择.Image = ((System.Drawing.Image)(resources.GetObject("按属性选择.Image")));
             this.按属性选择.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.按属性选择.Name = "按属性选择";
-            this.按属性选择.Size = new System.Drawing.Size(72, 22);
+            this.按属性选择.Size = new System.Drawing.Size(88, 24);
             this.按属性选择.Text = "按属性选择";
             this.按属性选择.Click += new System.EventHandler(this.按属性选择_Click);
             // 
@@ -118,7 +119,7 @@
             this.全部选择.Image = ((System.Drawing.Image)(resources.GetObject("全部选择.Image")));
             this.全部选择.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.全部选择.Name = "全部选择";
-            this.全部选择.Size = new System.Drawing.Size(60, 22);
+            this.全部选择.Size = new System.Drawing.Size(73, 24);
             this.全部选择.Text = "全部选择";
             this.全部选择.Click += new System.EventHandler(this.全部选择_Click);
             // 
@@ -128,32 +129,33 @@
             this.清除选择.Image = ((System.Drawing.Image)(resources.GetObject("清除选择.Image")));
             this.清除选择.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.清除选择.Name = "清除选择";
-            this.清除选择.Size = new System.Drawing.Size(60, 22);
+            this.清除选择.Size = new System.Drawing.Size(73, 24);
             this.清除选择.Text = "清除选择";
             this.清除选择.Click += new System.EventHandler(this.清除选择_Click);
             // 
             // statusStrip
             // 
+            this.statusStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Nameshow,
             this.lblSelectedNum});
-            this.statusStrip.Location = new System.Drawing.Point(0, 420);
+            this.statusStrip.Location = new System.Drawing.Point(0, 416);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(736, 22);
+            this.statusStrip.Size = new System.Drawing.Size(736, 26);
             this.statusStrip.TabIndex = 1;
             this.statusStrip.Text = "statusStrip1";
             // 
             // Nameshow
             // 
             this.Nameshow.Name = "Nameshow";
-            this.Nameshow.Size = new System.Drawing.Size(40, 17);
+            this.Nameshow.Size = new System.Drawing.Size(49, 20);
             this.Nameshow.Text = "name";
             // 
             // lblSelectedNum
             // 
             this.lblSelectedNum.AutoSize = false;
             this.lblSelectedNum.Name = "lblSelectedNum";
-            this.lblSelectedNum.Size = new System.Drawing.Size(90, 17);
+            this.lblSelectedNum.Size = new System.Drawing.Size(90, 20);
             this.lblSelectedNum.Text = "0/0已选择";
             // 
             // dataGridView
@@ -163,10 +165,11 @@
             this.dataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView.Location = new System.Drawing.Point(0, 25);
+            this.dataGridView.Location = new System.Drawing.Point(0, 27);
             this.dataGridView.Name = "dataGridView";
+            this.dataGridView.RowHeadersWidth = 51;
             this.dataGridView.RowTemplate.Height = 23;
-            this.dataGridView.Size = new System.Drawing.Size(736, 395);
+            this.dataGridView.Size = new System.Drawing.Size(736, 389);
             this.dataGridView.TabIndex = 2;
             this.dataGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView_CellMouseUp);
             this.dataGridView.CellParsing += new System.Windows.Forms.DataGridViewCellParsingEventHandler(this.dataGridView_CellParsing);
