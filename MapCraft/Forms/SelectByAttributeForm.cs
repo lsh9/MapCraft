@@ -9,10 +9,9 @@ namespace MapCraft.Forms
     {
 
         #region 字段
-        MapCraftForm MainForm;
-        private int mLayerSelectIndex;
-        private int mFieldSelectIndex;
-        private DataTable mDataTable;   // 数据表
+        MapCraftForm Main;
+        private int mSelectLayerIndex;
+        private int mSelectFieldIndex;
 
         #endregion
 
@@ -20,11 +19,13 @@ namespace MapCraft.Forms
         public SelectByAttributeForm(MapCraftForm main)
         {
             InitializeComponent();
-            Owner = main;
-            MainForm = main;
-            mLayerSelectIndex = -1;
-            mFieldSelectIndex = -1;
-            LoadLayers();
+            Main = main;
+            mSelectLayerIndex = -1;
+            mSelectFieldIndex = -1;
+            for (int i = 0; i < Main.MapControl.Layers.Count; i++)
+            {
+                cbLayers.Items.Add(Main.MapControl.Layers.GetItem(i).Name);
+            }
         }
 
         #endregion
@@ -115,87 +116,82 @@ namespace MapCraft.Forms
         #endregion
 
         #region 输入与查看事件
-        // 选中某个图层后
-        private void SelectBoxLayer_SelectionChangeCommitted(object sender, EventArgs e)
+        private void cbLayer_SelectedIndexChanged(object sender, EventArgs e)
         {
-            mLayerSelectIndex = SelectBoxLayer.SelectedIndex;// 获取选中的图层的索引
-            ListBoxUniqueValues.Items.Clear();// 重新选择了图层必然唯一值框要清零
-            ListBoxFields.Items.Clear();// 清零字段显示图层
-            labelSQL.Text = $"SELECT * FROM {MainForm.MapControl.Layers.GetItem(mLayerSelectIndex).Name} WHERE ";
-            LoadFields();// 重新加载下拉框
-            LoadDataTable();// 重新建立数据表
-            mFieldSelectIndex = -1;// 同时重新清零上次选中的字段
+            if (mSelectLayerIndex < 0)
+                return;
+            mSelectLayerIndex = cbLayers.SelectedIndex;
+            labelSQL.Text = $"SELECT * FROM {Main.MapControl.Layers.GetItem(mSelectLayerIndex).Name} WHERE ";
+            listBoxFields.Items.Clear();
+            mSelectFieldIndex = -1;
+
+            for (int i = 0; i < Main.MapControl.Layers.GetItem(mSelectLayerIndex).AttributeFields.Count; i++)
+            {
+                listBoxFields.Items.Add(Main.MapControl.Layers.GetItem(mSelectLayerIndex).AttributeFields.GetItem(i).Name);
+            }
+            listBoxUniqueValues.Items.Clear();
         }
 
-        // 选中某个字段后
         private void ListBoxFields_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // 暂时无用
+            mSelectFieldIndex = listBoxFields.SelectedIndex;
         }
 
-        // 单击Fields_List时，单击一下选中，单击第二下将字体投到下方输入框
         private void ListBoxFields_MouseClick(object sender, MouseEventArgs e)
         {
-            int index = ListBoxFields.IndexFromPoint(e.Location);// 获取index
+            // 根据点击位置获取index
+            int index = listBoxFields.IndexFromPoint(e.Location);
             if (index == ListBox.NoMatches)
                 return;
-            if (index == mFieldSelectIndex)
-            {
-                // 如果是第二次选中了，就把名字添加到下面的文本框
-                TextBoxSQL.AppendText(MainForm.MapControl.Layers.GetItem(mLayerSelectIndex).AttributeFields.GetItem(mFieldSelectIndex).Name + " ");
-            }
-            else
-            {
-                // 第一次点就普普通通即可
-                mFieldSelectIndex = index;// 选中这个条目
-            }
-            ListBoxFields.SelectedIndex = index;// 选中这个条目
-        }
-        // 双击Fields_List时，直接将文本投入下面框
-        private void ListBoxFields_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            int index = ListBoxFields.IndexFromPoint(e.Location);// 获取index
-            if (index == ListBox.NoMatches)
-                return;
-            TextBoxSQL.AppendText(MainForm.MapControl.Layers.GetItem(mLayerSelectIndex).AttributeFields.GetItem(mFieldSelectIndex).Name + " ");
-            mFieldSelectIndex = index;// 选中这个条目
-            ListBoxFields.SelectedIndex = index;// 选中这个条目
-        }
-        // 双击唯一值时，直接将文本投入下面框
-        private void ListBoxUniqueValues_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            int index = ListBoxUniqueValues.IndexFromPoint(e.Location);
-            if (index == ListBox.NoMatches)
-                return;
-            ListBoxUniqueValues.SelectedIndex = index;// 选中这个条目
-            TextBoxSQL.AppendText(ListBoxUniqueValues.Items[index] + " ");
+            mSelectFieldIndex = index;
+            listBoxFields.SelectedIndex = index;
         }
 
-        // 唯一值
+        private void ListBoxFields_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            // 根据点击位置获取index
+            int index = listBoxFields.IndexFromPoint(e.Location);
+            if (index == ListBox.NoMatches)
+                return;
+            mSelectFieldIndex = index;
+            listBoxFields.SelectedIndex = index;
+            TextBoxSQL.AppendText(Main.MapControl.Layers.GetItem(mSelectLayerIndex).AttributeFields.GetItem(mSelectFieldIndex).Name + " ");
+        }
+        
+        private void ListBoxUniqueValues_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            // 根据点击位置获取index
+            int index = listBoxUniqueValues.IndexFromPoint(e.Location);
+            if (index == ListBox.NoMatches)
+                return;
+            listBoxUniqueValues.SelectedIndex = index;
+            TextBoxSQL.AppendText(listBoxUniqueValues.Items[index] + " ");
+        }
+
         private void btnGetUniqueValue_Click(object sender, EventArgs e)
         {
-            if (mFieldSelectIndex < 0)
-                return;// 如果没有选择字段，就return
-            ListBoxUniqueValues.Items.Clear();
-            moMapLayer layerTemp = MainForm.MapControl.Layers.GetItem(mLayerSelectIndex);
-            for (int i = 0; i < layerTemp.Features.Count; i++)
+            if (mSelectFieldIndex < 0)
+                return;
+            listBoxUniqueValues.Items.Clear();
+            moMapLayer layer = Main.MapControl.Layers.GetItem(mSelectLayerIndex);
+            for (int i = 0; i < layer.Features.Count; i++)
             {
-                if (layerTemp.AttributeFields.GetItem(mFieldSelectIndex).ValueType == moValueTypeConstant.dText)
+                if (layer.AttributeFields.GetItem(mSelectFieldIndex).ValueType == moValueTypeConstant.dText)
                 {
-                    ListBoxUniqueValues.Items.Add("\'" + layerTemp.Features.GetItem(i).Attributes.GetItem(mFieldSelectIndex) + "\'");
+                    listBoxUniqueValues.Items.Add("\'" + layer.Features.GetItem(i).Attributes.GetItem(mSelectFieldIndex) + "\'");
                 }
                 else
                 {
-                    ListBoxUniqueValues.Items.Add(layerTemp.Features.GetItem(i).Attributes.GetItem(mFieldSelectIndex).ToString());
+                    listBoxUniqueValues.Items.Add(layer.Features.GetItem(i).Attributes.GetItem(mSelectFieldIndex).ToString());
                 }
             }
-            for (int i = 0; i < ListBoxUniqueValues.Items.Count; i++)
+            for (int i = 0; i < listBoxUniqueValues.Items.Count; i++)
             {
-                for (int j = i + 1; j < ListBoxUniqueValues.Items.Count; j++)
+                for (int j = i + 1; j < listBoxUniqueValues.Items.Count; j++)
                 {
-                    if (ListBoxUniqueValues.Items[i].Equals(ListBoxUniqueValues.Items[j]))
+                    if (listBoxUniqueValues.Items[i].Equals(listBoxUniqueValues.Items[j]))
                     {
-                        ListBoxUniqueValues.Items.RemoveAt(j);
+                        listBoxUniqueValues.Items.RemoveAt(j);
                         j--;
                     }
                 }
@@ -215,12 +211,13 @@ namespace MapCraft.Forms
         {
             try
             {
-                mDataTable.Select(TextBoxSQL.Text);
-                MessageBox.Show(@"语句合法，验证成功");
+                DataTable dt = GetDataTable();
+                dt.Select(TextBoxSQL.Text);
+                MessageBox.Show("语句合法，验证成功");
             }
             catch
             {
-                MessageBox.Show(@"非法语句，请重新输入");
+                MessageBox.Show("非法语句，请重新输入");
             }
         }
 
@@ -229,28 +226,12 @@ namespace MapCraft.Forms
         {
             try
             {
-                DataRow[] dataRows = mDataTable.Select(TextBoxSQL.Text);
-                // 清除被选中数据
-                MainForm.MapControl.Layers.GetItem(mLayerSelectIndex).SelectedFeatures.Clear();
-                if (dataRows.Length > 0)
-                {
-                    for (int i = 0; i < dataRows.Length; i++)
-                    {
-                        // 更新被选中数据
-                        MainForm.MapControl.Layers.GetItem(mLayerSelectIndex).SelectedFeatures.Add(MainForm.MapControl.Layers.GetItem(mLayerSelectIndex).Features.GetItem(mDataTable.Rows.IndexOf(dataRows[i])));
-                    }
-                    // 重新绘制要素图层
-                    MainForm.MapControl.RedrawTrackingShapes();
-                    // 这里要有一句代码，更新属性表
-                    // MainForm.RedrawAttribute();
-                }
-                else
-                    MessageBox.Show(@"未查询到符合条件要素");
+                apply();
                 Close();
             }
             catch
             {
-                MessageBox.Show(@"非法语句，请重新输入");
+                MessageBox.Show("非法语句，请重新输入");
             }
         }
 
@@ -259,95 +240,69 @@ namespace MapCraft.Forms
         {
             try
             {
-                DataRow[] dataRows = mDataTable.Select(TextBoxSQL.Text);
-                // 清除被选中数据
-                MainForm.MapControl.Layers.GetItem(mLayerSelectIndex).SelectedFeatures.Clear();
-                if (dataRows.Length > 0)
-                {
-                    for (int i = 0; i < dataRows.Length; i++)
-                    {
-                        // 更新被选中数据
-                        MainForm.MapControl.Layers.GetItem(mLayerSelectIndex).SelectedFeatures.Add(MainForm.MapControl.Layers.GetItem(mLayerSelectIndex).Features.GetItem(mDataTable.Rows.IndexOf(dataRows[i])));
-                    }
-                    // 重新绘制要素图层
-                    MainForm.MapControl.RedrawTrackingShapes();
-                    // MainForm.RedrawAttribute();
-                }
-                else
-                    MessageBox.Show(@"未查询到符合条件要素");
+                apply();
             }
             catch
             {
-                MessageBox.Show(@"非法语句，请重新输入");
+                MessageBox.Show("非法语句，请重新输入");
             }
         }
 
+        private void apply()
+        {
+            DataTable dt = GetDataTable();
+            DataRow[] dataRows = dt.Select(TextBoxSQL.Text);
+            Main.MapControl.Layers.GetItem(mSelectLayerIndex).SelectedFeatures.Clear();
+            if (dataRows.Length > 0)
+            {
+                for (int i = 0; i < dataRows.Length; i++)
+                {
+                    Main.MapControl.Layers.GetItem(mSelectLayerIndex).SelectedFeatures.Add(Main.MapControl.Layers.GetItem(mSelectLayerIndex).Features.GetItem(dt.Rows.IndexOf(dataRows[i])));
+                }
+                Main.MapControl.RedrawTrackingShapes();
+            }
+            else
+                MessageBox.Show("未查询到符合条件要素");
+        }
+
+        private DataTable GetDataTable()
+        {
+            // 当前选中图层
+            moMapLayer layer = Main.MapControl.Layers.GetItem(mSelectLayerIndex);
+            DataTable dt = new DataTable();
+            for (int i = 0; i < layer.AttributeFields.Count; i++)
+            {
+                moValueTypeConstant valueTypeConstant = layer.AttributeFields.GetItem(i).ValueType;
+                switch (valueTypeConstant)
+                {
+                    case moValueTypeConstant.dInt16:
+                        dt.Columns.Add(layer.AttributeFields.GetItem(i).Name, typeof(short));
+                        break;
+                    case moValueTypeConstant.dInt32:
+                        dt.Columns.Add(layer.AttributeFields.GetItem(i).Name, typeof(int));
+                        break;
+                    case moValueTypeConstant.dInt64:
+                        dt.Columns.Add(layer.AttributeFields.GetItem(i).Name, typeof(long));
+                        break;
+                    case moValueTypeConstant.dDouble:
+                        dt.Columns.Add(layer.AttributeFields.GetItem(i).Name, typeof(double));
+                        break;
+                    case moValueTypeConstant.dSingle:
+                        dt.Columns.Add(layer.AttributeFields.GetItem(i).Name, typeof(float));
+                        break;
+                    case moValueTypeConstant.dText:
+                        dt.Columns.Add(layer.AttributeFields.GetItem(i).Name, typeof(string));
+                        break;
+                }
+            }
+            for (int i = 0; i < layer.Features.Count; i++)
+            {
+                dt.Rows.Add(layer.Features.GetItem(i).Attributes.ToArray());
+            }
+            return dt;
+        }
         #endregion
 
-        #region 私有方法
-        // 加载所有图层
-        private void LoadLayers()
-        {
-            for (int i = 0; i < MainForm.MapControl.Layers.Count; i++)
-            {
-                SelectBoxLayer.Items.Add(MainForm.MapControl.Layers.GetItem(i).Name);
-            }
-        }
-
-        // 加载当前选中图层的字段
-        private void LoadFields()
-        {
-            for (int i = 0; i < MainForm.MapControl.Layers.GetItem(mLayerSelectIndex).AttributeFields.Count; i++)
-            {
-                ListBoxFields.Items.Add(MainForm.MapControl.Layers.GetItem(mLayerSelectIndex).AttributeFields.GetItem(i).Name);
-            }
-        }
-
-        // 加载数据表
-        private void LoadDataTable()
-        {
-            if (mLayerSelectIndex < 0)
-                return;
-            // 建表
-            mDataTable = new DataTable();
-            // 做一个中间值便于表示
-            moMapLayer layerTemp = MainForm.MapControl.Layers.GetItem(mLayerSelectIndex);
-            // 建立字段
-            for (int i = 0; i < layerTemp.AttributeFields.Count; i++)
-            {
-                if (layerTemp.AttributeFields.GetItem(i).ValueType == moValueTypeConstant.dInt16)
-                {
-                    mDataTable.Columns.Add(layerTemp.AttributeFields.GetItem(i).Name, typeof(short));
-                }
-                else if (layerTemp.AttributeFields.GetItem(i).ValueType == moValueTypeConstant.dInt32)
-                {
-                    mDataTable.Columns.Add(layerTemp.AttributeFields.GetItem(i).Name, typeof(int));
-                }
-                else if (layerTemp.AttributeFields.GetItem(i).ValueType == moValueTypeConstant.dInt64)
-                {
-                    mDataTable.Columns.Add(layerTemp.AttributeFields.GetItem(i).Name, typeof(long));
-                }
-                else if (layerTemp.AttributeFields.GetItem(i).ValueType == moValueTypeConstant.dDouble)
-                {
-                    mDataTable.Columns.Add(layerTemp.AttributeFields.GetItem(i).Name, typeof(double));
-                }
-                else if (layerTemp.AttributeFields.GetItem(i).ValueType == moValueTypeConstant.dSingle)
-                {
-                    mDataTable.Columns.Add(layerTemp.AttributeFields.GetItem(i).Name, typeof(float));
-                }
-                else if (layerTemp.AttributeFields.GetItem(i).ValueType == moValueTypeConstant.dText)
-                {
-                    mDataTable.Columns.Add(layerTemp.AttributeFields.GetItem(i).Name, typeof(string));
-                }
-            }
-            // 读取字段数据,按行读取
-            for (int i = 0; i < layerTemp.Features.Count; i++)
-            {
-                mDataTable.Rows.Add(layerTemp.Features.GetItem(i).Attributes.ToArray());
-            }
-
-        }
-        #endregion
 
     }
 }
