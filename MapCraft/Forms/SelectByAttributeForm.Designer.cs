@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.SelectBoxLayer = new System.Windows.Forms.ComboBox();
+            this.cbLayers = new System.Windows.Forms.ComboBox();
             this.labelLayers = new System.Windows.Forms.Label();
-            this.ListBoxFields = new System.Windows.Forms.ListBox();
+            this.listBoxFields = new System.Windows.Forms.ListBox();
             this.btnEq = new System.Windows.Forms.Button();
             this.btnGt = new System.Windows.Forms.Button();
             this.btnLt = new System.Windows.Forms.Button();
@@ -41,7 +41,7 @@
             this.btnAnd = new System.Windows.Forms.Button();
             this.btnOr = new System.Windows.Forms.Button();
             this.btnGetUniqueValue = new System.Windows.Forms.Button();
-            this.ListBoxUniqueValues = new System.Windows.Forms.ListBox();
+            this.listBoxUniqueValues = new System.Windows.Forms.ListBox();
             this.TextBoxSQL = new System.Windows.Forms.TextBox();
             this.btnApply = new System.Windows.Forms.Button();
             this.btnConfirm = new System.Windows.Forms.Button();
@@ -58,18 +58,18 @@
             this.btnPercnt = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // SelectBoxLayer
+            // cbLayers
             // 
-            this.SelectBoxLayer.DropDownHeight = 120;
-            this.SelectBoxLayer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.SelectBoxLayer.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.SelectBoxLayer.FormattingEnabled = true;
-            this.SelectBoxLayer.IntegralHeight = false;
-            this.SelectBoxLayer.Location = new System.Drawing.Point(90, 21);
-            this.SelectBoxLayer.Name = "SelectBoxLayer";
-            this.SelectBoxLayer.Size = new System.Drawing.Size(222, 22);
-            this.SelectBoxLayer.TabIndex = 0;
-            this.SelectBoxLayer.SelectionChangeCommitted += new System.EventHandler(this.SelectBoxLayer_SelectionChangeCommitted);
+            this.cbLayers.DropDownHeight = 120;
+            this.cbLayers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbLayers.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cbLayers.FormattingEnabled = true;
+            this.cbLayers.IntegralHeight = false;
+            this.cbLayers.Location = new System.Drawing.Point(90, 21);
+            this.cbLayers.Name = "cbLayers";
+            this.cbLayers.Size = new System.Drawing.Size(222, 25);
+            this.cbLayers.TabIndex = 0;
+            this.cbLayers.SelectedIndexChanged += new System.EventHandler(this.cbLayer_SelectedIndexChanged);
             // 
             // labelLayers
             // 
@@ -77,22 +77,22 @@
             this.labelLayers.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelLayers.Location = new System.Drawing.Point(40, 24);
             this.labelLayers.Name = "labelLayers";
-            this.labelLayers.Size = new System.Drawing.Size(42, 14);
+            this.labelLayers.Size = new System.Drawing.Size(53, 18);
             this.labelLayers.TabIndex = 1;
             this.labelLayers.Text = "图层:";
             // 
-            // ListBoxFields
+            // listBoxFields
             // 
-            this.ListBoxFields.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.ListBoxFields.FormattingEnabled = true;
-            this.ListBoxFields.ItemHeight = 14;
-            this.ListBoxFields.Location = new System.Drawing.Point(43, 68);
-            this.ListBoxFields.Name = "ListBoxFields";
-            this.ListBoxFields.Size = new System.Drawing.Size(269, 130);
-            this.ListBoxFields.TabIndex = 2;
-            this.ListBoxFields.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ListBoxFields_MouseClick);
-            this.ListBoxFields.SelectedIndexChanged += new System.EventHandler(this.ListBoxFields_SelectedIndexChanged);
-            this.ListBoxFields.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ListBoxFields_MouseDoubleClick);
+            this.listBoxFields.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.listBoxFields.FormattingEnabled = true;
+            this.listBoxFields.ItemHeight = 17;
+            this.listBoxFields.Location = new System.Drawing.Point(43, 68);
+            this.listBoxFields.Name = "listBoxFields";
+            this.listBoxFields.Size = new System.Drawing.Size(269, 123);
+            this.listBoxFields.TabIndex = 2;
+            this.listBoxFields.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ListBoxFields_MouseClick);
+            this.listBoxFields.SelectedIndexChanged += new System.EventHandler(this.ListBoxFields_SelectedIndexChanged);
+            this.listBoxFields.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ListBoxFields_MouseDoubleClick);
             // 
             // btnEq
             // 
@@ -194,15 +194,15 @@
             this.btnGetUniqueValue.UseVisualStyleBackColor = true;
             this.btnGetUniqueValue.Click += new System.EventHandler(this.btnGetUniqueValue_Click);
             // 
-            // ListBoxUniqueValues
+            // listBoxUniqueValues
             // 
-            this.ListBoxUniqueValues.FormattingEnabled = true;
-            this.ListBoxUniqueValues.ItemHeight = 12;
-            this.ListBoxUniqueValues.Location = new System.Drawing.Point(181, 219);
-            this.ListBoxUniqueValues.Name = "ListBoxUniqueValues";
-            this.ListBoxUniqueValues.Size = new System.Drawing.Size(131, 124);
-            this.ListBoxUniqueValues.TabIndex = 20;
-            this.ListBoxUniqueValues.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ListBoxUniqueValues_MouseDoubleClick);
+            this.listBoxUniqueValues.FormattingEnabled = true;
+            this.listBoxUniqueValues.ItemHeight = 12;
+            this.listBoxUniqueValues.Location = new System.Drawing.Point(181, 219);
+            this.listBoxUniqueValues.Name = "listBoxUniqueValues";
+            this.listBoxUniqueValues.Size = new System.Drawing.Size(131, 124);
+            this.listBoxUniqueValues.TabIndex = 20;
+            this.listBoxUniqueValues.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ListBoxUniqueValues_MouseDoubleClick);
             // 
             // TextBoxSQL
             // 
@@ -250,7 +250,7 @@
             this.labelFieldList.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelFieldList.Location = new System.Drawing.Point(147, 53);
             this.labelFieldList.Name = "labelFieldList";
-            this.labelFieldList.Size = new System.Drawing.Size(53, 12);
+            this.labelFieldList.Size = new System.Drawing.Size(67, 15);
             this.labelFieldList.TabIndex = 28;
             this.labelFieldList.Text = "字段列表";
             // 
@@ -301,7 +301,7 @@
             this.labelSQL.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelSQL.Location = new System.Drawing.Point(42, 397);
             this.labelSQL.Name = "labelSQL";
-            this.labelSQL.Size = new System.Drawing.Size(0, 12);
+            this.labelSQL.Size = new System.Drawing.Size(0, 15);
             this.labelSQL.TabIndex = 33;
             // 
             // btnNull
@@ -364,7 +364,7 @@
             this.Controls.Add(this.btnValidate);
             this.Controls.Add(this.btnApply);
             this.Controls.Add(this.TextBoxSQL);
-            this.Controls.Add(this.ListBoxUniqueValues);
+            this.Controls.Add(this.listBoxUniqueValues);
             this.Controls.Add(this.btnGetUniqueValue);
             this.Controls.Add(this.btnOr);
             this.Controls.Add(this.btnAnd);
@@ -375,9 +375,9 @@
             this.Controls.Add(this.btnLt);
             this.Controls.Add(this.btnGt);
             this.Controls.Add(this.btnEq);
-            this.Controls.Add(this.ListBoxFields);
+            this.Controls.Add(this.listBoxFields);
             this.Controls.Add(this.labelLayers);
-            this.Controls.Add(this.SelectBoxLayer);
+            this.Controls.Add(this.cbLayers);
             this.Name = "SelectByAttributeForm";
             this.Text = "按属性查询";
             this.ResumeLayout(false);
@@ -387,7 +387,7 @@
 
         #endregion
 
-        private System.Windows.Forms.ComboBox SelectBoxLayer;
+        private System.Windows.Forms.ComboBox cbLayers;
         private System.Windows.Forms.Label labelLayers;
         private System.Windows.Forms.Button btnEq;
         private System.Windows.Forms.Button btnGt;
@@ -399,12 +399,12 @@
         private System.Windows.Forms.Button btnAnd;
         private System.Windows.Forms.Button btnOr;
         private System.Windows.Forms.Button btnGetUniqueValue;
-        private System.Windows.Forms.ListBox ListBoxUniqueValues;
+        private System.Windows.Forms.ListBox listBoxUniqueValues;
         private System.Windows.Forms.TextBox TextBoxSQL;
         private System.Windows.Forms.Button btnApply;
         private System.Windows.Forms.Button btnConfirm;
         private System.Windows.Forms.Button btnValidate;
-        private System.Windows.Forms.ListBox ListBoxFields;
+        private System.Windows.Forms.ListBox listBoxFields;
         private System.Windows.Forms.Label labelFieldList;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnNot;

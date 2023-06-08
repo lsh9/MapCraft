@@ -42,7 +42,7 @@ namespace MapCraft.Forms
             InitializeComponent();
             Main = main;
             LayerIndex = index;
-            Layer = main.moMapControl1.Layers.GetItem(index);
+            Layer = main.MapControl.Layers.GetItem(index);
 
             dataGridView.ReadOnly = true;
             HasSelectField = false;
@@ -156,7 +156,7 @@ namespace MapCraft.Forms
             moField field = new moField(NewFieldName, NewFieldType);
             if (NewFieldType == moValueTypeConstant.dText)
                 field = new moField(NewFieldName, NewFieldType, NewFieldLength);
-            Layer = Main.moMapControl1.Layers.GetItem(LayerIndex);
+            Layer = Main.MapControl.Layers.GetItem(LayerIndex);
             Layer.AttributeFields.Append(field);
             Main.Shapefiles[LayerIndex].Add_Field(field);
 
@@ -176,7 +176,7 @@ namespace MapCraft.Forms
             {
                 Layer.SelectedFeatures.Add(Layer.Features.GetItem(dataGridView.SelectedRows[i].HeaderCell.RowIndex));
             }
-            Main.moMapControl1.RedrawTrackingShapes();
+            Main.MapControl.RedrawTrackingShapes();
             RefreshSelectedText();
         }
 
