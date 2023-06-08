@@ -222,7 +222,8 @@ namespace MapCraft.Forms
 						outlineSymbol.Style = (moSimpleLineSymbolStyleConstant)cbSymble.SelectedIndex;
 						outlineSymbol.Color = btnRenderColor.BackColor;
 						outlineSymbol.Size = Convert.ToDouble(numericUpDownSize.Value);
-						simpleRenderer.Symbol = fillSymbol;
+                        fillSymbol.Color = btnFillColor.BackColor;
+                        simpleRenderer.Symbol = fillSymbol;
 						break;
 				}
                 layer.Renderer = simpleRenderer;
@@ -350,15 +351,13 @@ namespace MapCraft.Forms
 			Int32 FieldIndex = cbUniqueValueField.SelectedIndex;
 			// 重新绘制DataGridView
 			string field = cbUniqueValueField.SelectedItem.ToString();
-			DataTable dataTable = new DataTable();
-			dataTable.Columns.Add(field);
-			dataTable.Columns.Add("符号");
-			dataTable.Columns.Add("颜色");
-			dataTable.Columns.Add("大小");
-			dataTable.Columns.Add("透明度");
-
-
-			dataGridViewUnique.DataSource = dataTable;
+			//DataTable dataTable = new DataTable();
+			//dataTable.Columns.Add(field);
+			//dataTable.Columns.Add("符号");
+			//dataTable.Columns.Add("颜色");
+			//dataTable.Columns.Add("大小");
+			//dataTable.Columns.Add("透明度");
+			//dataGridViewUnique.DataSource = dataTable;
 		}
 
 		private void tabControlInner_Enter(object sender, EventArgs e)
