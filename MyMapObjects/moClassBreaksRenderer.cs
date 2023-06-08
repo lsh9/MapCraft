@@ -263,42 +263,40 @@ namespace MyMapObjects
             sDic.Add("HeadTitle", _HeadTitle);
             sDic.Add("ShowHead", _ShowHead);
             sDic.Add("ShowDefaultSymbol", _ShowDefaultSymbol);
+            sDic.Add("BreakValues", _BreakValues);
+            List<Dictionary<string, object>> sSymbols = new List<Dictionary<string, object>>();
+            sDic.Add("Symbols", sSymbols);
             Int32 sBreakCount = _BreakValues.Count;
             for (Int32 i = 0; i <= sBreakCount - 1; i++)
             {
-                double sBreakValue = _BreakValues[i];
-                moSymbol sSymbol = null;
                 if (_Symbols[i] != null)
-                    sSymbol = _Symbols[i].Clone();
-                sDic.Add("BreakValue" + i.ToString(), sBreakValue);
-                sDic.Add("Symbol" + i.ToString(), sSymbol);
+                    sSymbols.Add(_Symbols[i].ToDictionary());
             }
             if (_DefaultSymbol != null)
             {
-                sDic.Add("DefaultSymbol", _DefaultSymbol.Clone());
+                sDic.Add("DefaultSymbol", _DefaultSymbol.ToDictionary());
             }
             return sDic;
         }
 
-        public static new moClassBreaksRenderer FromDictionary(Dictionary<string, object> sDic)
+        public static new moClassBreaksRenderer FromDictionary(Dictionary<string, object> dic)
         {
             moClassBreaksRenderer sRenderer = new moClassBreaksRenderer();
-            sRenderer._Field = sDic["Field"].ToString();
-            sRenderer._HeadTitle = sDic["HeadTitle"].ToString();
-            sRenderer._ShowHead = Convert.ToBoolean(sDic["ShowHead"]);
-            sRenderer._ShowDefaultSymbol = Convert.ToBoolean(sDic["ShowDefaultSymbol"]);
-            Int32 sBreakCount = (sDic.Count - 5) / 2;
+            sRenderer._Field = dic["Field"].ToString();
+            sRenderer._HeadTitle = dic["HeadTitle"].ToString();
+            sRenderer._ShowHead = Convert.ToBoolean(dic["ShowHead"]);
+            sRenderer._ShowDefaultSymbol = Convert.ToBoolean(dic["ShowDefaultSymbol"]);
+            List<object> breakValues = dic["BreakValues"] as List<object>;
+            List<object> sSymbols = dic["Symbols"] as List<object>;
+            Int32 sBreakCount = breakValues.Count;
             for (Int32 i = 0; i <= sBreakCount - 1; i++)
             {
-                double sBreakValue = Convert.ToDouble(sDic["BreakValue" + i.ToString()]);
-                moSymbol sSymbol = null;
-                if (sDic["Symbol" + i.ToString()] != null)
-                    sSymbol = (moSymbol)sDic["Symbol" + i.ToString()];
-                sRenderer.AddBreakValue(sBreakValue, sSymbol);
+                sRenderer._BreakValues.Add(Convert.ToDouble(breakValues[i]));
+                sRenderer._Symbols.Add(moSymbol.FromDictionary((Dictionary<string, object>)sSymbols[i]));
             }
-            if (sDic["DefaultSymbol"] != null)
+            if (dic["DefaultSymbol"] != null)
             {
-                sRenderer.DefaultSymbol = (moSymbol)sDic["DefaultSymbol"];
+                sRenderer.DefaultSymbol = moSymbol.FromDictionary((Dictionary<string, object>)dic["DefaultSymbol"]);
             }
             return sRenderer;
         }
