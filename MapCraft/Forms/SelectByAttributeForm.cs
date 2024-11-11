@@ -118,8 +118,8 @@ namespace MapCraft.Forms
         #region 输入与查看事件
         private void cbLayer_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (mSelectLayerIndex < 0)
-                return;
+            /*if (mSelectLayerIndex < 0)
+                return;*/
             mSelectLayerIndex = cbLayers.SelectedIndex;
             labelSQL.Text = $"SELECT * FROM {Main.MapControl.Layers.GetItem(mSelectLayerIndex).Name} WHERE ";
             listBoxFields.Items.Clear();

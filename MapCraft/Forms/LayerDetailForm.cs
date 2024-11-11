@@ -607,5 +607,10 @@ namespace MapCraft.Forms
 			// }
 
 		}
-	}
+
+        private void btnConfirm_Click_1(object sender, EventArgs e)
+        {
+
+        }
+    }
 }

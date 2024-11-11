@@ -1,5 +1,6 @@
 ﻿using MapCraft.FileProcessor;
 using MapCraft.Forms;
+using MapCraft.IO;
 using MyMapObjects;
 using System;
 using System.Collections.Generic;
@@ -260,6 +261,11 @@ namespace MapCraft
         }
 
         #region 图层TreeView控件操作
+        private void TreeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            SelectedLayerIndex = e.Node.Index;
+        }
+
 
         private void TreeView1_DragDrop(object sender, DragEventArgs e)
         {
@@ -345,7 +351,11 @@ namespace MapCraft
             try
             {
                 string layerPath = shpFilePath.Substring(0, shpFilePath.IndexOf(".shp", StringComparison.Ordinal));
-                mShapefiles[SelectedLayerIndex].Write_ShapeFile(layerPath);
+                // mShapefiles[SelectedLayerIndex].Write_ShapeFile(layerPath);    // 原始代码
+                // 下面是新添加的代码
+                var selectedLayer = MapControl.Layers.GetItem(SelectedLayerIndex);
+                // var outputPath = Shapefiles[SelectedLayerIndex].FilePath;
+                ShapefileWriter.write(selectedLayer, layerPath);
             }
             catch (Exception error)
             {
@@ -354,6 +364,26 @@ namespace MapCraft
             }
         }
 
+        private void 保存到数据库ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShapeFileParser curShpFileParser = mShapefiles[SelectedLayerIndex];
+            if (curShpFileParser.isDBLayer == false)
+            {
+                // 原来的代码
+                //MessageBox.Show("不是数据库图层，暂未实现[保存到数据库]功能！");
+                //return;
+
+                // 新添加的代码
+                AddDataFromDB addDataToDB = new AddDataFromDB(true, MapControl.Layers.GetItem(SelectedLayerIndex));
+                addDataToDB.ShowDialog();
+            }
+            else
+            {
+                ConnDBParser connDBParser = curShpFileParser.connDBParser;
+                moFeatures curFeatures = MapControl.Layers.GetItem(SelectedLayerIndex).Features;
+                connDBParser.Write_DB(curFeatures);
+            }
+        }
 
         private void 打开属性表_Click(object sender, EventArgs e)
         {
@@ -465,6 +495,23 @@ namespace MapCraft
             }
             btnAddData.BackColor = SystemColors.Control;
             mMapOpStyle = MapOpConstant.None;
+        }
+
+        // 点击从数据库添加图层按钮
+        private void btnAddDataFromDB_Click(object sender, EventArgs e)
+        {
+            AddDataFromDB adfdb = new AddDataFromDB(false, null);
+            ConnDBParser connDBParser;
+            if (adfdb.ShowDialog() == DialogResult.OK)
+            {
+                connDBParser = adfdb.connDBParserRtn;
+                AddLayerFromDB(connDBParser);
+                MessageBox.Show("添加成功！");
+            }
+            else
+            {
+                MessageBox.Show("取消从数据库添加图层！");
+            }
         }
 
         // 点击放大按钮
@@ -603,6 +650,7 @@ namespace MapCraft
             if (mIsLayerChanged)
             {
                 DialogResult dr = MessageBox.Show("是否保存编辑内容？", "保存", MessageBoxButtons.YesNoCancel);
+                // DialogResult dr = DialogResult.No;
                 if (dr == DialogResult.Yes)
                 {
                     保存编辑内容ToolStripMenuItem_Click(sender, e);
@@ -620,6 +668,7 @@ namespace MapCraft
             开始编辑ToolStripMenuItem.Enabled = true;
             结束编辑ToolStripMenuItem.Enabled = false;
             保存编辑内容ToolStripMenuItem.Enabled = false;
+            mEditingLayerIndex = -1;
             btnMoveFeature.Enabled = false;
             btnCreateFeature.Enabled = false;
             btnMoveNode.Enabled = false;
@@ -1486,6 +1535,14 @@ namespace MapCraft
                         break;
                     }
                 case moGeometryTypeConstant.MultiPolyline:
+                    {
+                        //屏幕坐标转为地理坐标加入描绘图形
+                        moPoint sPoint = MapControl.ToMapPoint(e.Location.X, e.Location.Y);
+                        mSketchingShape.Last().Add(sPoint);
+                        //重绘跟踪图形
+                        MapControl.RedrawTrackingShapes();
+                        break;
+                    }
                 case moGeometryTypeConstant.MultiPolygon:
                     {
                         //屏幕坐标转为地理坐标加入描绘图形
@@ -1749,8 +1806,13 @@ namespace MapCraft
         private void 移除ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MapControl.Layers.RemoveAt(SelectedLayerIndex);
+            if (SelectedLayerIndex == mEditingLayerIndex)
+            {
+                mEditingLayerIndex = -1;
+            }
             mShapefiles.RemoveAt(SelectedLayerIndex);
             RefreshLayersTree();
+            MapControl.RedrawMap();
         }
 
         private void MoveLayer(Int32 from, Int32 to)
@@ -1775,6 +1837,26 @@ namespace MapCraft
             // 将图层添加到第一个
             MapControl.Layers.Add(mapLayer);
             mShapefiles.Add(shapefile);
+            MoveLayer(MapControl.Layers.Count - 1, 0);
+            MapControl.FullExtent();
+            RefreshLayersTree();
+        }
+
+        public void AddLayerFromDB(ConnDBParser connDBParser)
+        {
+            // features
+            moFeatures features = connDBParser.Read_DB();
+            // layer
+            moMapLayer mapLayer = new moMapLayer(connDBParser.Table, connDBParser.GeometryType, connDBParser.Fields);
+            // layer.Features = features
+            mapLayer.Features = features;
+            // 添加layer到mapcontrol.layers
+            MapControl.Layers.Add(mapLayer);
+
+            // !!!!!!!!!!!!!!!!!!!!!!! 将DB图层添加到mShapefiles
+            ShapeFileParser shpFileParser = new ShapeFileParser(connDBParser);
+            mShapefiles.Add(shpFileParser);     
+
             MoveLayer(MapControl.Layers.Count - 1, 0);
             MapControl.FullExtent();
             RefreshLayersTree();
@@ -2156,7 +2238,7 @@ namespace MapCraft
                     }
                 case moGeometryTypeConstant.MultiPolyline:
                     {
-                        if (mSketchingPoint.Count == 0)
+                        if (mSketchingShape == null)
                             return;
                         int partCount = mSketchingShape.Count;
 
@@ -2553,9 +2635,15 @@ namespace MapCraft
             return fullPathUri.LocalPath;
         }
 
-        #endregion
 
         #endregion
 
+        #endregion
+
+        private void 拓扑查错ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TopoCheck topocheck = new TopoCheck(this, SelectedLayerIndex);
+            topocheck.ShowDialog();
+        }
     }
 }

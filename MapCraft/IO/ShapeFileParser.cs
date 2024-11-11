@@ -1,4 +1,5 @@
-﻿using MyMapObjects;
+﻿using MapCraft.IO;
+using MyMapObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,9 @@ namespace MapCraft.FileProcessor
 
         public moGeometryTypeConstant GeometryType => _shpFile.GetMoGeometryType();
 
+        // 仅用于识别和存储DB图层 ConnDBParser
+        public bool isDBLayer = false;
+        public ConnDBParser connDBParser = null;
         #endregion
 
         public string FilePath
@@ -43,7 +47,12 @@ namespace MapCraft.FileProcessor
             _shpFile = new ShpParser(_filePath + ".shp");
             _dbfFile = new DbfFileParser(_filePath + ".dbf");
         }
-
+        public ShapeFileParser(ConnDBParser dbParser)
+        {
+            // 仅用于存储DB图层 ConnDBParser
+            isDBLayer = true;
+            connDBParser = dbParser;
+        }
         #endregion
 
 
